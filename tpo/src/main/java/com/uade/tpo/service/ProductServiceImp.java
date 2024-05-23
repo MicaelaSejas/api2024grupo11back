@@ -28,7 +28,7 @@ public class ProductServiceImp {
     public Product createProduct(String nombre, int cantidad, int precio, String descripcion) throws ProductDuplicateException {
         List<Product> productos = productoRepository.findByNombre(nombre);
         if (productos.isEmpty())
-            return productoRepository.save(new Product(nombre));
+            return productoRepository.save(new Product(nombre, cantidad, precio, descripcion));
         throw new ProductDuplicateException();
     }
 }
