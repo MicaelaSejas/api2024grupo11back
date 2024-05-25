@@ -8,7 +8,7 @@ import org.springframework.data.domain.PageRequest;
 import com.uade.tpo.entity.Product;
 import com.uade.tpo.exception.ProductDuplicateException;
 
-public class ProductoService {
+public interface ProductoService {
     public Page<Product> getProducts(PageRequest pageRequest);
 
     public Optional<Product> getProductById(Long productId);
