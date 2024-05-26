@@ -14,9 +14,10 @@ public class CarritoService {
     @Autowired
     public CarritoRepository carritoRepository;
 
-    public Carrito getCarritoById(final Long id) throws CartNotFoundException{
-        return this.carritoRepository.getCarritoById(id)
-                .orElseThrow(() -> new CartNotFoundException("Carrito with id " + id + " not found"));
+    public Carrito getCarritoByUserId(final Long userId) throws CartNotFoundException{
+        return this.carritoRepository.getCarritoByUserId(userId)
+                .orElseThrow(() -> new CartNotFoundException("Carrito for user id " + userId + " not found"));
     }
+
 
 }
