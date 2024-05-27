@@ -3,8 +3,8 @@ package com.uade.tpo.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.uade.tpo.entity.Carrito;
 import com.uade.tpo.exception.CartNotFoundException;
-import com.uade.tpo.model.Carrito;
 import com.uade.tpo.repository.CarritoRepository;
 
 @Service

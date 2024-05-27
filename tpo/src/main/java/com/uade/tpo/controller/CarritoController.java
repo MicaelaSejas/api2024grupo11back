@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.uade.tpo.entity.Carrito;
 import com.uade.tpo.exception.CartNotFoundException;
-import com.uade.tpo.model.Carrito;
 import com.uade.tpo.service.CarritoService;
 
 @RestController
