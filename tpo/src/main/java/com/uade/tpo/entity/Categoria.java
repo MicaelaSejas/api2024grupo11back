@@ -21,12 +21,13 @@ public class Categoria {
     }
 
     @Id@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column (name = "idCategorias")
     private Long id;
 
     @Column
     private String descripcion;
 
     @OneToMany
-    @JoinColumn(name = "categoriaid", nullable = false)
+    @JoinColumn(name = "idCategoria", nullable = false)
     private Product product;
 }

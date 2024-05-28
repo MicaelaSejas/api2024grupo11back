@@ -6,11 +6,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import com.uade.tpo.entity.Product;
+import com.uade.tpo.entity.Descuento;
 
 @Repository
-public interface ProductoRepository extends JpaRepository<Product, Long>{
-
-    @Query(value ="select c from Product c where c.titulo= ?1")
-    List<Product> findByTitulo(String titulo);
+public interface DescuentoRepository extends JpaRepository<Descuento, Long> {
+    @Query(value ="select c from Categoria c where c.descripcion= ?1")
+    List<Descuento> findByDescuento(int Porcentaje);
 }

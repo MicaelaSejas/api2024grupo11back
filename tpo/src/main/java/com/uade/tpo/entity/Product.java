@@ -17,8 +17,8 @@ public class Product {
     public Product(){
     }
 
-    public Product(String nombre, int cantidad, int precio, String descripcion){
-        this.nombre=nombre;
+    public Product(String titulo, int cantidad, float precio, String descripcion){
+        this.titulo=titulo;
         this.cantidad=cantidad;
         this.precio=precio;
         this.descripcion=descripcion;
@@ -29,21 +29,22 @@ public class Product {
     private Long id;
 
     @Column
-    private String nombre;
+    private String titulo;
 
     @Column
     private int cantidad;
 
     @Column
-    private int precio;
+    private float precio;
 
     @Column
     private String descripcion;
 
-    @OneToOne(mappedBy ="product")
+    @OneToOne
+    @JoinColumn(name = "idDescuento", referencedColumnName = "id")
     private Descuento descuento;
 
     @ManyToOne
-    @JoinColumn(name = "categoria_id", referencedColumnName = "id")
+    @JoinColumn(name = "idCategoria", referencedColumnName = "id")
     private Categoria categoria;
 }
