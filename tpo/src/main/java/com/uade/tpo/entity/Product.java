@@ -8,17 +8,18 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
 import lombok.Data;
 
 @Data
 @Entity
+@Table(name = "productos")
 public class Product {
 
     public Product(){
     }
 
     public Product(String nombre, int cantidad, int precio, String descripcion){
-        this.nombre=nombre;
         this.cantidad=cantidad;
         this.precio=precio;
         this.descripcion=descripcion;
@@ -29,7 +30,7 @@ public class Product {
     private Long id;
 
     @Column
-    private String nombre;
+    private String titulo;
 
     @Column
     private int cantidad;
@@ -44,10 +45,7 @@ public class Product {
 //    private Descuento descuento;
 
     @ManyToOne
-    @JoinColumn(name = "categoria_id", referencedColumnName = "id")
+    @JoinColumn(name = "idCategoria", referencedColumnName = "idCategorias")
     private Categoria categoria;
     
-    @ManyToOne
-    @JoinColumn(name = "carritoId") 
-    private Carrito carrito;
 }

@@ -11,6 +11,6 @@ import com.uade.tpo.entity.Product;
 @Repository
 public interface ProductoRepository extends JpaRepository<Product, Long>{
 
-    @Query(value ="select c from Product c where c.nombre= ?1")
-    List<Product> findByNombre(String nombre);
+    @Query(value ="select c from Product c where c.titulo= ?1")
+    List<Product> findByTitulo(String nombre);
 }

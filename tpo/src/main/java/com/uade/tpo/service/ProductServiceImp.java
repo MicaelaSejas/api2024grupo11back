@@ -25,10 +25,10 @@ public class ProductServiceImp {
         return productoRepository.findById(productId);
     }
 
-    public Product createProduct(String nombre, int cantidad, int precio, String descripcion) throws ProductDuplicateException {
-        List<Product> productos = productoRepository.findByNombre(nombre);
+    public Product createProduct(String titulo, int cantidad, int precio, String descripcion) throws ProductDuplicateException {
+        List<Product> productos = productoRepository.findByTitulo(titulo);
         if (productos.isEmpty())
-            return productoRepository.save(new Product(nombre, cantidad, precio, descripcion));
+            return productoRepository.save(new Product(titulo, cantidad, precio, descripcion));
         throw new ProductDuplicateException();
     }
 }

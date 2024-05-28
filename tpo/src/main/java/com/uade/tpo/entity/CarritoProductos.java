@@ -1,6 +1,6 @@
 package com.uade.tpo.entity;
 
-import java.util.List;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -8,12 +8,13 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import lombok.Data;
 
 @Data
 @Entity
+@Table(name = "carritoproductos")
 public class CarritoProductos {
 
     @Id
@@ -27,9 +28,44 @@ public class CarritoProductos {
 
     @ManyToOne
     @JoinColumn(name = "idCarrito", referencedColumnName = "idCARRITO")
+    @JsonIgnore
     private Carrito carrito;
 
     @Column(name = "cantidad")
     private int cantidad;
 
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public Product getProducto() {
+		return producto;
+	}
+
+	public void setProducto(Product producto) {
+		this.producto = producto;
+	}
+
+	public Carrito getCarrito() {
+		return carrito;
+	}
+
+	public void setCarrito(Carrito carrito) {
+		this.carrito = carrito;
+	}
+
+	public int getCantidad() {
+		return cantidad;
+	}
+
+	public void setCantidad(int cantidad) {
+		this.cantidad = cantidad;
+	}
+
+    
+    
 }

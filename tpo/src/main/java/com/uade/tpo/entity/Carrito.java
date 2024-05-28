@@ -1,6 +1,10 @@
 package com.uade.tpo.entity;
 
-import java.util.List;
+import java.util.Set;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -10,11 +14,12 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
 import lombok.Data;
 
 @Data
 @Entity
+@Table(name = "carrito")
 public class Carrito {
 
 	@Id
@@ -26,9 +31,8 @@ public class Carrito {
     @JoinColumn(name = "idUsuario", referencedColumnName = "id")
     private Usuario usuario;
 
-    @OneToOne
-    @JoinColumn(name = "idCarritoProductos", referencedColumnName = "idCarritoProducto")
-    private CarritoProductos carritoProducto;
+    @OneToMany(mappedBy = "carrito")
+    private Set<CarritoProductos> carritoProductos;
 
     @Column(name = "total")
     private float total;
@@ -49,20 +53,20 @@ public class Carrito {
 		this.usuario = usuario;
 	}
 
-	public CarritoProductos getCarritoProducto() {
-		return carritoProducto;
-	}
-
-	public void setCarritoProducto(CarritoProductos carritoProducto) {
-		this.carritoProducto = carritoProducto;
-	}
-
 	public float getTotal() {
 		return total;
 	}
 
 	public void setTotal(float total) {
 		this.total = total;
+	}
+
+	public Set<CarritoProductos> getCarritoProductos() {
+		return carritoProductos;
+	}
+
+	public void setCarritoProductos(Set<CarritoProductos> carritoProductos) {
+		this.carritoProductos = carritoProductos;
 	}
     
     
