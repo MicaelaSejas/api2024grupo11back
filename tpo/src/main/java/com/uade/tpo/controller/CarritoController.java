@@ -19,7 +19,6 @@ public class CarritoController {
     @Autowired
     private CarritoService carritoService;
 
-
     @GetMapping("/{id}")
     public ResponseEntity<String> getCarritoById(@PathVariable final Long id) {
 
@@ -32,6 +31,5 @@ public class CarritoController {
         }
 
     }
-
 
 }
