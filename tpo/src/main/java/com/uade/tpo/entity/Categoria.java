@@ -26,7 +26,7 @@ public class Categoria {
     @Column
     private String descripcion;
 
-    @OneToMany
-    @JoinColumn(name = "categoriaid", nullable = false)
-    private Product product;
+//    @OneToMany
+//    @JoinColumn(name = "categoriaid", nullable = false)
+//    private Product product;
 }
