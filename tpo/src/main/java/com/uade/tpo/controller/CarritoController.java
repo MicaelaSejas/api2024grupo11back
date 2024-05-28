@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.uade.tpo.entity.Carrito;
+import com.uade.tpo.entity.dto.CarritoRequest;
+import com.uade.tpo.entity.dto.CarritoResponse;
 import com.uade.tpo.exception.CartNotFoundException;
 import com.uade.tpo.service.CarritoService;
 
@@ -24,50 +26,48 @@ public class CarritoController {
 
 
     @GetMapping("/{userId}")
-    public ResponseEntity<String> getCarritoByUserId(@PathVariable final Long userId) {
+    public ResponseEntity<CarritoResponse> getCarritoByUserId(@PathVariable final Long userId) {
 
         try {
             Carrito carrito = this.carritoService.getCarritoByUserId(userId);
-            return ResponseEntity.ok().body(carrito.toString());
+            return ResponseEntity.ok().body(new CarritoResponse("Carrito creado exitosamente.", carrito));
 
         } catch (CartNotFoundException exception) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(exception.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new CarritoResponse(HttpStatus.NOT_FOUND.getReasonPhrase(), exception.getMessage()));
         }
 
     }
 
-
-    // o agregar/{idProducto}
-    @PostMapping("/agregar")
-    public ResponseEntity<String> addToCarrito(@RequestBody final Carrito carrito) {
-
-        try {
-            // si carrito no existe, lo creo y agrego producto
-
-            // si carrito existe, agrego el producto
-        } catch ( ) {
-
-        }
-
-    }
-
-
-    @PatchMapping("/actualizarCarrito")
-    public ResponseEntity<String> updateCarrito(@RequestBody final Carrito carrito) {
-
-        try {
-
-            // por las dudas, chequear que exista el carrito
-            // si existe, hacer update
-
-            // si no llega a existir, exception
-
-        } catch ( ) {
-
-        }
-
-    }
-
-    @PostMapping("vaciarCarrito/{}")
+//
+//    @PostMapping("/agregar/{carritoId}")
+//    public ResponseEntity<CarritoResponse> addToCarrito(@PathVariable final Long carritoId, @RequestBody final CarritoRequest request) {
+//
+//        try {
+//        	carritoService.addToCarrito(carritoId, request);
+//        	
+//        } catch ( ) {
+//
+//        }
+//
+//    }
+//
+//
+//    @PatchMapping("/actualizarCarrito")
+//    public ResponseEntity<String> updateCarrito(@RequestBody final Carrito carrito) {
+//
+//        try {
+//
+//            // por las dudas, chequear que exista el carrito
+//            // si existe, hacer update
+//
+//            // si no llega a existir, exception
+//
+//        } catch ( ) {
+//
+//        }
+//
+//    }
+//
+//    @PostMapping("vaciarCarrito/{}")
 
 }

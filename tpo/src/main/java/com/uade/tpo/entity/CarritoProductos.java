@@ -8,29 +8,28 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
 import lombok.Data;
 
 @Data
 @Entity
-public class Carrito {
+public class CarritoProductos {
 
-	@Id
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "idCARRITO")
+    @Column(name = "idCarritoProducto")
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "idUsuario", referencedColumnName = "id")
-    private Usuario usuario;
+    @JoinColumn(name = "idProducto", referencedColumnName = "id")
+    private Product producto;
 
-    @OneToOne
-    @JoinColumn(name = "idCarritoProductos", referencedColumnName = "idCarritoProducto")
-    private CarritoProductos carritoProducto;
+    @ManyToOne
+    @JoinColumn(name = "idCarrito", referencedColumnName = "idCARRITO")
+    private Carrito carrito;
 
-    @Column(name = "total")
-    private float total;
-    
+    @Column(name = "cantidad")
+    private int cantidad;
+
 }

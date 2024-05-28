@@ -18,6 +18,6 @@ public class Descuento {
     @Column
     private int descuento;
 
-    @OneToOne(mappedBy = "descuento")
-    private Product product;
+//    @OneToOne(mappedBy = "descuento")
+//    private Product product;
 }

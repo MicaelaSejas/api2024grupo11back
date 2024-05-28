@@ -40,10 +40,14 @@ public class Product {
     @Column
     private String descripcion;
 
-    @OneToOne(mappedBy ="product")
-    private Descuento descuento;
+//    @OneToOne(mappedBy ="product")
+//    private Descuento descuento;
 
     @ManyToOne
     @JoinColumn(name = "categoria_id", referencedColumnName = "id")
     private Categoria categoria;
+    
+    @ManyToOne
+    @JoinColumn(name = "carritoId") 
+    private Carrito carrito;
 }
