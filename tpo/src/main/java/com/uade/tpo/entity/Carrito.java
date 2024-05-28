@@ -1,4 +1,4 @@
-package com.uade.tpo.model;
+package com.uade.tpo.entity;
 
 import jakarta.persistence.Entity;
 
