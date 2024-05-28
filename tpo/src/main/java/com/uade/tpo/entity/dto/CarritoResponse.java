@@ -1,8 +1,10 @@
 package com.uade.tpo.entity.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.uade.tpo.entity.Carrito;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class CarritoResponse {
 
 	@JsonProperty("message")
@@ -16,7 +18,7 @@ public class CarritoResponse {
 
 	public CarritoResponse(String message, String error) {
 		this.message = message;
-		this.error = error;
+        this.error = error != null ? error : "";
 	}
 	
 	public CarritoResponse(String message, Carrito carrito) {
