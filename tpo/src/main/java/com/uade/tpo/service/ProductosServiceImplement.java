@@ -1,14 +1,14 @@
 package com.uade.tpo.service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import com.uade.tpo.entity.Descuentos;
 import com.uade.tpo.entity.Productos;
 import com.uade.tpo.repository.ProductosRepository;
 
@@ -19,41 +19,47 @@ public class ProductosServiceImplement implements ProductosService {
     private ProductosRepository productosRepository;
 
     @Override
-    public Page<Productos> getProductos(PageRequest pageable) {
+    public Page<Productos> getProductos(Pageable pageable) {
         return productosRepository.findAll(pageable);
-        throw new UnsupportedOperationException("Unimplemented method 'getProductos'");
     }
 
     @Override
-    public Optional<Productos> getProductosById(Integer id) {
-        return productosRepository.findById(id).orElse(null);
-        throw new UnsupportedOperationException("Unimplemented method 'getProductosById'");
+    public Optional<Productos> getProductosById(Long id) {
+        return productosRepository.findById(id);
     }
 
     @Override
-    public Productos crearProductos(Integer id) {
-        List<Productos> productos = productosRepository.findById(id);
-        if (productos.isEmpty())
-            return productosRepository.save(new Productos(id));
-        throw new UnsupportedOperationException("Unimplemented method 'crearProductos'");
+    public Productos crearProductos(Productos productos) {
+        Optional<Productos> listaProductos = productosRepository.findById(productos.getId());
+        if (listaProductos.isEmpty()){
+            return productosRepository.save(productos);
+        }else{
+            throw new IllegalStateException("El producto ya existe");
+        }
     }
 
     @Override
-    public List<Productos> getAllProductos( {
+    public List<Productos> getAllProductos() {
         return productosRepository.findAll();
-        throw new UnsupportedOperationException("Unimplemented method 'getAllProductos'");
     }
 
     @Override
-    public Productos eliminarProductos(Integer id) {
-        productosRepository.deleteById(id);
-        throw new UnsupportedOperationException("Unimplemented method 'eliminarProductos'");
+    public Productos eliminarProductos(Long id) {
+        Optional<Productos> productoOptional = productosRepository.findById(id);
+        if(productoOptional.isPresent()){
+            Productos productoEliminado = productoOptional.get();
+            productosRepository.deleteById(id);
+            return productoEliminado;
+        }else{
+            throw new NoSuchElementException("El producto no existe");
+        }
     }
 
     @Override
-    public Productos modificarProductos(Integer id) {
-        return productosRepository.save(id);
-        throw new UnsupportedOperationException("Unimplemented method 'modificarProductos'");
+    public Productos actualizarProductos(Long id, Productos productosActualizados) {
+        productosActualizados.setId(id);
+        return productosRepository.save(productosActualizados);
     }
+
 
 }

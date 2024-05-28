@@ -1,10 +1,10 @@
-package com.uade.tpo.controller;
+package com.uade.tpo.controller.request;
 
 import lombok.Data;
 
 @Data
 public class DescuentosRequest {
-    private int idDescuentos;
+    private Long idDescuentos;
     private int Porcentaje;
 
 }

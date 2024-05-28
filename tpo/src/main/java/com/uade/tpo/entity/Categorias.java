@@ -1,30 +1,55 @@
 package com.uade.tpo.entity;
 
-import jakarta.annotation.Generated;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
 import lombok.Data;
 
 @Data
 @Entity
+@Table(name = "categorias")
+
 public class Categorias {
 
-    private Categorias() {
-    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(nullable = false)
-    private int idCategorias;
+    @Column(name = "idCategorias", nullable = false)
+    private Long idCategorias;
 
-    @Column(nullable = false)
+    @Column(name = "descripcion", nullable = false)
     private String descripcion;
 
     @OneToOne(mappedBy = "categorias")
     private Productos productos;
+
+    // Aca los getter  y setters
+    public Long getIdCategorias() {
+        return idCategorias;
+    }
+
+    public void setIdCategorias(Long idCategorias) {
+        this.idCategorias = idCategorias;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public Productos getProductos() {
+        return productos;
+    }
+
+    public void setProductos(Productos productos) {
+        this.productos = productos;
+    }    
 
 }

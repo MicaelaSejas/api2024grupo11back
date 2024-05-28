@@ -1,9 +1,9 @@
-package com.uade.tpo.controller;
+package com.uade.tpo.controller.request;
 
 import lombok.Data;
 
 @Data
 public class CategoriasRequest {
-    private int idCategorias;
+    private Long idCategorias;
     private String descripcion;
 }
