@@ -26,11 +26,9 @@ public class CarritoService {
     }
 
 	public void addToCarrito(final Long carritoId, final CarritoRequest request) throws CartNotFoundException {
-		Carrito retrievedCarrito = getCarritoById(carritoId);
-		
-		this.carritoRepository.save(retrievedCarrito);
-		
-		
+
+	
+	
 	}
 	
 
