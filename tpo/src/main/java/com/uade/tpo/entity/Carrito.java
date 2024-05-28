@@ -32,5 +32,39 @@ public class Carrito {
 
     @Column(name = "total")
     private float total;
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
+
+	public CarritoProductos getCarritoProducto() {
+		return carritoProducto;
+	}
+
+	public void setCarritoProducto(CarritoProductos carritoProducto) {
+		this.carritoProducto = carritoProducto;
+	}
+
+	public float getTotal() {
+		return total;
+	}
+
+	public void setTotal(float total) {
+		this.total = total;
+	}
+    
+    
     
 }

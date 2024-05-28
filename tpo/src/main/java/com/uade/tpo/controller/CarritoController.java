@@ -25,7 +25,7 @@ public class CarritoController {
     private CarritoService carritoService;
 
 
-    @GetMapping("/{userId}")
+    @GetMapping("/user/{userId}")
     public ResponseEntity<CarritoResponse> getCarritoByUserId(@PathVariable final Long userId) {
 
         try {
@@ -39,10 +39,10 @@ public class CarritoController {
     }
 
     @GetMapping("/{carritoId}")
-    public ResponseEntity<CarritoResponse> getCarritoById(@PathVariable final Long userId) {
+    public ResponseEntity<CarritoResponse> getCarritoById(@PathVariable final Long carritoId) {
 
         try {
-            Carrito carrito = this.carritoService.getCarritoById(userId);
+            Carrito carrito = this.carritoService.getCarritoById(carritoId);
             return ResponseEntity.ok().body(new CarritoResponse("Carrito obtenido exitosamente.", carrito));
 
         } catch (CartNotFoundException exception) {
