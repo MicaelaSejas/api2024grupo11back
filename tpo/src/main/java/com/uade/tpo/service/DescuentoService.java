@@ -13,5 +13,5 @@ public interface DescuentoService {
 
     public Optional<Descuento> getDescuentoById(Long descuentoId);
 
-    public Descuento createDescuento(int Porcentaje) throws ProductDuplicateException;
+    public Descuento createDescuento(int descuento) throws ProductDuplicateException;
 }

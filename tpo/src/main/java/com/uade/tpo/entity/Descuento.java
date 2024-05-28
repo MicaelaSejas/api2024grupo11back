@@ -15,8 +15,8 @@ public class Descuento {
     public Descuento(){
     }
 
-    public Descuento(int Porcentaje){
-        this.Porcentaje=Porcentaje;
+    public Descuento(int descuento){
+        this.descuento=descuento;
     }
 
     @Id
@@ -25,8 +25,8 @@ public class Descuento {
     private Long id;
 
     @Column
-    private int Porcentaje;
+    private int descuento;
 
-    @OneToOne(mappedBy = "idDescuento")
+    @OneToOne(mappedBy = "descuento")
     private Product product;
 }

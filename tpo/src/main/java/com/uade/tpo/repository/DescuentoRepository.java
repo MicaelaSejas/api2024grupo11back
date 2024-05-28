@@ -10,6 +10,6 @@ import com.uade.tpo.entity.Descuento;
 
 @Repository
 public interface DescuentoRepository extends JpaRepository<Descuento, Long> {
-    @Query(value ="select c from Categoria c where c.descripcion= ?1")
-    List<Descuento> findByDescuento(int Porcentaje);
+    @Query(value ="select c from Descuento c where c.descuento= ?1")
+    List<Descuento> findByDescuento(int descuento);
 }

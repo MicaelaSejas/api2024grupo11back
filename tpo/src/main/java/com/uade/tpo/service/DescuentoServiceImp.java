@@ -25,10 +25,10 @@ public class DescuentoServiceImp {
         return descuentoRepository.findById(descuentoId);
     }
 
-    public Descuento createDescuento(int Porcentaje) throws ProductDuplicateException {
-        List<Descuento> descuentos = descuentoRepository.findByDescuento(Porcentaje);
+    public Descuento createDescuento(int descuento) throws ProductDuplicateException {
+        List<Descuento> descuentos = descuentoRepository.findByDescuento(descuento);
         if (descuentos.isEmpty())
-            return descuentoRepository.save(new Descuento(Porcentaje));
+            return descuentoRepository.save(new Descuento(descuento));
         throw new ProductDuplicateException();
     }
 }
