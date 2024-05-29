@@ -26,7 +26,7 @@ public class Categorias {
     @Column(name = "descripcion", nullable = false)
     private String descripcion;
 
-    @OneToMany(mappedBy = "idCategorias")
+    @OneToMany(mappedBy = "idCategoria")
     private List<Productos> productos;
 
     // Aca los getter  y setters

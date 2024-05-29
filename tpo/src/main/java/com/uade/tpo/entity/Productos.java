@@ -45,12 +45,12 @@ public class Productos {
     private int cantidad = 0;
 
     @ManyToOne
-    @JoinColumn(name = "idCategorias", nullable = false, referencedColumnName = "idCategorias")
-    private Categorias idCategorias;
+    @JoinColumn(name = "idCategoria", nullable = false, referencedColumnName = "idCategorias")
+    private Categorias idCategoria;
 
     @OneToOne
-    @JoinColumn(name = "idDescuentos", nullable = true, referencedColumnName = "idDescuentos")
-    private Descuentos idDescuentos;
+    @JoinColumn(name = "idDescuento", nullable = true, referencedColumnName = "idDescuentos")
+    private Descuentos idDescuento;
 
     // Aca los getter  y setters
 
@@ -118,20 +118,20 @@ public class Productos {
         this.cantidad = cantidad;
     }
 
-    public Categorias getidCategorias() {
-        return idCategorias;
+    public Categorias getidCategoria() {
+        return idCategoria;
     }
 
-    public void setidCategorias(Categorias idCategorias) {
-        this.idCategorias = idCategorias;
+    public void setidCategoria(Categorias idCategoria) {
+        this.idCategoria = idCategoria;
     }
 
-    public Descuentos getidDescuentos() {
-        return idDescuentos;
+    public Descuentos getidDescuento() {
+        return idDescuento;
     }
 
-    public void setidDescuentos(Descuentos idDescuentos) {
-        this.idDescuentos = idDescuentos;
+    public void setidDescuento(Descuentos idDescuento) {
+        this.idDescuento = idDescuento;
     }
 }
 
