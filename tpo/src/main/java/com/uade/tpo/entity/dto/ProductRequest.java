@@ -5,8 +5,10 @@ import lombok.Data;
 @Data
 public class ProductRequest {
     private int id;
-    private String nombre;
+    private String titulo;
     private int cantidad;
-    private int precio;
+    private float precio;
     private String descripcion;
+    private int idCategoria;
+    private int idDescuento;
 }

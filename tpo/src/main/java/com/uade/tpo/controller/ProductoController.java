@@ -15,9 +15,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.uade.tpo.entity.Categoria;
+import com.uade.tpo.entity.Descuento;
 import com.uade.tpo.entity.Product;
 import com.uade.tpo.entity.dto.ProductRequest;
-import com.uade.tpo.exception.ProductDuplicateException;
+import com.uade.tpo.service.CategoriaService;
+import com.uade.tpo.service.DescuentoService;
 import com.uade.tpo.service.ProductoService;
 
 @RestController
@@ -26,6 +29,12 @@ public class ProductoController {
     
     @Autowired
     private ProductoService productoService;
+
+    @Autowired
+    private DescuentoService descuentoService;
+
+    @Autowired
+    private CategoriaService categoriaService;
 
     @GetMapping
     public ResponseEntity<Page<Product>> getProducts(
@@ -46,9 +55,28 @@ public class ProductoController {
     }
 
     @PostMapping
-    public ResponseEntity<Object> createProduct(@RequestBody ProductRequest productRequest)
-            throws ProductDuplicateException {
-        Product result = productoService.createProduct(productRequest.getNombre(), productRequest.getCantidad(), productRequest.getPrecio(), productRequest.getDescripcion());
-        return ResponseEntity.created(URI.create("/productos/" + result.getId())).body(result);
+    public ResponseEntity<Object> createProduct(@RequestBody ProductRequest productRequest){
+        Product nuevoProductos = new Product();
+        nuevoProductos.setTitulo(productRequest.getTitulo());
+        
+        nuevoProductos.setDescripcion(productRequest.getDescripcion());
+        nuevoProductos.setPrecio(productRequest.getPrecio());
+        nuevoProductos.setCantidad(productRequest.getCantidad());
+        long idCategorias = productRequest.getIdCategoria();
+        Categoria categoria = categoriaService.getCategoriaById(idCategorias).orElse(null);
+        if(categoria != null) {
+        nuevoProductos.setidCategoria(categoria);
+        }else{
+        return ResponseEntity.notFound().build();
+        }
+        long idDescuentos = productRequest.getIdDescuento();
+        Descuento descuento = descuentoService.getDescuentoById(idDescuentos).orElse(null);
+        if(descuento != null) {
+        nuevoProductos.setidDescuento(descuento);
+        }else{
+        return ResponseEntity.notFound().build();
+        }
+        Product result = productoService.createProduct(nuevoProductos);
+        return ResponseEntity.created(URI.create("/producto/" + result.getId())).body(result);
     }
 }

@@ -30,4 +30,29 @@ public class Categoria {
     @OneToMany
     @JoinColumn(name = "idCategoria", nullable = false)
     private Product product;
+
+    //getters setters
+    public Long getIdCategorias() {
+        return id;
+    }
+
+    public void setIdCategorias(Long id) {
+        this.id = id;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
 }

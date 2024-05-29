@@ -1,6 +1,6 @@
 package com.uade.tpo.repository;
 
-import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -10,6 +10,9 @@ import com.uade.tpo.entity.Categoria;
 
 @Repository
 public interface CategoriaRepository extends JpaRepository<Categoria, Long> {
-    @Query(value ="select c from Categoria c where c.descripcion= ?1")
-    List<Categoria> findByDescripcion(String descripcion);
+    @Query(
+        value = "SELECT * FROM categorias c WHERE c.idCategorias = ?1",
+        nativeQuery=true
+    )
+    Optional<Categoria> findbyCategoriasId(Long id);
 }

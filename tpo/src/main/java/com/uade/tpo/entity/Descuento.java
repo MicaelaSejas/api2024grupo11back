@@ -29,4 +29,29 @@ public class Descuento {
 
     @OneToOne(mappedBy = "descuento")
     private Product product;
+
+    // Aca los getters and Setters
+    public Long getIdDescuentos() {
+        return id;
+    }
+
+    public void setIdDescuentos(Long id) {
+        this.id = id;
+    }
+
+    public int getDescuento() {
+        return descuento;
+    }
+
+    public void setDescuento(int descuento) {
+        this.descuento = descuento;
+    }
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    } 
 }
