@@ -6,6 +6,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
@@ -43,12 +44,12 @@ public class Productos {
     @Column(name = "cantidad", nullable = false)
     private int cantidad = 0;
 
-    @OneToOne
-    @JoinColumn(name = "idCategoria", nullable = false, referencedColumnName = "idCategorias")
+    @ManyToOne
+    @JoinColumn(name = "idCategorias", nullable = false, referencedColumnName = "idCategorias")
     private Categorias idCategorias;
 
     @OneToOne
-    @JoinColumn(name = "idDescuento", nullable = true, referencedColumnName = "idDescuentos")
+    @JoinColumn(name = "idDescuentos", nullable = true, referencedColumnName = "idDescuentos")
     private Descuentos idDescuentos;
 
     // Aca los getter  y setters
@@ -117,11 +118,11 @@ public class Productos {
         this.cantidad = cantidad;
     }
 
-    public Categorias getIdCategorias() {
+    public Categorias getidCategorias() {
         return idCategorias;
     }
 
-    public void setIdCategorias(Categorias idCategorias) {
+    public void setidCategorias(Categorias idCategorias) {
         this.idCategorias = idCategorias;
     }
 
@@ -129,7 +130,7 @@ public class Productos {
         return idDescuentos;
     }
 
-    public void setIdDescuentos(Descuentos idDescuentos) {
+    public void setidDescuentos(Descuentos idDescuentos) {
         this.idDescuentos = idDescuentos;
     }
 }

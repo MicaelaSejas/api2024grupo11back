@@ -67,14 +67,14 @@ public class ProductosController {
         long idCategorias = productosRequest.getIdCategoria();
         Categorias categorias = categoriasService.getCategoriasById(idCategorias).orElse(null);
         if(categorias != null) {
-        nuevoProductos.setIdCategorias(categorias);
+        nuevoProductos.setidCategorias(categorias);
         }else{
         return ResponseEntity.notFound().build();
         }
         long idDescuentos = productosRequest.getIdDescuento();
         Descuentos descuentos = descuentosService.getDescuentosById(idDescuentos).orElse(null);
         if(descuentos != null) {
-        nuevoProductos.setIdDescuentos(descuentos);
+        nuevoProductos.setidDescuentos(descuentos);
         }else{
         return ResponseEntity.notFound().build();
         }

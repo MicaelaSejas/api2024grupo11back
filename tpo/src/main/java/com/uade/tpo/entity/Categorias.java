@@ -1,11 +1,13 @@
 package com.uade.tpo.entity;
 
+import java.util.List;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Data;
 
@@ -24,8 +26,8 @@ public class Categorias {
     @Column(name = "descripcion", nullable = false)
     private String descripcion;
 
-    @OneToOne(mappedBy = "categorias")
-    private Productos productos;
+    @OneToMany(mappedBy = "idCategorias")
+    private List<Productos> productos;
 
     // Aca los getter  y setters
     public Long getIdCategorias() {
@@ -44,11 +46,11 @@ public class Categorias {
         this.descripcion = descripcion;
     }
 
-    public Productos getProductos() {
+    public List<Productos> getProductos() {
         return productos;
     }
 
-    public void setProductos(Productos productos) {
+    public void setProductos(List<Productos> productos) {
         this.productos = productos;
     }    
 

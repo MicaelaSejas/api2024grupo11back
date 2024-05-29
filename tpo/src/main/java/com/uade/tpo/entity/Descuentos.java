@@ -24,7 +24,7 @@ public class Descuentos {
     @Column(name = "Porcentaje",nullable = false)
     private int Porcentaje;
 
-    @OneToOne(mappedBy = "descuentos")
+    @OneToOne(mappedBy = "idDescuentos")
    private Productos productos;
 
     // Aca los getters and Setters
