@@ -27,9 +27,19 @@ public class CarritoService {
 
 	public void addToCarrito(final Long carritoId, final CarritoRequest request) throws CartNotFoundException {
 
-	
-	
+        Carrito carrito = getCarritoById(carritoId);
+
+        // TODO:
+        // - chequear si es conveniente hacer un fetch con el id
+        // o si es conveniente ya traer el producto en la request con su cantidad
+        // o si solo guardar los id
+        // o si crear entidad producto carrito y mapear ahi y luego ponerlo en el carrito
+        // - retrieve product y check si hay stock ?
+        // - si no hay stock -> exception que se catchea en front
+        // - si hay stock
+
+
 	}
-	
+
 
 }
