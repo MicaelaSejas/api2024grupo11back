@@ -70,6 +70,11 @@ public class CarritoService {
     			float total = carrito.getTotal() + (producto.getPrecio() * request.getCantidad());
                 carrito.setTotal(total);
 
+                //TODO:
+                // si el producto ya existe agregar la cantidad y actualizar carritoproducto
+                //  carrito.getCarritoProductos().stream().anyMatch((cp) -> cp.getProducto().getId() == producto.getid())
+                
+                // si no existe, crear un nuevo carritoproducto
                 CarritoProductos carritoProducto = new CarritoProductos();
                 carritoProducto.setCarrito(carrito);
                 carritoProducto.setProducto(producto);
