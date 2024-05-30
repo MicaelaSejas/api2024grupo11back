@@ -6,13 +6,13 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import com.uade.tpo.entity.Descuentos;
+import com.uade.tpo.entity.Descuento;
 
 @Repository
-public interface DescuentosRepository extends JpaRepository<Descuentos, Long>{
+public interface DescuentosRepository extends JpaRepository<Descuento, Long>{
     @Query(
         value = "SELECT * FROM descuentos d WHERE d.idDescuentos = ?1",
         nativeQuery=true
     )
-    Optional<Descuentos> findbyDescuentosId(Long idDescuentos);
+    Optional<Descuento> findbyDescuentosId(Long idDescuentos);
 }

@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.uade.tpo.controller.request.CategoriasRequest;
-import com.uade.tpo.entity.Categorias;
+import com.uade.tpo.entity.Categoria;
 import com.uade.tpo.service.CategoriasService;
 
 @RestController
@@ -30,7 +30,7 @@ public class CategoriasController {
     private CategoriasService categoriasService;
 
     @GetMapping
-    public ResponseEntity<Page<Categorias>> getCategorias(
+    public ResponseEntity<Page<Categoria>> getCategorias(
             @RequestParam(required = false) Integer page,
             @RequestParam(required = false) Integer size) {
         if (page == null || size == null)
@@ -39,8 +39,8 @@ public class CategoriasController {
     }
 
     @GetMapping("/{idCategorias}")
-    public ResponseEntity<Categorias> getCategoriasById(@PathVariable Long idCategorias) {
-        Optional<Categorias> result = categoriasService.getCategoriasById(idCategorias);
+    public ResponseEntity<Categoria> getCategoriasById(@PathVariable Long idCategorias) {
+        Optional<Categoria> result = categoriasService.getCategoriasById(idCategorias);
         if (result.isPresent())
             return ResponseEntity.ok(result.get());
 
@@ -49,17 +49,17 @@ public class CategoriasController {
 
     @PostMapping
     public ResponseEntity<Object> crearCategorias(@RequestBody CategoriasRequest categoriasRequest){
-        Categorias nuevaCategoria = new Categorias();
+        Categoria nuevaCategoria = new Categoria();
         nuevaCategoria.setDescripcion(categoriasRequest.getDescripcion());
-        Categorias result = categoriasService.crearCategorias(nuevaCategoria);
+        Categoria result = categoriasService.crearCategorias(nuevaCategoria);
         return ResponseEntity.created(URI.create("/categorias/" + result.getIdCategorias())).body(result);
     }
 
     @PutMapping("/{idCategorias}")
     public ResponseEntity<Object> actualizarCategorias(@PathVariable Long idCategorias, @RequestBody CategoriasRequest categoriasRequest) {
-        Optional<Categorias> categoriasOptional = categoriasService.getCategoriasById(idCategorias);
+        Optional<Categoria> categoriasOptional = categoriasService.getCategoriasById(idCategorias);
         if (categoriasOptional.isPresent()) {
-            Categorias categoriaExistente = categoriasOptional.get();
+            Categoria categoriaExistente = categoriasOptional.get();
             categoriaExistente.setDescripcion(categoriasRequest.getDescripcion());
             categoriasService.actualizarCategorias(idCategorias, categoriaExistente);
             return ResponseEntity.ok(categoriaExistente);
