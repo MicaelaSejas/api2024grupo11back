@@ -23,19 +23,19 @@ import lombok.Data;
 public class Carrito {
 
 	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "idCARRITO")
-    private Long id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "idCARRITO")
+	private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "idUsuario", referencedColumnName = "id")
-    private Usuario usuario;
+	@ManyToOne
+	@JoinColumn(name = "idUsuario", referencedColumnName = "id")
+	private Usuario usuario;
 
-    @OneToMany(mappedBy = "carrito")
-    private Set<CarritoProductos> carritoProductos;
+	@OneToMany(mappedBy = "carrito")
+	private Set<CarritoProductos> carritoProductos;
 
-    @Column(name = "total")
-    private float total;
+	@Column(name = "total")
+	private float total;
 
 	public Long getId() {
 		return id;
@@ -68,7 +68,5 @@ public class Carrito {
 	public void setCarritoProductos(Set<CarritoProductos> carritoProductos) {
 		this.carritoProductos = carritoProductos;
 	}
-    
-    
-    
+
 }
