@@ -1,5 +1,7 @@
 package com.uade.tpo.service;
 
+import java.util.Collections;
+import java.util.Iterator;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,9 +58,6 @@ public class CarritoService {
     	Optional<Product> optProducto = productoRepository.findById(request.getProductoId());
     	
     	
-    	// TODO:
-    	// si ya tiene el producto, agregar la cantidad al nodo
-    	
     	if (optProducto.isPresent()) {
     		
     		Product producto = optProducto.get();
@@ -95,6 +94,25 @@ public class CarritoService {
     		throw new ProductNotFoundException("No se encontró el producto con id: " + request.getProductoId());
     	}
     	
+	}
+
+    @Transactional
+	public ResponseEntity<CarritoResponse> vaciarCarrito(Long carritoId) throws CartNotFoundException {
+		Carrito carrito = getCarritoById(carritoId);
+		
+		carrito.setTotal(0);
+		
+        Iterator<CarritoProductos> iterator = carrito.getCarritoProductos().iterator();
+        while (iterator.hasNext()) {
+            CarritoProductos carritoProducto = iterator.next();
+            iterator.remove(); 
+            carritoProdRepository.delete(carritoProducto);
+        }
+
+        
+		this.carritoRepository.save(carrito);
+		
+		return ResponseEntity.ok(new CarritoResponse("Carrito vaciado con éxito.", ""));
 	}
 
 

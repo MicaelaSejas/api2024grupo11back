@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -50,7 +51,7 @@ public class CarritoController {
         }
 
     }
-}
+
 
 //
 //    @PatchMapping("/actualizarCarrito")
@@ -69,5 +70,12 @@ public class CarritoController {
 //
 //    }
 //
-//    @PostMapping("vaciarCarrito/{}")
-
+     @PatchMapping("vaciar/{carritoId}")
+     public ResponseEntity<CarritoResponse> vaciarCarrito(@PathVariable final Long carritoId) {
+    	 try {
+    		 return this.carritoService.vaciarCarrito(carritoId);
+    	 } catch (CartNotFoundException exception) {
+             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new CarritoResponse(HttpStatus.NOT_FOUND.getReasonPhrase(), exception.getMessage()));
+    	 }
+     }
+}

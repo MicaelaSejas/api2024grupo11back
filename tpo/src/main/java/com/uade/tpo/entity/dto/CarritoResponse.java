@@ -41,7 +41,7 @@ public class CarritoResponse {
         public CarritoWithProductos(Carrito carrito) {
             this.id = carrito.getId();
             this.total = carrito.getTotal();
-            this.productos = carrito.getCarritoProductos(); // Suponiendo que Carrito tiene un método getProductos()
+            this.productos = carrito.getCarritoProductos();
         }
     }
 }
