@@ -48,6 +48,7 @@ public class Product {
     private Categoria categoria;
     
     
+    // stock
     public int getCantidad() {
     	return this.cantidad;
     }
