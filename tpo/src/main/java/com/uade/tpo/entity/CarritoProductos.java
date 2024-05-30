@@ -21,11 +21,11 @@ public class CarritoProductos {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "idCarritoProducto")
+    @JsonIgnore
     private Long id;
 
     @ManyToOne
     @JoinColumn(name = "idProducto", referencedColumnName = "id")
-    @JsonIgnore
     private Product producto;
 
     @ManyToOne

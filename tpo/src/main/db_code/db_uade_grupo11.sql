@@ -52,7 +52,7 @@ CREATE TABLE `productos` (
 
 CREATE TABLE `CarritoProductos` (
   `idCarritoProducto` int NOT NULL AUTO_INCREMENT,
-  `idProducto` int NOT NULL UNIQUE,
+  `idProducto` int NOT NULL,
   `idCarrito` int NOT NULL,
   `cantidad` int NOT NULL DEFAULT 0,
   PRIMARY KEY (`idCarritoProducto`),
