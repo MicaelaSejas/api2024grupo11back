@@ -1,5 +1,7 @@
 package com.uade.tpo.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -24,6 +26,7 @@ public class Descuentos {
     @Column(name = "Porcentaje",nullable = false)
     private int Porcentaje;
 
+    @JsonIgnore
     @OneToOne(mappedBy = "idDescuento")
    private Productos productos;
 

@@ -61,7 +61,6 @@ public class ProductosController {
     public ResponseEntity<Object> crearProductos(@RequestBody ProductosRequest productosRequest){
         Productos nuevoProductos = new Productos();
         nuevoProductos.setTitulo(productosRequest.getTitulo());
-        nuevoProductos.setCategoria(productosRequest.getCategoria());
         nuevoProductos.setImagen_1(productosRequest.getImagen_1());
         nuevoProductos.setImagen_2(productosRequest.getImagen_2());
         nuevoProductos.setDescripcion(productosRequest.getDescripcion());
@@ -91,7 +90,6 @@ public class ProductosController {
         if (productosOptional.isPresent()) {
             Productos productoExistente = productosOptional.get();
             productoExistente.setTitulo(productosRequest.getTitulo());
-            productoExistente.setCategoria(productosRequest.getCategoria());
             productoExistente.setImagen_1(productosRequest.getImagen_1());
             productoExistente.setImagen_2(productosRequest.getImagen_2());
             productoExistente.setDescripcion(productosRequest.getDescripcion());

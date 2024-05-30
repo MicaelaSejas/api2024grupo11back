@@ -2,6 +2,8 @@ package com.uade.tpo.entity;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -26,6 +28,7 @@ public class Categorias {
     @Column(name = "descripcion", nullable = false)
     private String descripcion;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "idCategoria")
     private List<Productos> productos;
 

@@ -26,9 +26,6 @@ public class Productos {
     @Column(name = "titulo", nullable = false)
     private String titulo;
 
-    @Column(name = "categoria", nullable = false)
-    private String categoria;
-
     @Column(name = "imagen_1", nullable = true)
     private byte[] imagen_1;
 
@@ -68,14 +65,6 @@ public class Productos {
 
     public void setTitulo(String titulo) {
         this.titulo = titulo;
-    }
-
-    public String getCategoria() {
-        return categoria;
-    }
-
-    public void setCategoria(String categoria) {
-        this.categoria = categoria;
     }
 
     public byte[] getImagen_1() {
