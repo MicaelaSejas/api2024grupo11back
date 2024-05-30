@@ -17,7 +17,6 @@ import lombok.Data;
 
 public class Productos {
 
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)

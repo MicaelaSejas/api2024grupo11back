@@ -12,7 +12,7 @@ import com.uade.tpo.controller.request.CarritoRequest;
 import com.uade.tpo.controller.request.CarritoResponse;
 import com.uade.tpo.entity.Carrito;
 import com.uade.tpo.entity.CarritoProductos;
-import com.uade.tpo.entity.Product;
+import com.uade.tpo.entity.Productos;
 import com.uade.tpo.exception.BadProductQuantityException;
 import com.uade.tpo.exception.CartAlreadyEmptyException;
 import com.uade.tpo.exception.CartNotFoundException;
@@ -21,7 +21,7 @@ import com.uade.tpo.exception.ProductNotFoundException;
 import com.uade.tpo.exception.ProductNotInCartException;
 import com.uade.tpo.repository.CarritoProductosRepository;
 import com.uade.tpo.repository.CarritoRepository;
-import com.uade.tpo.repository.ProductoRepository;
+import com.uade.tpo.repository.ProductosRepository;
 
 import jakarta.transaction.Transactional;
 
@@ -33,7 +33,7 @@ public class CarritoService {
     private CarritoRepository carritoRepository;
     
     @Autowired
-    private ProductoRepository productoRepository;
+    private ProductosRepository productoRepository;
     
     @Autowired
     private CarritoProductosRepository carritoProdRepository;
@@ -48,7 +48,7 @@ public class CarritoService {
         Carrito carrito = getCarritoById(carritoId);
         
         Optional<CarritoProductos> optCarritoProducto = carrito.getCarritoProductos().stream()
-                .filter(cp -> cp.getProducto().getId().equals(request.getProductoId()))
+                .filter(cp -> cp.getProducto().getIdProductos().equals(request.getProductoId()))
                 .findFirst();
         
         if (optCarritoProducto.isPresent()) {
@@ -79,13 +79,13 @@ public class CarritoService {
         Carrito carrito = getCarritoById(carritoId);
         int cantidad = request.getCantidad();
 
-        Optional<Product> optProducto = productoRepository.findById(request.getProductoId());
+        Optional<Productos> optProducto = productoRepository.findById(request.getProductoId());
 
         if (optProducto.isPresent()) {
-            Product producto = optProducto.get();
+        	Productos producto = optProducto.get();
 
             Optional<CarritoProductos> optCarritoProducto = carrito.getCarritoProductos().stream()
-                    .filter(cp -> cp.getProducto().getId().equals(producto.getId()))
+                    .filter(cp -> cp.getProducto().getIdProductos().equals(producto.getIdProductos()))
                     .findFirst();
 
             // Si el producto ya está en el carrito
@@ -149,7 +149,7 @@ public class CarritoService {
             CarritoProductos carritoProducto = iterator.next();
             iterator.remove();
 
-            Product producto = carritoProducto.getProducto();
+            Productos producto = carritoProducto.getProducto();
             
             int cantidadActual = producto.getCantidad();
             int cantidadEnCarrito = carritoProducto.getCantidad();
@@ -174,13 +174,13 @@ public class CarritoService {
 		Carrito carrito = getCarritoById(carritoId);
         int cantidad = request.getCantidad();
 
-        Optional<Product> optProducto = productoRepository.findById(request.getProductoId());
+        Optional<Productos> optProducto = productoRepository.findById(request.getProductoId());
 
         if (optProducto.isPresent()) {
-            Product producto = optProducto.get();
+        	Productos producto = optProducto.get();
 
             Optional<CarritoProductos> optCarritoProducto = carrito.getCarritoProductos().stream()
-                    .filter(cp -> cp.getProducto().getId().equals(producto.getId()))
+                    .filter(cp -> cp.getProducto().getIdProductos().equals(producto.getIdProductos()))
                     .findFirst();
 
             if (optCarritoProducto.isPresent()) {
