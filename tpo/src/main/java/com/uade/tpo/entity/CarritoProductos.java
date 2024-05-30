@@ -17,22 +17,23 @@ import lombok.Data;
 @Table(name = "carritoproductos")
 public class CarritoProductos {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "idCarritoProducto")
-    private Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "idCarritoProducto")
+	@JsonIgnore
+	private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "idProducto", referencedColumnName = "id")
-    private Product producto;
+	@ManyToOne
+	@JoinColumn(name = "idProducto", referencedColumnName = "id")
+	private Productos producto;
 
-    @ManyToOne
-    @JoinColumn(name = "idCarrito", referencedColumnName = "idCARRITO")
-    @JsonIgnore
-    private Carrito carrito;
+	@ManyToOne
+	@JoinColumn(name = "idCarrito", referencedColumnName = "idCARRITO")
+	@JsonIgnore
+	private Carrito carrito;
 
-    @Column(name = "cantidad")
-    private int cantidad;
+	@Column(name = "cantidad")
+	private int cantidad;
 
 	public Long getId() {
 		return id;
@@ -40,14 +41,6 @@ public class CarritoProductos {
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public Product getProducto() {
-		return producto;
-	}
-
-	public void setProducto(Product producto) {
-		this.producto = producto;
 	}
 
 	public Carrito getCarrito() {
@@ -66,6 +59,12 @@ public class CarritoProductos {
 		this.cantidad = cantidad;
 	}
 
-    
-    
+	public Productos getProducto() {
+		return producto;
+	}
+
+	public void setProducto(Productos producto) {
+		this.producto = producto;
+	}
+
 }
