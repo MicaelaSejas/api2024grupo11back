@@ -15,7 +15,7 @@ import lombok.Data;
 @Entity
 @Table(name = "descuentos")
 
-public class Descuentos {
+public class Descuento {
 
 
     @Id
@@ -28,7 +28,7 @@ public class Descuentos {
 
     @JsonIgnore
     @OneToOne(mappedBy = "idDescuento")
-   private Productos productos;
+   private Producto productos;
 
     // Aca los getters and Setters
     public Long getIdDescuentos() {
@@ -47,11 +47,11 @@ public class Descuentos {
         this.Porcentaje = Porcentaje;
     }
 
-    public Productos getProductos() {
+    public Producto getProductos() {
         return productos;
     }
 
-    public void setProductos(Productos productos) {
+    public void setProductos(Producto productos) {
         this.productos = productos;
     }   
 }

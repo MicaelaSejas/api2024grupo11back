@@ -8,7 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import com.uade.tpo.entity.Descuentos;
+import com.uade.tpo.entity.Descuento;
 import com.uade.tpo.repository.DescuentosRepository;
 
 @Service
@@ -18,31 +18,31 @@ public class DescuentosServiceImplement implements DescuentosService {
     private DescuentosRepository descuentosRepository;
 
     @Override
-    public Page<Descuentos> getDescuentos(Pageable pageable) {
+    public Page<Descuento> getDescuentos(Pageable pageable) {
         return descuentosRepository.findAll(pageable);
     }
 
     @Override
-    public Optional<Descuentos> getDescuentosById(Long idDescuentos) {
+    public Optional<Descuento> getDescuentosById(Long idDescuentos) {
         return descuentosRepository.findById(idDescuentos);
     }
 
     @Override
-    public Descuentos crearDescuentos(Descuentos descuentos) {
+    public Descuento crearDescuentos(Descuento descuentos) {
         return descuentosRepository.save(descuentos);
     }
 
     @Override
-    public Descuentos actualizarDescuentos(Long idDescuentos, Descuentos descuentosActualizados) {
+    public Descuento actualizarDescuentos(Long idDescuentos, Descuento descuentosActualizados) {
         descuentosActualizados.setIdDescuentos(idDescuentos);
         return descuentosRepository.save(descuentosActualizados);
     }
     
     @Override
-    public Descuentos eliminarDescuentos(Long idDescuentos) {
-        Optional<Descuentos> descuentosOptional = descuentosRepository.findById(idDescuentos);
+    public Descuento eliminarDescuentos(Long idDescuentos) {
+        Optional<Descuento> descuentosOptional = descuentosRepository.findById(idDescuentos);
         if (descuentosOptional.isPresent()) {
-            Descuentos descuentoEliminado = descuentosOptional.get();
+            Descuento descuentoEliminado = descuentosOptional.get();
             descuentosRepository.deleteById(idDescuentos);
             return descuentoEliminado;
         } else {

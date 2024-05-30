@@ -26,7 +26,7 @@ public class CarritoProductos {
 
     @ManyToOne
     @JoinColumn(name = "idProducto", referencedColumnName = "id")
-    private Productos producto;
+    private Producto producto;
 
     @ManyToOne
     @JoinColumn(name = "idCarrito", referencedColumnName = "idCARRITO")
@@ -60,11 +60,11 @@ public class CarritoProductos {
 		this.cantidad = cantidad;
 	}
 
-	public Productos getProducto() {
+	public Producto getProducto() {
 		return producto;
 	}
 
-	public void setProducto(Productos producto) {
+	public void setProducto(Producto producto) {
 		this.producto = producto;
 	}
 

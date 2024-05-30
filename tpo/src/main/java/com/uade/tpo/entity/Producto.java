@@ -15,7 +15,7 @@ import lombok.Data;
 @Entity
 @Table(name = "productos")
 
-public class Productos {
+public class Producto {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -42,11 +42,11 @@ public class Productos {
 
     @ManyToOne
     @JoinColumn(name = "idCategoria", nullable = false, referencedColumnName = "idCategorias")
-    private Categorias idCategoria;
+    private Categoria idCategoria;
 
     @OneToOne
     @JoinColumn(name = "idDescuento", nullable = true, referencedColumnName = "idDescuentos")
-    private Descuentos idDescuento;
+    private Descuento idDescuento;
 
     // Aca los getter  y setters
 
@@ -106,19 +106,19 @@ public class Productos {
         this.cantidad = cantidad;
     }
 
-    public Categorias getidCategoria() {
+    public Categoria getidCategoria() {
         return idCategoria;
     }
 
-    public void setidCategoria(Categorias idCategoria) {
+    public void setidCategoria(Categoria idCategoria) {
         this.idCategoria = idCategoria;
     }
 
-    public Descuentos getidDescuento() {
+    public Descuento getidDescuento() {
         return idDescuento;
     }
 
-    public void setidDescuento(Descuentos idDescuento) {
+    public void setidDescuento(Descuento idDescuento) {
         this.idDescuento = idDescuento;
     }
 }

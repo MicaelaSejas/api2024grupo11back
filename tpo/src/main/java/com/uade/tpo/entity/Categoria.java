@@ -17,7 +17,7 @@ import lombok.Data;
 @Entity
 @Table(name = "categorias")
 
-public class Categorias {
+public class Categoria {
 
 
     @Id
@@ -30,7 +30,7 @@ public class Categorias {
 
     @JsonIgnore
     @OneToMany(mappedBy = "idCategoria")
-    private List<Productos> productos;
+    private List<Producto> productos;
 
     // Aca los getter  y setters
     public Long getIdCategorias() {
@@ -49,11 +49,11 @@ public class Categorias {
         this.descripcion = descripcion;
     }
 
-    public List<Productos> getProductos() {
+    public List<Producto> getProductos() {
         return productos;
     }
 
-    public void setProductos(List<Productos> productos) {
+    public void setProductos(List<Producto> productos) {
         this.productos = productos;
     }    
 

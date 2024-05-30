@@ -12,7 +12,7 @@ import com.uade.tpo.controller.request.CarritoRequest;
 import com.uade.tpo.controller.request.CarritoResponse;
 import com.uade.tpo.entity.Carrito;
 import com.uade.tpo.entity.CarritoProductos;
-import com.uade.tpo.entity.Productos;
+import com.uade.tpo.entity.Producto;
 import com.uade.tpo.exception.BadProductQuantityException;
 import com.uade.tpo.exception.CartAlreadyEmptyException;
 import com.uade.tpo.exception.CartNotFoundException;
@@ -79,10 +79,10 @@ public class CarritoService {
         Carrito carrito = getCarritoById(carritoId);
         int cantidad = request.getCantidad();
 
-        Optional<Productos> optProducto = productoRepository.findById(request.getProductoId());
+        Optional<Producto> optProducto = productoRepository.findById(request.getProductoId());
 
         if (optProducto.isPresent()) {
-        	Productos producto = optProducto.get();
+        	Producto producto = optProducto.get();
 
             Optional<CarritoProductos> optCarritoProducto = carrito.getCarritoProductos().stream()
                     .filter(cp -> cp.getProducto().getIdProductos().equals(producto.getIdProductos()))
@@ -149,7 +149,7 @@ public class CarritoService {
             CarritoProductos carritoProducto = iterator.next();
             iterator.remove();
 
-            Productos producto = carritoProducto.getProducto();
+            Producto producto = carritoProducto.getProducto();
             
             int cantidadActual = producto.getCantidad();
             int cantidadEnCarrito = carritoProducto.getCantidad();
@@ -174,10 +174,10 @@ public class CarritoService {
 		Carrito carrito = getCarritoById(carritoId);
         int cantidad = request.getCantidad();
 
-        Optional<Productos> optProducto = productoRepository.findById(request.getProductoId());
+        Optional<Producto> optProducto = productoRepository.findById(request.getProductoId());
 
         if (optProducto.isPresent()) {
-        	Productos producto = optProducto.get();
+        	Producto producto = optProducto.get();
 
             Optional<CarritoProductos> optCarritoProducto = carrito.getCarritoProductos().stream()
                     .filter(cp -> cp.getProducto().getIdProductos().equals(producto.getIdProductos()))
