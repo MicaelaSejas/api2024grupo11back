@@ -46,55 +46,67 @@ public class CarritoService {
     }
 
     @Transactional
-	public ResponseEntity<CarritoResponse> addToCarrito(final Long carritoId, final CarritoRequest request) throws CartNotFoundException, ProductNotFoundException {
+    public ResponseEntity<CarritoResponse> addToCarrito(final Long carritoId, final CarritoRequest request) throws CartNotFoundException, ProductNotFoundException {
 
-    	// TODO: crear carrito si no tiene??
-    	
-    	Carrito carrito = getCarritoById(carritoId);
-    	
-    	int cantidad =  request.getCantidad();
-    	
-    	
-    	Optional<Product> optProducto = productoRepository.findById(request.getProductoId());
-    	
-    	
-    	if (optProducto.isPresent()) {
-    		
-    		Product producto = optProducto.get();
-    		
-    		// si hay stock
-    		if (producto.getCantidad() >= cantidad) {
-    			producto.setCantidad(producto.getCantidad() - cantidad);
+        Carrito carrito = getCarritoById(carritoId);
+        int cantidad = request.getCantidad();
+
+        Optional<Product> optProducto = productoRepository.findById(request.getProductoId());
+
+        if (optProducto.isPresent()) {
+            Product producto = optProducto.get();
+
+            // El producto ya está en el carrito
+            Optional<CarritoProductos> optCarritoProducto = carrito.getCarritoProductos().stream()
+                    .filter(cp -> cp.getProducto().getId().equals(producto.getId()))
+                    .findFirst();
+
+            // Si el producto ya está en el carrito
+            if (optCarritoProducto.isPresent()) {
+                CarritoProductos carritoProducto = optCarritoProducto.get();
+                int nuevaCantidad = carritoProducto.getCantidad() + cantidad;
                 
-    			float total = carrito.getTotal() + (producto.getPrecio() * request.getCantidad());
-                carrito.setTotal(total);
-
-                //TODO:
-                // si el producto ya existe agregar la cantidad y actualizar carritoproducto
-                carrito.getCarritoProductos().stream().anyMatch((cp) -> cp.getProducto().getId() == producto.getid());
+                if (producto.getCantidad() >= cantidad) {
+                    producto.setCantidad(producto.getCantidad() - cantidad);
+                    carritoProducto.setCantidad(nuevaCantidad);
+                    
+                    float total = carrito.getTotal() + (producto.getPrecio() * cantidad);
+                    carrito.setTotal(total);
+                    
+                    productoRepository.save(producto);
+                    carritoRepository.save(carrito);
+                    return ResponseEntity.ok(new CarritoResponse("Cantidad de producto en el carrito actualizada.", carrito));
+                } else {
+                    return ResponseEntity.badRequest().body(new CarritoResponse("No hay suficiente cantidad del producto en el inventario.", "BAD_REQUEST"));
+                }
                 
-                // si no existe, crear un nuevo carritoproducto
-                CarritoProductos carritoProducto = new CarritoProductos();
-                carritoProducto.setCarrito(carrito);
-                carritoProducto.setProducto(producto);
-                carritoProducto.setCantidad(cantidad);
-                
-                carrito.getCarritoProductos().add(carritoProducto);
+            } else {
+                // Si el producto no está en el carrito
+                if (producto.getCantidad() >= cantidad) {
+                    producto.setCantidad(producto.getCantidad() - cantidad);
 
-                productoRepository.save(producto);
-                carritoProdRepository.save(carritoProducto);
-                carritoRepository.save(carrito);
+                    float total = carrito.getTotal() + (producto.getPrecio() * cantidad);
+                    carrito.setTotal(total);
 
-                return ResponseEntity.ok(new CarritoResponse("Producto agregado exitosamente.", carrito));
-    		} else {
-                return ResponseEntity.badRequest().body(new CarritoResponse("No hay suficiente cantidad del producto en el inventario.", "BAD_REQUEST"));
+                    CarritoProductos carritoProducto = new CarritoProductos();
+                    carritoProducto.setCarrito(carrito);
+                    carritoProducto.setProducto(producto);
+                    carritoProducto.setCantidad(cantidad);
+                    carrito.getCarritoProductos().add(carritoProducto);
+                    carritoProdRepository.save(carritoProducto);
 
-    		}
-    	} else {
-    		throw new ProductNotFoundException("No se encontró el producto con id: " + request.getProductoId());
-    	}
-    	
-	}
+                    productoRepository.save(producto);
+                    carritoRepository.save(carrito);
+
+                    return ResponseEntity.ok(new CarritoResponse("Producto agregado exitosamente.", carrito));
+                } else {
+                    return ResponseEntity.badRequest().body(new CarritoResponse("No hay suficiente cantidad del producto en el inventario.", "BAD_REQUEST"));
+                }
+            }
+        } else {
+            throw new ProductNotFoundException("No se encontró el producto con id: " + request.getProductoId());
+        }
+    }
 
     @Transactional
 	public ResponseEntity<CarritoResponse> vaciarCarrito(Long carritoId) throws CartNotFoundException {
