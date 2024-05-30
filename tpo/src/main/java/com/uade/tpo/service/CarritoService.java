@@ -71,7 +71,7 @@ public class CarritoService {
 
                 //TODO:
                 // si el producto ya existe agregar la cantidad y actualizar carritoproducto
-                //  carrito.getCarritoProductos().stream().anyMatch((cp) -> cp.getProducto().getId() == producto.getid())
+                carrito.getCarritoProductos().stream().anyMatch((cp) -> cp.getProducto().getId() == producto.getid());
                 
                 // si no existe, crear un nuevo carritoproducto
                 CarritoProductos carritoProducto = new CarritoProductos();
