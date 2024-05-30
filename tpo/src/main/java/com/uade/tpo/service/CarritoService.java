@@ -66,7 +66,7 @@ public class CarritoService {
                 CarritoProductos carritoProducto = optCarritoProducto.get();
                 int nuevaCantidad = carritoProducto.getCantidad() + cantidad;
                 
-                if (producto.getCantidad() >= nuevaCantidad) {
+                if (producto.getCantidad() >= cantidad) {
                     producto.setCantidad(producto.getCantidad() - cantidad);
                     carritoProducto.setCantidad(nuevaCantidad);
                     
