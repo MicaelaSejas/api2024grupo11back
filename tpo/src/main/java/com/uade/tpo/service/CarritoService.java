@@ -8,11 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import com.uade.tpo.controller.request.CarritoRequest;
+import com.uade.tpo.controller.request.CarritoResponse;
 import com.uade.tpo.entity.Carrito;
 import com.uade.tpo.entity.CarritoProductos;
 import com.uade.tpo.entity.Product;
-import com.uade.tpo.entity.dto.CarritoRequest;
-import com.uade.tpo.entity.dto.CarritoResponse;
 import com.uade.tpo.exception.BadProductQuantityException;
 import com.uade.tpo.exception.CartNotFoundException;
 import com.uade.tpo.exception.ProductNotFoundException;

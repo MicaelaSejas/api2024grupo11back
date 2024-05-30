@@ -1,4 +1,4 @@
-package com.uade.tpo.entity.dto;
+package com.uade.tpo.controller.request;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
