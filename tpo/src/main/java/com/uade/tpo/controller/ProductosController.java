@@ -69,14 +69,14 @@ public class ProductosController {
         long idCategorias = productosRequest.getIdCategoria();
         Categoria categorias = categoriasService.getCategoriasById(idCategorias).orElse(null);
         if(categorias != null) {
-        nuevoProductos.setidCategoria(categorias);
+        nuevoProductos.setIdCategoria(categorias);
         }else{
         return ResponseEntity.notFound().build();
         }
         long idDescuentos = productosRequest.getIdDescuento();
         Descuento descuentos = descuentosService.getDescuentosById(idDescuentos).orElse(null);
         if(descuentos != null) {
-        nuevoProductos.setidDescuento(descuentos);
+        nuevoProductos.setIdDescuento(descuentos);
         }else{
         return ResponseEntity.notFound().build();
         }
@@ -98,14 +98,14 @@ public class ProductosController {
             long idCategorias = productosRequest.getIdCategoria();
             Categoria categorias = categoriasService.getCategoriasById(idCategorias).orElse(null);
             if(categorias != null) {
-            productoExistente.setidCategoria(categorias);
+            productoExistente.setIdCategoria(categorias);
             }else{
             return ResponseEntity.notFound().build();
             }
             long idDescuentos = productosRequest.getIdDescuento();
             Descuento descuentos = descuentosService.getDescuentosById(idDescuentos).orElse(null);
             if(descuentos != null) {
-            productoExistente.setidDescuento(descuentos);
+            productoExistente.setIdDescuento(descuentos);
             }else{
             return ResponseEntity.notFound().build();
             }

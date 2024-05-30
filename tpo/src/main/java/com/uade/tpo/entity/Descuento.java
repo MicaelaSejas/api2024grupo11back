@@ -24,11 +24,11 @@ public class Descuento {
     private Long idDescuentos;
 
     @Column(name = "Porcentaje",nullable = false)
-    private int Porcentaje;
+    private int porcentaje;
 
     @JsonIgnore
     @OneToOne(mappedBy = "idDescuento")
-   private Producto productos;
+    private Producto productos;
 
     // Aca los getters and Setters
     public Long getIdDescuentos() {
@@ -40,11 +40,11 @@ public class Descuento {
     }
 
     public int getPorcentaje() {
-        return Porcentaje;
+        return porcentaje;
     }
 
     public void setPorcentaje(int Porcentaje) {
-        this.Porcentaje = Porcentaje;
+        this.porcentaje = Porcentaje;
     }
 
     public Producto getProductos() {

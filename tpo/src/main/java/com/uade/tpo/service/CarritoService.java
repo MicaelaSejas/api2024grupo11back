@@ -55,7 +55,7 @@ public class CarritoService {
             CarritoProductos carritoProducto = optCarritoProducto.get();
             int cantidadEliminada = carritoProducto.getCantidad();
 
-            float nuevoTotal = carrito.getTotal() - (carritoProducto.getProducto().getPrecio() * cantidadEliminada);
+            float nuevoTotal = carrito.getTotal() - (carritoProducto.getProducto().getPrecioConDescuento() * cantidadEliminada);
             carrito.setTotal(nuevoTotal);
 
             int nuevaCantidadProducto = carritoProducto.getProducto().getCantidad() + cantidadEliminada;
@@ -97,7 +97,7 @@ public class CarritoService {
                     producto.setCantidad(producto.getCantidad() - cantidad);
                     carritoProducto.setCantidad(nuevaCantidad);
                     
-                    float total = carrito.getTotal() + (producto.getPrecio() * cantidad);
+                    float total = carrito.getTotal() + (producto.getPrecioConDescuento() * cantidad);
                     carrito.setTotal(total);
                     
                     productoRepository.save(producto);
@@ -112,7 +112,7 @@ public class CarritoService {
                 if (producto.getCantidad() >= cantidad) {
                     producto.setCantidad(producto.getCantidad() - cantidad);
 
-                    float total = carrito.getTotal() + (producto.getPrecio() * cantidad);
+                    float total = carrito.getTotal() + (producto.getPrecioConDescuento() * cantidad);
                     carrito.setTotal(total);
 
                     CarritoProductos carritoProducto = new CarritoProductos();
@@ -197,7 +197,7 @@ public class CarritoService {
                 } else {
                 	carritoProducto.setCantidad(nuevaCantidadDelCarrito);
                 }
-                total = carrito.getTotal() - (producto.getPrecio() * cantidad);
+                total = carrito.getTotal() - (producto.getPrecioConDescuento() * cantidad);
 
                 producto.setCantidad(producto.getCantidad() + cantidad);
 
