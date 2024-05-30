@@ -55,6 +55,10 @@ public class CarritoService {
     	
     	Optional<Product> optProducto = productoRepository.findById(request.getProductoId());
     	
+    	
+    	// TODO:
+    	// si ya tiene el producto, agregar la cantidad al nodo
+    	
     	if (optProducto.isPresent()) {
     		
     		Product producto = optProducto.get();

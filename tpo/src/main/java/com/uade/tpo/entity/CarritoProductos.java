@@ -25,6 +25,7 @@ public class CarritoProductos {
 
     @ManyToOne
     @JoinColumn(name = "idProducto", referencedColumnName = "id")
+    @JsonIgnore
     private Product producto;
 
     @ManyToOne
@@ -33,7 +34,6 @@ public class CarritoProductos {
     private Carrito carrito;
 
     @Column(name = "cantidad")
-    @JsonIgnore
     private int cantidad;
 
 	public Long getId() {

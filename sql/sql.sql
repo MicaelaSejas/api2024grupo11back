@@ -24,8 +24,8 @@ CREATE TABLE `usuarios` (
   `id` int NOT NULL AUTO_INCREMENT,
   `nombre` varchar(45) NOT NULL,
   `apellido` varchar(45) NOT NULL,
-  `mail` varchar(45) NOT NULL,
-  `usuario` varchar(45) NOT NULL,
+  `mail` varchar(45) NOT NULL UNIQUE,
+  `usuario` varchar(45) NOT NULL UNIQUE,
   `password` varchar(45) NOT NULL,
   `idRoles` int NOT NULL,
   PRIMARY KEY (`id`),
@@ -52,7 +52,7 @@ CREATE TABLE `productos` (
 
 CREATE TABLE `CarritoProductos` (
   `idCarritoProducto` int NOT NULL AUTO_INCREMENT,
-  `idProducto` int NOT NULL,
+  `idProducto` int NOT NULL UNIQUE,
   `idCarrito` int NOT NULL,
   `cantidad` int NOT NULL DEFAULT 0,
   PRIMARY KEY (`idCarritoProducto`),
