@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class ProductosRequest {
 
-    private Long id;
+    private Long idProductos;
     private String titulo;
     private String categoria;
     private byte[] imagen_1;

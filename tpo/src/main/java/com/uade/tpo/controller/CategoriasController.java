@@ -1,15 +1,18 @@
 package com.uade.tpo.controller;
 
 import java.net.URI;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -51,5 +54,34 @@ public class CategoriasController {
         Categorias result = categoriasService.crearCategorias(nuevaCategoria);
         return ResponseEntity.created(URI.create("/categorias/" + result.getIdCategorias())).body(result);
     }
+
+    @PutMapping("/{idCategorias}")
+    public ResponseEntity<Object> actualizarCategorias(@PathVariable Long idCategorias, @RequestBody CategoriasRequest categoriasRequest) {
+        Optional<Categorias> categoriasOptional = categoriasService.getCategoriasById(idCategorias);
+        if (categoriasOptional.isPresent()) {
+            Categorias categoriaExistente = categoriasOptional.get();
+            categoriaExistente.setDescripcion(categoriasRequest.getDescripcion());
+            categoriasService.actualizarCategorias(idCategorias, categoriaExistente);
+            return ResponseEntity.ok(categoriaExistente);
+        }
+        return ResponseEntity.notFound().build();
+    }    
+    
+    @DeleteMapping("/{idCategorias}")
+    public ResponseEntity<Object> eliminarCategorias(@PathVariable Long idCategorias) {
+        try {
+            categoriasService.eliminarCategorias(idCategorias);
+            return ResponseEntity.ok().build();
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
     
 }
+
+
+
+
+
+
+

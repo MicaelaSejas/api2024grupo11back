@@ -1,6 +1,5 @@
 package com.uade.tpo.service;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.domain.Page;
@@ -16,10 +15,10 @@ public interface CategoriasService {
 
     public Categorias crearCategorias(Categorias categoria);
 
-    public List<Categorias> getAllCategorias();
+    public Categorias actualizarCategorias(Long idCategorias, Categorias categoriasActualizadas);
 
     public Categorias eliminarCategorias(Long idCategorias);
 
-    public Categorias actualizarCategorias(Long idCategorias, Categorias categoria);
+    
 
 }

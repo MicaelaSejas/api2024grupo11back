@@ -1,6 +1,5 @@
 package com.uade.tpo.service;
 
-import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
@@ -24,42 +23,31 @@ public class ProductosServiceImplement implements ProductosService {
     }
 
     @Override
-    public Optional<Productos> getProductosById(Long id) {
-        return productosRepository.findById(id);
+    public Optional<Productos> getProductosById(Long idProductos) {
+        return productosRepository.findById(idProductos);
     }
 
     @Override
     public Productos crearProductos(Productos productos) {
-        Optional<Productos> listaProductos = productosRepository.findById(productos.getId());
-        if (listaProductos.isEmpty()){
-            return productosRepository.save(productos);
-        }else{
-            throw new IllegalStateException("El producto ya existe");
-        }
+        return productosRepository.save(productos);
     }
 
     @Override
-    public List<Productos> getAllProductos() {
-        return productosRepository.findAll();
+    public Productos actualizarProductos(Long idProductos, Productos productosActualizados) {
+        productosActualizados.setIdProductos(idProductos);
+        return productosRepository.save(productosActualizados);
     }
 
     @Override
-    public Productos eliminarProductos(Long id) {
-        Optional<Productos> productoOptional = productosRepository.findById(id);
+    public Productos eliminarProductos(Long idProductos) {
+        Optional<Productos> productoOptional = productosRepository.findById(idProductos);
         if(productoOptional.isPresent()){
             Productos productoEliminado = productoOptional.get();
-            productosRepository.deleteById(id);
+            productosRepository.deleteById(idProductos);
             return productoEliminado;
         }else{
             throw new NoSuchElementException("El producto no existe");
         }
     }
-
-    @Override
-    public Productos actualizarProductos(Long id, Productos productosActualizados) {
-        productosActualizados.setId(id);
-        return productosRepository.save(productosActualizados);
-    }
-
 
 }

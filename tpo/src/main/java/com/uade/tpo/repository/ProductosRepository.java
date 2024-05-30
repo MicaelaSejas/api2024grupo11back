@@ -11,9 +11,9 @@ import com.uade.tpo.entity.Productos;
 @Repository
 public interface ProductosRepository extends JpaRepository<Productos, Long> {
     @Query(
-        value = "SELECT * FROM productos p WHERE p.id = ?1",
+        value = "SELECT * FROM productos p WHERE p.idProductos = ?1",
         nativeQuery=true
     )
-    Optional<Productos> findbyProductosId(Long id);
+    Optional<Productos> findbyProductosId(Long idProductos);
 }
 

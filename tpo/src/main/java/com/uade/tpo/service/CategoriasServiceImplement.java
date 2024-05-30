@@ -1,6 +1,5 @@
 package com.uade.tpo.service;
 
-import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
@@ -30,17 +29,13 @@ public class CategoriasServiceImplement implements CategoriasService {
 
     @Override
     public Categorias crearCategorias(Categorias categorias) {
-        Optional<Categorias> listaCategorias = categoriasRepository.findById(categorias.getIdCategorias());
-        if (listaCategorias.isEmpty()){
-            return categoriasRepository.save(categorias);
-        }else{
-            throw new IllegalStateException("La categoría ya existe");
-        }
+        return categoriasRepository.save(categorias);
     }
 
     @Override
-    public List<Categorias> getAllCategorias() {
-        return categoriasRepository.findAll();
+    public Categorias actualizarCategorias(Long idCategorias, Categorias categoriaActualizada) {
+        categoriaActualizada.setIdCategorias(idCategorias);
+        return categoriasRepository.save(categoriaActualizada);
     }
 
     @Override
@@ -55,10 +50,6 @@ public class CategoriasServiceImplement implements CategoriasService {
         }
     }
 
-    @Override
-    public Categorias actualizarCategorias(Long idCategorias, Categorias categoriaActualizada) {
-        categoriaActualizada.setIdCategorias(idCategorias);
-        return categoriasRepository.save(categoriaActualizada);
-    }
+
 
 }

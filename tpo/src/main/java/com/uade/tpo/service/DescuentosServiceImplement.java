@@ -1,6 +1,5 @@
 package com.uade.tpo.service;
 
-import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
@@ -30,34 +29,25 @@ public class DescuentosServiceImplement implements DescuentosService {
 
     @Override
     public Descuentos crearDescuentos(Descuentos descuentos) {
-        Optional<Descuentos> listaDescuentos = descuentosRepository.findById(descuentos.getIdDescuentos());
-        if (listaDescuentos.isEmpty()){
-            return descuentosRepository.save(descuentos);
-        }else{
-            throw new IllegalStateException("El descuento ya existe");
-        }
+        return descuentosRepository.save(descuentos);
     }
 
-    @Override
-    public List<Descuentos> getAllDescuentos() {
-        return descuentosRepository.findAll();
-    }
-
-    @Override
-    public Descuentos eliminarDescuentos(Long idDescuentos) {
-        Optional<Descuentos> descuentosOptional = descuentosRepository.findById(idDescuentos);
-        if(descuentosOptional.isPresent()){
-            Descuentos descuentoEliminado = descuentosOptional.get();
-            descuentosRepository.deleteById(idDescuentos);
-            return descuentoEliminado;
-        }else{
-            throw new NoSuchElementException("El descuento no existe");
-        } 
-    }
-    
     @Override
     public Descuentos actualizarDescuentos(Long idDescuentos, Descuentos descuentosActualizados) {
         descuentosActualizados.setIdDescuentos(idDescuentos);
         return descuentosRepository.save(descuentosActualizados);
     }
+    
+    @Override
+    public Descuentos eliminarDescuentos(Long idDescuentos) {
+        Optional<Descuentos> descuentosOptional = descuentosRepository.findById(idDescuentos);
+        if (descuentosOptional.isPresent()) {
+            Descuentos descuentoEliminado = descuentosOptional.get();
+            descuentosRepository.deleteById(idDescuentos);
+            return descuentoEliminado;
+        } else {
+            throw new NoSuchElementException("El descuento no existe");
+        }
+    }
+
 }
