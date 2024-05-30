@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -31,11 +32,12 @@ public class Carrito {
     @JoinColumn(name = "idUsuario", referencedColumnName = "id")
     private Usuario usuario;
 
-    @OneToMany(mappedBy = "carrito")
-    private Set<CarritoProductos> carritoProductos;
-
     @Column(name = "total")
     private float total;
+    
+    @OneToMany(mappedBy = "carrito", cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private Set<CarritoProductos> carritoProductos;
 
 	public Long getId() {
 		return id;
@@ -68,7 +70,7 @@ public class Carrito {
 	public void setCarritoProductos(Set<CarritoProductos> carritoProductos) {
 		this.carritoProductos = carritoProductos;
 	}
-    
-    
-    
+
+	
+	
 }

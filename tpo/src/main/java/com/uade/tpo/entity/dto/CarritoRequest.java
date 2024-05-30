@@ -10,4 +10,15 @@ public class CarritoRequest {
     @JsonProperty("cantidad")
     private int cantidad;
 
+	public Long getProductoId() {
+		return productoId;
+	}
+
+	public int getCantidad() {
+		return cantidad;
+	}
+
+    
+    
+    
 }

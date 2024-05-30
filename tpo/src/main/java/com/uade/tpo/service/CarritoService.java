@@ -1,19 +1,37 @@
 package com.uade.tpo.service;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.uade.tpo.entity.Carrito;
+import com.uade.tpo.entity.CarritoProductos;
+import com.uade.tpo.entity.Product;
 import com.uade.tpo.entity.dto.CarritoRequest;
+import com.uade.tpo.entity.dto.CarritoResponse;
+import com.uade.tpo.exception.BadProductQuantityException;
 import com.uade.tpo.exception.CartNotFoundException;
+import com.uade.tpo.exception.ProductNotFoundException;
+import com.uade.tpo.repository.CarritoProductosRepository;
 import com.uade.tpo.repository.CarritoRepository;
+import com.uade.tpo.repository.ProductoRepository;
+
+import jakarta.transaction.Transactional;
 
 @Service
 public class CarritoService {
 
 
     @Autowired
-    public CarritoRepository carritoRepository;
+    private CarritoRepository carritoRepository;
+    
+    @Autowired
+    private ProductoRepository productoRepository;
+    
+    @Autowired
+    private CarritoProductosRepository carritoProdRepository;
 
     public Carrito getCarritoById(final Long carritoId) throws CartNotFoundException {
     	return this.carritoRepository.findById(carritoId)
@@ -25,20 +43,49 @@ public class CarritoService {
                 .orElseThrow(() -> new CartNotFoundException("Carrito for user id " + userId + " not found"));
     }
 
-	public void addToCarrito(final Long carritoId, final CarritoRequest request) throws CartNotFoundException {
+    @Transactional
+	public ResponseEntity<CarritoResponse> addToCarrito(final Long carritoId, final CarritoRequest request) throws CartNotFoundException, ProductNotFoundException {
 
-        Carrito carrito = getCarritoById(carritoId);
+    	// TODO: crear carrito si no tiene??
+    	
+    	Carrito carrito = getCarritoById(carritoId);
+    	
+    	int cantidad =  request.getCantidad();
+    	
+    	
+    	Optional<Product> optProducto = productoRepository.findById(request.getProductoId());
+    	
+    	if (optProducto.isPresent()) {
+    		
+    		Product producto = optProducto.get();
+    		
+    		// si hay stock
+    		if (producto.getCantidad() >= cantidad) {
+    			producto.setCantidad(producto.getCantidad() - cantidad);
+                
+    			float total = carrito.getTotal() + (producto.getPrecio() * request.getCantidad());
+                carrito.setTotal(total);
 
-        // TODO:
-        // - chequear si es conveniente hacer un fetch con el id
-        // o si es conveniente ya traer el producto en la request con su cantidad
-        // o si solo guardar los id
-        // o si crear entidad producto carrito y mapear ahi y luego ponerlo en el carrito
-        // - retrieve product y check si hay stock ?
-        // - si no hay stock -> exception que se catchea en front
-        // - si hay stock
+                CarritoProductos carritoProducto = new CarritoProductos();
+                carritoProducto.setCarrito(carrito);
+                carritoProducto.setProducto(producto);
+                carritoProducto.setCantidad(cantidad);
+                
+                carrito.getCarritoProductos().add(carritoProducto);
 
+                productoRepository.save(producto);
+                carritoProdRepository.save(carritoProducto);
+                carritoRepository.save(carrito);
 
+                return ResponseEntity.ok(new CarritoResponse("Producto agregado exitosamente.", carrito));
+    		} else {
+                return ResponseEntity.badRequest().body(new CarritoResponse("No hay suficiente cantidad del producto en el inventario.", "BAD_REQUEST"));
+
+    		}
+    	} else {
+    		throw new ProductNotFoundException("No se encontró el producto con id: " + request.getProductoId());
+    	}
+    	
 	}
 
 

@@ -16,7 +16,8 @@ import lombok.Data;
 @Entity
 @Table(name = "carritoproductos")
 public class CarritoProductos {
-
+	
+	
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "idCarritoProducto")
@@ -32,6 +33,7 @@ public class CarritoProductos {
     private Carrito carrito;
 
     @Column(name = "cantidad")
+    @JsonIgnore
     private int cantidad;
 
 	public Long getId() {
@@ -40,14 +42,6 @@ public class CarritoProductos {
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public Product getProducto() {
-		return producto;
-	}
-
-	public void setProducto(Product producto) {
-		this.producto = producto;
 	}
 
 	public Carrito getCarrito() {
@@ -66,6 +60,13 @@ public class CarritoProductos {
 		this.cantidad = cantidad;
 	}
 
-    
+	public Product getProducto() {
+		return producto;
+	}
+
+	public void setProducto(Product producto) {
+		this.producto = producto;
+	}
+
     
 }

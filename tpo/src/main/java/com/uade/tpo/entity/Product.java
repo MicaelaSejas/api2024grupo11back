@@ -48,4 +48,17 @@ public class Product {
     @JoinColumn(name = "idCategoria", referencedColumnName = "idCategorias")
     private Categoria categoria;
     
+    
+    public int getCantidad() {
+    	return this.cantidad;
+    }
+    
+    public void setCantidad(int cantidad) {
+    	this.cantidad = cantidad;
+    }
+
+	public int getPrecio() {
+		return this.precio;
+	}
+    
 }
