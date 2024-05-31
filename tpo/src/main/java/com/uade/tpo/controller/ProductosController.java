@@ -79,9 +79,7 @@ public class ProductosController {
         Descuento descuentos = descuentosService.getDescuentosById(idDescuentos).orElse(null);
         if (descuentos != null) {
             nuevoProductos.setIdDescuento(descuentos);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+        } 
         Producto result = productosService.crearProductos(nuevoProductos);
         return ResponseEntity.created(URI.create("/productos/" + result.getIdProductos())).body(result);
     }

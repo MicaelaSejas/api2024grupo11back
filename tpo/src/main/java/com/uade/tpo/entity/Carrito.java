@@ -33,7 +33,7 @@ public class Carrito {
 	@Column(name = "total")
 	private float total;
 
-	@OneToMany(mappedBy = "carrito", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "carrito")
 	@JsonManagedReference
 	private Set<CarritoProductos> carritoProductos;
 
