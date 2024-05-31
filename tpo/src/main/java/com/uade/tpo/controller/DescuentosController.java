@@ -56,7 +56,7 @@ public class DescuentosController {
         return ResponseEntity.created(URI.create("/descuentos/" + result.getIdDescuentos())).body(result);
     }
 
-    @PutMapping("/api/v1/{idDescuentos}")
+    @PutMapping("/{idDescuentos}")
     public ResponseEntity<Object> actualizarDescuentos(@PathVariable Long idDescuentos, @RequestBody DescuentosRequest descuentosRequest) {
         Optional<Descuento> descuentosOptional = descuentosService.getDescuentosById(idDescuentos);
         if (descuentosOptional.isPresent()) {
@@ -68,7 +68,7 @@ public class DescuentosController {
         return ResponseEntity.notFound().build();
     }    
 
-    @DeleteMapping("/api/v1/{idDescuentos}")
+    @DeleteMapping("/{idDescuentos}")
     public ResponseEntity<Object> eliminarDescuentos(@PathVariable Long idDescuentos) {
         try {
             descuentosService.eliminarDescuentos(idDescuentos);

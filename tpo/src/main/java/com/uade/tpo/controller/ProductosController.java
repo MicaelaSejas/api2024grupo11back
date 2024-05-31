@@ -7,7 +7,6 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -58,7 +57,7 @@ public class ProductosController {
         return ResponseEntity.noContent().build();
     }
 
-    @PostMapping(consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    @PostMapping()
     public ResponseEntity<Object> crearProductos(@RequestBody ProductosRequest productosRequest){
         Producto nuevoProductos = new Producto();
         nuevoProductos.setTitulo(productosRequest.getTitulo());
