@@ -5,7 +5,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -38,62 +37,74 @@ public class CarritoController {
             return ResponseEntity.ok().body(new CarritoResponse("Carrito obtenido exitosamente.", carrito));
 
         } catch (CartNotFoundException exception) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new CarritoResponse(HttpStatus.NOT_FOUND.getReasonPhrase(), exception.getMessage()));
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(new CarritoResponse(HttpStatus.NOT_FOUND.getReasonPhrase(), exception.getMessage()));
         }
 
     }
 
-	/*
-	 * Si el producto no existe, lo agrega.
-	 * Si existe, suma en 1 la cantidad.
-	 * 
-	 */
+    /*
+     * Si el producto no existe, lo agrega.
+     * Si existe, suma en 1 la cantidad.
+     * 
+     */
     @PostMapping("agregar/{carritoId}")
-    public ResponseEntity<CarritoResponse> addToCarrito(@PathVariable final Long carritoId, @RequestBody final CarritoRequest request) {
+    public ResponseEntity<CarritoResponse> addToCarrito(@PathVariable final Long carritoId,
+            @RequestBody final CarritoRequest request) {
         try {
-        	return this.carritoService.addToCarrito(carritoId, request);
+            return this.carritoService.addToCarrito(carritoId, request);
 
-        } catch (CartNotFoundException | ProductNotFoundException exception ) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new CarritoResponse(HttpStatus.NOT_FOUND.getReasonPhrase(), exception.getMessage()));
+        } catch (CartNotFoundException | ProductNotFoundException exception) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(new CarritoResponse(HttpStatus.NOT_FOUND.getReasonPhrase(), exception.getMessage()));
         } catch (ExceededCartQuantityException exception) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new CarritoResponse(HttpStatus.BAD_REQUEST.getReasonPhrase(), exception.getMessage()));
-    	}
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(new CarritoResponse(HttpStatus.BAD_REQUEST.getReasonPhrase(), exception.getMessage()));
+        }
 
     }
-    
+
     @PostMapping("restar/{carritoId}")
-    public ResponseEntity<CarritoResponse> substractFromCarrito(@PathVariable final Long carritoId, @RequestBody final CarritoRequest request) {
+    public ResponseEntity<CarritoResponse> substractFromCarrito(@PathVariable final Long carritoId,
+            @RequestBody final CarritoRequest request) {
         try {
-        	return this.carritoService.substractFromCarrito(carritoId, request);
+            return this.carritoService.substractFromCarrito(carritoId, request);
 
-        } catch (CartNotFoundException | ProductNotFoundException  exception ) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new CarritoResponse(HttpStatus.NOT_FOUND.getReasonPhrase(), exception.getMessage()));
+        } catch (CartNotFoundException | ProductNotFoundException exception) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(new CarritoResponse(HttpStatus.NOT_FOUND.getReasonPhrase(), exception.getMessage()));
         } catch (ProductNotInCartException | ExceededCartQuantityException exception) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new CarritoResponse(HttpStatus.BAD_REQUEST.getReasonPhrase(), exception.getMessage()));
-    	}
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(new CarritoResponse(HttpStatus.BAD_REQUEST.getReasonPhrase(), exception.getMessage()));
+        }
 
     }
-    
+
     @DeleteMapping("quitar/{carritoId}")
-    public ResponseEntity<CarritoResponse> removeFromCarrito(@PathVariable final Long carritoId, @RequestBody final CarritoRequest request) {
-    	try {
-    		return this.carritoService.removeFromCarrito(carritoId, request);
-    		
-    	} catch (CartNotFoundException exception) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new CarritoResponse(HttpStatus.NOT_FOUND.getReasonPhrase(), exception.getMessage()));
-    	} catch (ProductNotInCartException exception) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new CarritoResponse(HttpStatus.BAD_REQUEST.getReasonPhrase(), exception.getMessage()));
-    	}
+    public ResponseEntity<CarritoResponse> removeFromCarrito(@PathVariable final Long carritoId,
+            @RequestBody final CarritoRequest request) {
+        try {
+            return this.carritoService.removeFromCarrito(carritoId, request);
+
+        } catch (CartNotFoundException exception) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(new CarritoResponse(HttpStatus.NOT_FOUND.getReasonPhrase(), exception.getMessage()));
+        } catch (ProductNotInCartException exception) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(new CarritoResponse(HttpStatus.BAD_REQUEST.getReasonPhrase(), exception.getMessage()));
+        }
     }
 
-     @PutMapping("vaciar/{carritoId}")
-     public ResponseEntity<CarritoResponse> emptyCarrito(@PathVariable final Long carritoId) {
-    	 try {
-    		 return this.carritoService.emptyCarrito(carritoId);
-    	 } catch (CartNotFoundException exception) {
-             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new CarritoResponse(HttpStatus.NOT_FOUND.getReasonPhrase(), exception.getMessage()));
-    	 } catch (CartAlreadyEmptyException exception) {
-    		 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new CarritoResponse(HttpStatus.BAD_REQUEST.getReasonPhrase(), exception.getMessage()));
-    	 }
-     }
+    @PutMapping("vaciar/{carritoId}")
+    public ResponseEntity<CarritoResponse> emptyCarrito(@PathVariable final Long carritoId) {
+        try {
+            return this.carritoService.emptyCarrito(carritoId);
+        } catch (CartNotFoundException exception) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(new CarritoResponse(HttpStatus.NOT_FOUND.getReasonPhrase(), exception.getMessage()));
+        } catch (CartAlreadyEmptyException exception) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(new CarritoResponse(HttpStatus.BAD_REQUEST.getReasonPhrase(), exception.getMessage()));
+        }
+    }
 }
