@@ -53,8 +53,8 @@ public class Usuario implements UserDetails {
     @JoinColumn(name = "roles_id", referencedColumnName = "id")
     private Rol roles;
 
-    @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL)
-    private Carrito carrito;
+//    @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL)
+//    private Carrito carrito;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
