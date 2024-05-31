@@ -5,19 +5,19 @@ import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import com.uade.tpo.entity.Categorias;
+import com.uade.tpo.entity.Categoria;
 
 public interface CategoriasService {
 
-    public Page<Categorias> getCategorias(Pageable pageable);
+    public Page<Categoria> getCategorias(Pageable pageable);
 
-    public Optional<Categorias> getCategoriasById(Long idCategorias);
+    public Optional<Categoria> getCategoriasById(Long idCategorias);
 
-    public Categorias crearCategorias(Categorias categoria);
+    public Categoria crearCategorias(Categoria categoria);
 
-    public Categorias actualizarCategorias(Long idCategorias, Categorias categoriasActualizadas);
+    public Categoria actualizarCategorias(Long idCategorias, Categoria categoriasActualizadas);
 
-    public Categorias eliminarCategorias(Long idCategorias);
+    public Categoria eliminarCategorias(Long idCategorias);
 
     
 
