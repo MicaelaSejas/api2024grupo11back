@@ -13,6 +13,7 @@ import com.uade.tpo.controller.auth.RegisterRequest;
 import com.uade.tpo.controller.config.JwtService;
 import com.uade.tpo.entity.Carrito;
 import com.uade.tpo.entity.Usuario;
+import com.uade.tpo.repository.CarritoRepository;
 import com.uade.tpo.repository.RolesRepository;
 import com.uade.tpo.repository.UsuarioRepository;
 
@@ -36,6 +37,9 @@ public class AuthenticationServiceImplement implements AuthenticationService {
 		
 		@Autowired
 		private RolesRepository roles;
+		
+		@Autowired
+		private CarritoRepository carritoRepository;
 
         @Override
         @Transactional(rollbackFor = Throwable.class)
@@ -48,10 +52,15 @@ public class AuthenticationServiceImplement implements AuthenticationService {
                                 .email(request.getEmail())
                                 .password(passwordEncoder.encode(request.getPassword()))
                                 .roles(Rol.orElseThrow())
-                                .carrito(new Carrito())
+//                                .carrito(new Carrito())
                                 .build();
+                
+                Carrito carrito = new Carrito();
+                carrito.setUsuario((Usuario) user);
+                
 
                 repository.save(user);
+                carritoRepository.save(carrito);
                 var jwtToken = jwtService.generateToken(user);
                 return AuthenticationResponse.builder()
                                 .accessToken(jwtToken)
