@@ -76,6 +76,7 @@ public class AuthenticationServiceImplement implements AuthenticationService {
 
                 var user = repository.findByEmail(request.getEmail())
                                 .orElseThrow();
+                
                 var jwtToken = jwtService.generateToken(user);
                 return AuthenticationResponse.builder()
                                 .accessToken(jwtToken)
