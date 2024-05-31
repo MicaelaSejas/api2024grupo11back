@@ -29,7 +29,7 @@ public class SecurityConfig {
                         .requestMatchers("/error/**").permitAll()
                         .requestMatchers("/categorias").hasAnyAuthority("Vendedor")
                         .requestMatchers("/productos").permitAll()
-                        // .requestMatchers("/categories/**").hasAnyAuthority("Vendedor")
+                        .requestMatchers("/carrito").authenticated()
                         .anyRequest()
                         .authenticated())
                 .sessionManagement(session -> session.sessionCreationPolicy(STATELESS))
