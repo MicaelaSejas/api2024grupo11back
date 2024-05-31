@@ -1,5 +1,6 @@
 package com.uade.tpo.controller;
 
+import java.io.IOException;
 import java.net.URI;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -7,6 +8,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -57,12 +60,16 @@ public class ProductosController {
         return ResponseEntity.noContent().build();
     }
 
-    @PostMapping
+    @PostMapping(consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     public ResponseEntity<Object> crearProductos(@RequestBody ProductosRequest productosRequest){
         Productos nuevoProductos = new Productos();
         nuevoProductos.setTitulo(productosRequest.getTitulo());
-        nuevoProductos.setImagen_1(productosRequest.getImagen_1());
-        nuevoProductos.setImagen_2(productosRequest.getImagen_2());
+        try{
+        nuevoProductos.setImagen_1(productosRequest.getImagen_1().getBytes());
+        nuevoProductos.setImagen_2(productosRequest.getImagen_2().getBytes());
+        }catch (IOException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al leer la imagen");
+        }
         nuevoProductos.setDescripcion(productosRequest.getDescripcion());
         nuevoProductos.setPrecio(productosRequest.getPrecio());
         nuevoProductos.setCantidad(productosRequest.getCantidad());
@@ -90,8 +97,12 @@ public class ProductosController {
         if (productosOptional.isPresent()) {
             Productos productoExistente = productosOptional.get();
             productoExistente.setTitulo(productosRequest.getTitulo());
-            productoExistente.setImagen_1(productosRequest.getImagen_1());
-            productoExistente.setImagen_2(productosRequest.getImagen_2());
+            try{
+                productoExistente.setImagen_1(productosRequest.getImagen_1().getBytes());
+                productoExistente.setImagen_2(productosRequest.getImagen_2().getBytes());
+                }catch (IOException e) {
+                    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al leer la imagen");
+            }
             productoExistente.setDescripcion(productosRequest.getDescripcion());
             productoExistente.setPrecio(productosRequest.getPrecio());
             productoExistente.setCantidad(productosRequest.getCantidad());

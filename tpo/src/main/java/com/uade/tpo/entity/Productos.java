@@ -30,7 +30,7 @@ public class Productos {
     private byte[] imagen_1;
 
     @Column(name = "imagen_2", nullable = true)
-    private byte[] imagen_2;
+    private byte[]  imagen_2;
 
     @Column(name = "descripcion", nullable = false)
     private String descripcion;
@@ -67,7 +67,7 @@ public class Productos {
         this.titulo = titulo;
     }
 
-    public byte[] getImagen_1() {
+    public byte[]  getImagen_1() {
         return imagen_1;
     }
 
@@ -75,11 +75,11 @@ public class Productos {
         this.imagen_1 = imagen_1;
     }
 
-    public byte[] getImagen_2() {
+    public byte[]  getImagen_2() {
         return imagen_2;
     }
 
-    public void setImagen_2(byte[] imagen_2) {
+    public void setImagen_2(byte[]  imagen_2) {
         this.imagen_2 = imagen_2;
     }
 

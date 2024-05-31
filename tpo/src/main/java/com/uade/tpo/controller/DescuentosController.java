@@ -23,7 +23,7 @@ import com.uade.tpo.entity.Descuentos;
 import com.uade.tpo.service.DescuentosService;
 
 @RestController
-@RequestMapping("descuentos")
+@RequestMapping("/api/v1/descuentos")
 public class DescuentosController {
 
     @Autowired
@@ -38,7 +38,7 @@ public class DescuentosController {
         return ResponseEntity.ok(descuentosService.getDescuentos(PageRequest.of(page, size)));
     }
 
-    @GetMapping("/{idDescuentos}")
+    @GetMapping("/api/v1/{idDescuentos}")
     public ResponseEntity<Descuentos> getDescuentosById(@PathVariable Long idDescuentos) {
         Optional<Descuentos> result = descuentosService.getDescuentosById(idDescuentos);
         if (result.isPresent())
@@ -55,7 +55,7 @@ public class DescuentosController {
         return ResponseEntity.created(URI.create("/descuentos/" + result.getIdDescuentos())).body(result);
     }
 
-    @PutMapping("/{idDescuentos}")
+    @PutMapping("/api/v1/{idDescuentos}")
     public ResponseEntity<Object> actualizarDescuentos(@PathVariable Long idDescuentos, @RequestBody DescuentosRequest descuentosRequest) {
         Optional<Descuentos> descuentosOptional = descuentosService.getDescuentosById(idDescuentos);
         if (descuentosOptional.isPresent()) {
@@ -67,7 +67,7 @@ public class DescuentosController {
         return ResponseEntity.notFound().build();
     }    
 
-    @DeleteMapping("/{idDescuentos}")
+    @DeleteMapping("/api/v1/{idDescuentos}")
     public ResponseEntity<Object> eliminarDescuentos(@PathVariable Long idDescuentos) {
         try {
             descuentosService.eliminarDescuentos(idDescuentos);

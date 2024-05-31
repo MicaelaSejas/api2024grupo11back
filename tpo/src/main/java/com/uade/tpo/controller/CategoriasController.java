@@ -23,7 +23,7 @@ import com.uade.tpo.entity.Categorias;
 import com.uade.tpo.service.CategoriasService;
 
 @RestController
-@RequestMapping("categorias")
+@RequestMapping("/api/v1/categorias")
 public class CategoriasController {
 
     @Autowired
@@ -38,7 +38,7 @@ public class CategoriasController {
         return ResponseEntity.ok(categoriasService.getCategorias(PageRequest.of(page, size)));
     }
 
-    @GetMapping("/{idCategorias}")
+    @GetMapping("/api/v1/{idCategorias}")
     public ResponseEntity<Categorias> getCategoriasById(@PathVariable Long idCategorias) {
         Optional<Categorias> result = categoriasService.getCategoriasById(idCategorias);
         if (result.isPresent())
@@ -55,7 +55,7 @@ public class CategoriasController {
         return ResponseEntity.created(URI.create("/categorias/" + result.getIdCategorias())).body(result);
     }
 
-    @PutMapping("/{idCategorias}")
+    @PutMapping("/api/v1/{idCategorias}")
     public ResponseEntity<Object> actualizarCategorias(@PathVariable Long idCategorias, @RequestBody CategoriasRequest categoriasRequest) {
         Optional<Categorias> categoriasOptional = categoriasService.getCategoriasById(idCategorias);
         if (categoriasOptional.isPresent()) {
@@ -67,7 +67,7 @@ public class CategoriasController {
         return ResponseEntity.notFound().build();
     }    
     
-    @DeleteMapping("/{idCategorias}")
+    @DeleteMapping("/api/v1/{idCategorias}")
     public ResponseEntity<Object> eliminarCategorias(@PathVariable Long idCategorias) {
         try {
             categoriasService.eliminarCategorias(idCategorias);
