@@ -12,16 +12,15 @@ INSERT INTO descuentos(Porcentaje) VALUES (10);
 INSERT INTO descuentos(Porcentaje) VALUES (5);
 INSERT INTO descuentos(Porcentaje) VALUES (35);
 
-INSERT INTO productos(titulo, categoria, descripcion, precio, cantidad, idCategoria, idDescuento)
-VALUES ('Silla RGB', 'Silla Gamer', 'Silla RGB max max', 1000, 3, 1, 2);
-INSERT INTO productos(titulo, categoria, descripcion, precio, cantidad, idCategoria)
-VALUES ('Silla plaza plaza', 'Silla Jardin', 'Silla amplia para tu jardin unica', 500, 5, 3);
+INSERT INTO productos(titulo, descripcion, precio, cantidad, idCategoria, idDescuento)
+VALUES ('Silla RGB', 'Silla RGB max max', 1000, 3, 1, 2);
+INSERT INTO productos(titulo, descripcion, precio, cantidad, idCategoria)
+VALUES ('Silla plaza plaza', 'Silla amplia para tu jardin unica', 500, 5, 3);
 
 INSERT INTO carrito(idUsuario, total) VALUES (2, 1000);
 INSERT INTO carritoproductos(idProducto, idCarrito, cantidad) VALUES (1, 1, 1);
 INSERT INTO carrito(idUsuario, total) VALUES (1, 500);
 INSERT INTO carritoproductos(idProducto, idCarrito, cantidad) VALUES (2, 2, 1);
-
 
 select * from usuarios;
 select * from roles;

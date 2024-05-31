@@ -23,7 +23,7 @@ import com.uade.tpo.entity.Descuento;
 import com.uade.tpo.service.DescuentosService;
 
 @RestController
-@RequestMapping("descuentos")
+@RequestMapping("api/v1/descuentos")
 public class DescuentosController {
 
     @Autowired

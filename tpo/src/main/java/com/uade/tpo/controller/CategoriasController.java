@@ -23,7 +23,7 @@ import com.uade.tpo.entity.Categoria;
 import com.uade.tpo.service.CategoriasService;
 
 @RestController
-@RequestMapping("categorias")
+@RequestMapping("api/v1/categorias")
 public class CategoriasController {
 
     @Autowired

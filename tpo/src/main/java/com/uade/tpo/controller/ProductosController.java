@@ -27,7 +27,7 @@ import com.uade.tpo.service.DescuentosService;
 import com.uade.tpo.service.ProductosService;
 
 @RestController
-@RequestMapping("productos")
+@RequestMapping("api/v1/productos")
 public class ProductosController {
 
     @Autowired
