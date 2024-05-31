@@ -22,6 +22,7 @@ INSERT INTO carritoproductos(idProducto, idCarrito, cantidad) VALUES (1, 1, 1);
 INSERT INTO carrito(idUsuario, total) VALUES (1, 500);
 INSERT INTO carritoproductos(idProducto, idCarrito, cantidad) VALUES (2, 2, 1);
 
+USE tpo;
 select * from usuarios;
 select * from roles;
 select * from categorias;
