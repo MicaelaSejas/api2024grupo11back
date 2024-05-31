@@ -1,5 +1,6 @@
 package com.uade.tpo.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -20,12 +21,23 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class AuthenticationServiceImplement implements AuthenticationService {
-        private final UsuarioRepository repository;
-        private final PasswordEncoder passwordEncoder;
-        private final JwtService jwtService;
-        private final AuthenticationManager authenticationManager;
-        private final RolesRepository roles;
+	
+		@Autowired
+        private UsuarioRepository repository;
+		
+		@Autowired
+		private PasswordEncoder passwordEncoder;
+		
+		@Autowired
+		private JwtService jwtService;
+		
+		@Autowired
+		private AuthenticationManager authenticationManager;
+		
+		@Autowired
+		private RolesRepository roles;
 
+        @Override
         @Transactional(rollbackFor = Throwable.class)
         public AuthenticationResponse register(RegisterRequest request) {
                 var Rol = roles.findById(request.getRoles());
@@ -46,6 +58,7 @@ public class AuthenticationServiceImplement implements AuthenticationService {
                                 .build();
         }
 
+        @Override
         public AuthenticationResponse authenticate(AuthenticationRequest request) {
                 authenticationManager.authenticate(
                                 new UsernamePasswordAuthenticationToken(

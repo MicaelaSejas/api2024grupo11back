@@ -11,6 +11,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import lombok.RequiredArgsConstructor;
 
 @Configuration
@@ -18,8 +20,11 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class SecurityConfig {
 
-    private final JwtAuthenticationFilter jwtAuthFilter;
-    private final AuthenticationProvider authenticationProvider;
+	@Autowired
+    private JwtAuthenticationFilter jwtAuthFilter;
+
+    @Autowired
+    private AuthenticationProvider authenticationProvider;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {

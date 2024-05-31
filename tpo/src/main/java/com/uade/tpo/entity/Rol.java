@@ -25,4 +25,25 @@ public class Rol {
 
     @OneToMany(mappedBy = "roles")
     private List<Usuario> usuarios;
+
+	public String getDescripcion() {
+		return descripcion;
+	}
+
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
+	}
+
+	public List<Usuario> getUsuarios() {
+		return usuarios;
+	}
+
+	public void setUsuarios(List<Usuario> usuarios) {
+		this.usuarios = usuarios;
+	}
+
+	public Long getId() {
+		return id;
+	}
+    
 }
