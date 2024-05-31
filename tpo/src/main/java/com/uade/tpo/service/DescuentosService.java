@@ -5,19 +5,19 @@ import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import com.uade.tpo.entity.Descuentos;
+import com.uade.tpo.entity.Descuento;
 
 public interface DescuentosService {
 
-    public Page<Descuentos> getDescuentos(Pageable pageable);
+    public Page<Descuento> getDescuentos(Pageable pageable);
 
-    public Optional<Descuentos> getDescuentosById(Long idDescuentos);
+    public Optional<Descuento> getDescuentosById(Long idDescuentos);
 
-    public Descuentos crearDescuentos(Descuentos descuentos);
+    public Descuento crearDescuentos(Descuento descuentos);
 
-    public Descuentos actualizarDescuentos(Long idDescuentos, Descuentos descuentosActualizados);
+    public Descuento actualizarDescuentos(Long idDescuentos, Descuento descuentosActualizados);
 
-    public Descuentos eliminarDescuentos(Long idDescuentos);
+    public Descuento eliminarDescuentos(Long idDescuentos);
 
 
 

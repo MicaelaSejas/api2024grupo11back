@@ -1,5 +1,7 @@
 package com.uade.tpo.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -15,8 +17,7 @@ import lombok.Data;
 @Entity
 @Table(name = "productos")
 
-public class Productos {
-
+public class Producto {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -43,11 +44,12 @@ public class Productos {
 
     @ManyToOne
     @JoinColumn(name = "idCategoria", nullable = false, referencedColumnName = "idCategorias")
-    private Categorias idCategoria;
+    private Categoria idCategoria;
 
+    @JsonBackReference
     @OneToOne
     @JoinColumn(name = "idDescuento", nullable = true, referencedColumnName = "idDescuentos")
-    private Descuentos idDescuento;
+    private Descuento idDescuento;
 
     // Aca los getter  y setters
 
@@ -92,12 +94,24 @@ public class Productos {
     }
 
     public float getPrecio() {
-        return precio;
+    	return this.precio;
     }
 
     public void setPrecio(float precio) {
         this.precio = precio;
     }
+    
+    public float getPrecioConDescuento() {
+        if (this.getIdDescuento() != null && this.getIdDescuento().getPorcentaje() != 0) {
+        	float porcentaje = (float)this.getIdDescuento().getPorcentaje() / 100f;
+            float precioFinal = (this.precio - (this.precio * porcentaje));
+
+            return precioFinal;
+        } else {
+            return this.precio;
+        }
+    }
+
 
     public int getCantidad() {
         return cantidad;
@@ -107,20 +121,21 @@ public class Productos {
         this.cantidad = cantidad;
     }
 
-    public Categorias getidCategoria() {
+    public Categoria getIdCategoria() {
         return idCategoria;
     }
 
-    public void setidCategoria(Categorias idCategoria) {
+    public void setIdCategoria(Categoria idCategoria) {
         this.idCategoria = idCategoria;
     }
 
-    public Descuentos getidDescuento() {
+    public Descuento getIdDescuento() {
         return idDescuento;
     }
 
-    public void setidDescuento(Descuentos idDescuento) {
+    public void setIdDescuento(Descuento idDescuento) {
         this.idDescuento = idDescuento;
     }
+    
 }
 

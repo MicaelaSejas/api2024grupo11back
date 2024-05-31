@@ -24,8 +24,8 @@ CREATE TABLE `usuarios` (
   `id` int NOT NULL AUTO_INCREMENT,
   `nombre` varchar(45) NOT NULL,
   `apellido` varchar(45) NOT NULL,
-  `mail` varchar(45) NOT NULL,
-  `usuario` varchar(45) NOT NULL,
+  `mail` varchar(45) NOT NULL UNIQUE,
+  `usuario` varchar(45) NOT NULL UNIQUE,
   `password` varchar(45) NOT NULL,
   `idRoles` int NOT NULL,
   PRIMARY KEY (`id`),
@@ -62,11 +62,11 @@ CREATE TABLE `CarritoProductos` (
 CREATE TABLE `carrito` (
   `idCARRITO` int NOT NULL AUTO_INCREMENT,
   `idUsuario` int NOT NULL,
-  `idCarritoProductos` int NOT NULL,
   `total` float NOT NULL,
   PRIMARY KEY (`idCARRITO`),
   KEY `fk_idUsuario` (`idUsuario`),
-  KEY `fk_idCarritoProducto` (`idCarritoProductos`),
-  CONSTRAINT `fk_idUsuario` FOREIGN KEY (`idUsuario`) REFERENCES `usuarios` (`id`),
-  CONSTRAINT `fk_idCarritoProductos` FOREIGN KEY (`idCarritoProductos`) REFERENCES `CarritoProductos` (`idCarritoProducto`)
+  CONSTRAINT `fk_idUsuario` FOREIGN KEY (`idUsuario`) REFERENCES `usuarios` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+
+
+

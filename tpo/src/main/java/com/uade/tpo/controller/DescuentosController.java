@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.uade.tpo.controller.request.DescuentosRequest;
-import com.uade.tpo.entity.Descuentos;
+import com.uade.tpo.entity.Descuento;
 import com.uade.tpo.service.DescuentosService;
 
 @RestController
@@ -30,7 +30,7 @@ public class DescuentosController {
     private DescuentosService descuentosService;
 
     @GetMapping
-    public ResponseEntity<Page<Descuentos>> getDescuentos(
+    public ResponseEntity<Page<Descuento>> getDescuentos(
             @RequestParam(required = false) Integer page,
             @RequestParam(required = false) Integer size) {
         if (page == null || size == null)
@@ -38,9 +38,10 @@ public class DescuentosController {
         return ResponseEntity.ok(descuentosService.getDescuentos(PageRequest.of(page, size)));
     }
 
-    @GetMapping("/api/v1/{idDescuentos}")
-    public ResponseEntity<Descuentos> getDescuentosById(@PathVariable Long idDescuentos) {
-        Optional<Descuentos> result = descuentosService.getDescuentosById(idDescuentos);
+
+    @GetMapping("/{idDescuentos}")
+    public ResponseEntity<Descuento> getDescuentosById(@PathVariable Long idDescuentos) {
+        Optional<Descuento> result = descuentosService.getDescuentosById(idDescuentos);
         if (result.isPresent())
             return ResponseEntity.ok(result.get());
 
@@ -49,17 +50,17 @@ public class DescuentosController {
     
     @PostMapping
     public ResponseEntity<Object> crearDescuentos(@RequestBody DescuentosRequest descuentosRequest){
-        Descuentos nuevoDescuento = new Descuentos();
+        Descuento nuevoDescuento = new Descuento();
         nuevoDescuento.setPorcentaje(descuentosRequest.getPorcentaje());
-        Descuentos result = descuentosService.crearDescuentos(nuevoDescuento);
+        Descuento result = descuentosService.crearDescuentos(nuevoDescuento);
         return ResponseEntity.created(URI.create("/descuentos/" + result.getIdDescuentos())).body(result);
     }
 
     @PutMapping("/api/v1/{idDescuentos}")
     public ResponseEntity<Object> actualizarDescuentos(@PathVariable Long idDescuentos, @RequestBody DescuentosRequest descuentosRequest) {
-        Optional<Descuentos> descuentosOptional = descuentosService.getDescuentosById(idDescuentos);
+        Optional<Descuento> descuentosOptional = descuentosService.getDescuentosById(idDescuentos);
         if (descuentosOptional.isPresent()) {
-            Descuentos descuentoExistente = descuentosOptional.get();
+            Descuento descuentoExistente = descuentosOptional.get();
             descuentoExistente.setPorcentaje(descuentosRequest.getPorcentaje());
             descuentosService.actualizarDescuentos(idDescuentos, descuentoExistente);
             return ResponseEntity.ok(descuentoExistente);

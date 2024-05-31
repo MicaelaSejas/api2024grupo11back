@@ -1,6 +1,5 @@
 package com.uade.tpo.controller;
 
-import java.io.IOException;
 import java.net.URI;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -8,7 +7,6 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -22,15 +20,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.uade.tpo.controller.request.ProductosRequest;
-import com.uade.tpo.entity.Categorias;
-import com.uade.tpo.entity.Descuentos;
-import com.uade.tpo.entity.Productos;
+import com.uade.tpo.entity.Categoria;
+import com.uade.tpo.entity.Descuento;
+import com.uade.tpo.entity.Producto;
 import com.uade.tpo.service.CategoriasService;
 import com.uade.tpo.service.DescuentosService;
 import com.uade.tpo.service.ProductosService;
 
 @RestController
-@RequestMapping("productos")
+@RequestMapping("api/v1/productos")
 public class ProductosController {
 
     @Autowired
@@ -43,7 +41,7 @@ public class ProductosController {
     private DescuentosService descuentosService;
 
     @GetMapping
-    public ResponseEntity<Page<Productos>> getProductos(
+    public ResponseEntity<Page<Producto>> getProductos(
             @RequestParam(required = false) Integer page,
             @RequestParam(required = false) Integer size) {
         if (page == null || size == null)
@@ -52,8 +50,8 @@ public class ProductosController {
     }
 
     @GetMapping("/{idProductos}")
-    public ResponseEntity<Productos> getProductosById(@PathVariable Long idProductos) {
-        Optional<Productos> result = productosService.getProductosById(idProductos);
+    public ResponseEntity<Producto> getProductosById(@PathVariable Long idProductos) {
+        Optional<Producto> result = productosService.getProductosById(idProductos);
         if (result.isPresent())
             return ResponseEntity.ok(result.get());
 
@@ -62,61 +60,57 @@ public class ProductosController {
 
     @PostMapping(consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     public ResponseEntity<Object> crearProductos(@RequestBody ProductosRequest productosRequest){
-        Productos nuevoProductos = new Productos();
+        Producto nuevoProductos = new Producto();
         nuevoProductos.setTitulo(productosRequest.getTitulo());
-        try{
-        nuevoProductos.setImagen_1(productosRequest.getImagen_1().getBytes());
-        nuevoProductos.setImagen_2(productosRequest.getImagen_2().getBytes());
-        }catch (IOException e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al leer la imagen");
-        }
+        
+        nuevoProductos.setImagen_1(productosRequest.getImagen_1());
+        nuevoProductos.setImagen_2(productosRequest.getImagen_2());
+        
         nuevoProductos.setDescripcion(productosRequest.getDescripcion());
         nuevoProductos.setPrecio(productosRequest.getPrecio());
         nuevoProductos.setCantidad(productosRequest.getCantidad());
         long idCategorias = productosRequest.getIdCategoria();
-        Categorias categorias = categoriasService.getCategoriasById(idCategorias).orElse(null);
+        Categoria categorias = categoriasService.getCategoriasById(idCategorias).orElse(null);
         if(categorias != null) {
-        nuevoProductos.setidCategoria(categorias);
+        nuevoProductos.setIdCategoria(categorias);
         }else{
         return ResponseEntity.notFound().build();
         }
         long idDescuentos = productosRequest.getIdDescuento();
-        Descuentos descuentos = descuentosService.getDescuentosById(idDescuentos).orElse(null);
+        Descuento descuentos = descuentosService.getDescuentosById(idDescuentos).orElse(null);
         if(descuentos != null) {
-        nuevoProductos.setidDescuento(descuentos);
+        nuevoProductos.setIdDescuento(descuentos);
         }else{
         return ResponseEntity.notFound().build();
         }
-        Productos result = productosService.crearProductos(nuevoProductos);
+        Producto result = productosService.crearProductos(nuevoProductos);
         return ResponseEntity.created(URI.create("/productos/" + result.getIdProductos())).body(result);
     }
 
     @PutMapping("/{idProductos}")
     public ResponseEntity<Object> actualizarProductos(@PathVariable Long idProductos, @RequestBody ProductosRequest productosRequest) {
-        Optional<Productos> productosOptional = productosService.getProductosById(idProductos);
+        Optional<Producto> productosOptional = productosService.getProductosById(idProductos);
         if (productosOptional.isPresent()) {
-            Productos productoExistente = productosOptional.get();
+            Producto productoExistente = productosOptional.get();
             productoExistente.setTitulo(productosRequest.getTitulo());
-            try{
-                productoExistente.setImagen_1(productosRequest.getImagen_1().getBytes());
-                productoExistente.setImagen_2(productosRequest.getImagen_2().getBytes());
-                }catch (IOException e) {
-                    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al leer la imagen");
-            }
+          
+                productoExistente.setImagen_1(productosRequest.getImagen_1());
+                productoExistente.setImagen_2(productosRequest.getImagen_2());
+             
             productoExistente.setDescripcion(productosRequest.getDescripcion());
             productoExistente.setPrecio(productosRequest.getPrecio());
             productoExistente.setCantidad(productosRequest.getCantidad());
             long idCategorias = productosRequest.getIdCategoria();
-            Categorias categorias = categoriasService.getCategoriasById(idCategorias).orElse(null);
+            Categoria categorias = categoriasService.getCategoriasById(idCategorias).orElse(null);
             if(categorias != null) {
-            productoExistente.setidCategoria(categorias);
+            productoExistente.setIdCategoria(categorias);
             }else{
             return ResponseEntity.notFound().build();
             }
             long idDescuentos = productosRequest.getIdDescuento();
-            Descuentos descuentos = descuentosService.getDescuentosById(idDescuentos).orElse(null);
+            Descuento descuentos = descuentosService.getDescuentosById(idDescuentos).orElse(null);
             if(descuentos != null) {
-            productoExistente.setidDescuento(descuentos);
+            productoExistente.setIdDescuento(descuentos);
             }else{
             return ResponseEntity.notFound().build();
             }
