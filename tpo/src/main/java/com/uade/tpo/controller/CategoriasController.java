@@ -48,7 +48,7 @@ public class CategoriasController {
     }
 
     @PostMapping
-    public ResponseEntity<Object> crearCategorias(@RequestBody CategoriasRequest categoriasRequest){
+    public ResponseEntity<Object> crearCategorias(@RequestBody CategoriasRequest categoriasRequest) {
         Categoria nuevaCategoria = new Categoria();
         nuevaCategoria.setDescripcion(categoriasRequest.getDescripcion());
         Categoria result = categoriasService.crearCategorias(nuevaCategoria);
@@ -56,7 +56,8 @@ public class CategoriasController {
     }
 
     @PutMapping("/{idCategorias}")
-    public ResponseEntity<Object> actualizarCategorias(@PathVariable Long idCategorias, @RequestBody CategoriasRequest categoriasRequest) {
+    public ResponseEntity<Object> actualizarCategorias(@PathVariable Long idCategorias,
+            @RequestBody CategoriasRequest categoriasRequest) {
         Optional<Categoria> categoriasOptional = categoriasService.getCategoriasById(idCategorias);
         if (categoriasOptional.isPresent()) {
             Categoria categoriaExistente = categoriasOptional.get();
@@ -65,8 +66,8 @@ public class CategoriasController {
             return ResponseEntity.ok(categoriaExistente);
         }
         return ResponseEntity.notFound().build();
-    }    
-    
+    }
+
     @DeleteMapping("/{idCategorias}")
     public ResponseEntity<Object> eliminarCategorias(@PathVariable Long idCategorias) {
         try {
@@ -76,12 +77,5 @@ public class CategoriasController {
             return ResponseEntity.notFound().build();
         }
     }
-    
+
 }
-
-
-
-
-
-
-

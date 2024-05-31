@@ -58,7 +58,7 @@ public class ProductosController {
     }
 
     @PostMapping
-    public ResponseEntity<Object> crearProductos(@RequestBody ProductosRequest productosRequest){
+    public ResponseEntity<Object> crearProductos(@RequestBody ProductosRequest productosRequest) {
         Producto nuevoProductos = new Producto();
         nuevoProductos.setTitulo(productosRequest.getTitulo());
         nuevoProductos.setImagen_1(productosRequest.getImagen_1());
@@ -68,24 +68,25 @@ public class ProductosController {
         nuevoProductos.setCantidad(productosRequest.getCantidad());
         long idCategorias = productosRequest.getIdCategoria();
         Categoria categorias = categoriasService.getCategoriasById(idCategorias).orElse(null);
-        if(categorias != null) {
-        nuevoProductos.setIdCategoria(categorias);
-        }else{
-        return ResponseEntity.notFound().build();
+        if (categorias != null) {
+            nuevoProductos.setIdCategoria(categorias);
+        } else {
+            return ResponseEntity.notFound().build();
         }
         long idDescuentos = productosRequest.getIdDescuento();
         Descuento descuentos = descuentosService.getDescuentosById(idDescuentos).orElse(null);
-        if(descuentos != null) {
-        nuevoProductos.setIdDescuento(descuentos);
-        }else{
-        return ResponseEntity.notFound().build();
+        if (descuentos != null) {
+            nuevoProductos.setIdDescuento(descuentos);
+        } else {
+            return ResponseEntity.notFound().build();
         }
         Producto result = productosService.crearProductos(nuevoProductos);
         return ResponseEntity.created(URI.create("/productos/" + result.getIdProductos())).body(result);
     }
 
     @PutMapping("/{idProductos}")
-    public ResponseEntity<Object> actualizarProductos(@PathVariable Long idProductos, @RequestBody ProductosRequest productosRequest) {
+    public ResponseEntity<Object> actualizarProductos(@PathVariable Long idProductos,
+            @RequestBody ProductosRequest productosRequest) {
         Optional<Producto> productosOptional = productosService.getProductosById(idProductos);
         if (productosOptional.isPresent()) {
             Producto productoExistente = productosOptional.get();
@@ -97,23 +98,23 @@ public class ProductosController {
             productoExistente.setCantidad(productosRequest.getCantidad());
             long idCategorias = productosRequest.getIdCategoria();
             Categoria categorias = categoriasService.getCategoriasById(idCategorias).orElse(null);
-            if(categorias != null) {
-            productoExistente.setIdCategoria(categorias);
-            }else{
-            return ResponseEntity.notFound().build();
+            if (categorias != null) {
+                productoExistente.setIdCategoria(categorias);
+            } else {
+                return ResponseEntity.notFound().build();
             }
             long idDescuentos = productosRequest.getIdDescuento();
             Descuento descuentos = descuentosService.getDescuentosById(idDescuentos).orElse(null);
-            if(descuentos != null) {
-            productoExistente.setIdDescuento(descuentos);
-            }else{
-            return ResponseEntity.notFound().build();
+            if (descuentos != null) {
+                productoExistente.setIdDescuento(descuentos);
+            } else {
+                return ResponseEntity.notFound().build();
             }
             productosService.actualizarProductos(idProductos, productoExistente);
             return ResponseEntity.ok(productoExistente);
         }
         return ResponseEntity.notFound().build();
-    }    
+    }
 
     @DeleteMapping("/{idProductos}")
     public ResponseEntity<Object> eliminarProductos(@PathVariable Long idProductos) {
