@@ -35,7 +35,6 @@ CREATE TABLE `usuarios` (
 CREATE TABLE `productos` (
   `id` int NOT NULL AUTO_INCREMENT,
   `titulo` varchar(45) NOT NULL,
-  `categoria` varchar(45) NOT NULL,
   `imagen_1` blob,
   `imagen_2` blob,
   `descripcion` varchar(45) NOT NULL,
