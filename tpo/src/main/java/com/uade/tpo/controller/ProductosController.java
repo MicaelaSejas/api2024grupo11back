@@ -57,12 +57,14 @@ public class ProductosController {
         return ResponseEntity.noContent().build();
     }
 
-    @PostMapping
-    public ResponseEntity<Object> crearProductos(@RequestBody ProductosRequest productosRequest) {
+    @PostMapping()
+    public ResponseEntity<Object> crearProductos(@RequestBody ProductosRequest productosRequest){
         Producto nuevoProductos = new Producto();
         nuevoProductos.setTitulo(productosRequest.getTitulo());
+        
         nuevoProductos.setImagen_1(productosRequest.getImagen_1());
         nuevoProductos.setImagen_2(productosRequest.getImagen_2());
+        
         nuevoProductos.setDescripcion(productosRequest.getDescripcion());
         nuevoProductos.setPrecio(productosRequest.getPrecio());
         nuevoProductos.setCantidad(productosRequest.getCantidad());
@@ -91,8 +93,10 @@ public class ProductosController {
         if (productosOptional.isPresent()) {
             Producto productoExistente = productosOptional.get();
             productoExistente.setTitulo(productosRequest.getTitulo());
-            productoExistente.setImagen_1(productosRequest.getImagen_1());
-            productoExistente.setImagen_2(productosRequest.getImagen_2());
+          
+                productoExistente.setImagen_1(productosRequest.getImagen_1());
+                productoExistente.setImagen_2(productosRequest.getImagen_2());
+             
             productoExistente.setDescripcion(productosRequest.getDescripcion());
             productoExistente.setPrecio(productosRequest.getPrecio());
             productoExistente.setCantidad(productosRequest.getCantidad());

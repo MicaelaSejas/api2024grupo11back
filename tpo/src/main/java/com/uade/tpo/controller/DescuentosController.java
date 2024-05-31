@@ -23,7 +23,7 @@ import com.uade.tpo.entity.Descuento;
 import com.uade.tpo.service.DescuentosService;
 
 @RestController
-@RequestMapping("api/v1/descuentos")
+@RequestMapping("/api/v1/descuentos")
 public class DescuentosController {
 
     @Autowired
@@ -37,6 +37,7 @@ public class DescuentosController {
             return ResponseEntity.ok(descuentosService.getDescuentos(PageRequest.of(0, Integer.MAX_VALUE)));
         return ResponseEntity.ok(descuentosService.getDescuentos(PageRequest.of(page, size)));
     }
+
 
     @GetMapping("/{idDescuentos}")
     public ResponseEntity<Descuento> getDescuentosById(@PathVariable Long idDescuentos) {
