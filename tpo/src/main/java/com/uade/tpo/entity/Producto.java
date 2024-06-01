@@ -33,8 +33,8 @@ public class Producto {
     @Column(name = "imagen_2", nullable = true)
     private byte[]  imagen_2;
 
-    @Column(name = "descripcion", nullable = false)
-    private String descripcion;
+//    @Column(name = "descripcion", nullable = false)
+//    private String descripcion;
 
     @Column(name = "precio", nullable = false)
     private float precio = 0.0f;
@@ -85,13 +85,13 @@ public class Producto {
         this.imagen_2 = imagen_2;
     }
 
-    public String getDescripcion() {
-        return descripcion;
-    }
-
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
-    }
+//    public String getDescripcion() {
+//        return descripcion;
+//    }
+//
+//    public void setDescripcion(String descripcion) {
+//        this.descripcion = descripcion;
+//    }
 
     public float getPrecio() {
     	return this.precio;

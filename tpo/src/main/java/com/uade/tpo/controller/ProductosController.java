@@ -65,7 +65,6 @@ public class ProductosController {
         nuevoProductos.setImagen_1(productosRequest.getImagen_1());
         nuevoProductos.setImagen_2(productosRequest.getImagen_2());
         
-        nuevoProductos.setDescripcion(productosRequest.getDescripcion());
         nuevoProductos.setPrecio(productosRequest.getPrecio());
         nuevoProductos.setCantidad(productosRequest.getCantidad());
         long idCategorias = productosRequest.getIdCategoria();
@@ -95,7 +94,6 @@ public class ProductosController {
                 productoExistente.setImagen_1(productosRequest.getImagen_1());
                 productoExistente.setImagen_2(productosRequest.getImagen_2());
              
-            productoExistente.setDescripcion(productosRequest.getDescripcion());
             productoExistente.setPrecio(productosRequest.getPrecio());
             productoExistente.setCantidad(productosRequest.getCantidad());
             long idCategorias = productosRequest.getIdCategoria();
@@ -109,9 +107,8 @@ public class ProductosController {
             Descuento descuentos = descuentosService.getDescuentosById(idDescuentos).orElse(null);
             if (descuentos != null) {
                 productoExistente.setIdDescuento(descuentos);
-            } else {
-                return ResponseEntity.notFound().build();
-            }
+            } 
+            
             productosService.actualizarProductos(idProductos, productoExistente);
             return ResponseEntity.ok(productoExistente);
         }

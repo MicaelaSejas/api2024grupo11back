@@ -20,14 +20,14 @@ import com.uade.tpo.exception.CartNotFoundException;
 import com.uade.tpo.exception.ExceededCartQuantityException;
 import com.uade.tpo.exception.ProductNotFoundException;
 import com.uade.tpo.exception.ProductNotInCartException;
-import com.uade.tpo.service.CarritoService;
+import com.uade.tpo.service.CarritoServiceImpl;
 
 @RestController
 @RequestMapping("api/v1/carrito")
 public class CarritoController {
 
     @Autowired
-    private CarritoService carritoService;
+    private CarritoServiceImpl carritoService;
 
     @GetMapping("{carritoId}")
     public ResponseEntity<CarritoResponse> getCarritoById(@PathVariable final Long carritoId) {

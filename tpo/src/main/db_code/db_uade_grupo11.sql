@@ -37,7 +37,6 @@ CREATE TABLE `productos` (
   `titulo` varchar(45) NOT NULL,
   `imagen_1` blob,
   `imagen_2` blob,
-  `descripcion` varchar(45) NOT NULL,
   `precio` float NOT NULL DEFAULT 0,
   `cantidad` int NOT NULL DEFAULT 0,
   `idCategoria` int NOT NULL,
