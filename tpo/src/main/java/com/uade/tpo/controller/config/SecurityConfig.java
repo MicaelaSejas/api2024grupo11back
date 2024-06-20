@@ -27,7 +27,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(req -> req
                         .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers("/error/**").permitAll()
-                        .requestMatchers("/api/categoria").hasAuthority("Vendedor")
+                        // .requestMatchers("/api/categoria").hasAuthority("Vendedor")
                         .requestMatchers("/api/carrito/**").permitAll()
                         .requestMatchers("/api/carritoProducto/**").permitAll()
                         .requestMatchers("/api/categoria/**").permitAll()

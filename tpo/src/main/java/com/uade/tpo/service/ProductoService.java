@@ -7,8 +7,6 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.uade.tpo.entity.Categoria;
-import com.uade.tpo.entity.Descuento;
 import com.uade.tpo.entity.Producto;
 import com.uade.tpo.repository.ProductoRepository;
 
@@ -16,13 +14,13 @@ import com.uade.tpo.repository.ProductoRepository;
 public class ProductoService {
 
     @Autowired
-    private ProductoRepository productoRepository;
+    private  ProductoRepository productoRepository;
 
-    public List<Producto> findAllProductos() {
+    public List<Producto> getAllProductos() {
         return productoRepository.findAll();
     }
 
-    public Optional<Producto> findProductoById(Long id) {
+    public Optional<Producto> getProductoById(Long id) {
         return productoRepository.findById(id);
     }
 
@@ -30,35 +28,8 @@ public class ProductoService {
         return productoRepository.save(producto);
     }
 
-    public Producto updateProducto(Long id, Producto productoNuevo) {
-        Optional<Producto> optionalProducto = productoRepository.findById(id);
-        if (optionalProducto.isPresent()) {
-            Producto productoExistente = optionalProducto.get();
-            productoExistente.setTitulo(productoNuevo.getTitulo());
-            productoExistente.setImagen_1(productoNuevo.getImagen_1());
-            productoExistente.setImagen_2(productoNuevo.getImagen_2());
-            productoExistente.setImagen_3_url(productoNuevo.getImagen_3_url());
-            productoExistente.setImagen_4_url(productoNuevo.getImagen_4_url());
-            productoExistente.setPrecio(productoNuevo.getPrecio());
-            productoExistente.setCantidad(productoNuevo.getCantidad());
-            productoExistente.setCategoria(productoNuevo.getCategoria());
-            productoExistente.setDescuento(productoNuevo.getDescuento());
-            return productoRepository.save(productoExistente);
-        } else {
-            throw new NoSuchElementException("No se encontró el producto con ID: " + id);
-        }
-    }
-
     public void deleteProducto(Long id) {
         productoRepository.deleteById(id);
-    }
-
-    public Optional<Producto> findProductoByDescuento(Descuento descuento) {
-        return productoRepository.findByDescuento(descuento);
-    }
-
-    public Optional<Producto> findProductoByCategoria(Categoria categoria) {
-        return productoRepository.findByCategoria(categoria);
     }
 
     public int getCantidadDisponibleEnStock(Long idProducto) {
@@ -81,5 +52,11 @@ public class ProductoService {
         }
     }
 
-    
+    public List<Producto> getProductosByDescuentoId(Long idDescuento) {
+        return productoRepository.findByDescuentoId(idDescuento);
+    }
+
+    public List<Producto> getProductosByCategoriaId(Long idCategoria) {
+        return productoRepository.findByCategoriaId(idCategoria);
+    }
 }

@@ -80,6 +80,11 @@
             <artifactId>lombok</artifactId>
             <optional>true</optional>
         </dependency>
+<dependency>
+    <groupId>javax.validation</groupId>
+    <artifactId>validation-api</artifactId>
+    <version>2.0.1.Final</version> <!-- Adjust version as per your project's requirements -->
+</dependency>
 
         <!-- JSON Web Token Support -->
         <dependency>

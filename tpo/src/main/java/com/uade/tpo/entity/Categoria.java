@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -27,6 +28,9 @@ public class Categoria {
     private String descripcion;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "categoria")
-    private List<Producto> productos;
+    @OneToMany(mappedBy = "categoria", cascade = CascadeType.ALL)
+    private List<Producto> productos; // Cambiado a plural "productos" y se especifica el mappedBy como "categoria"
+
+
+    // Getters y setters generados automáticamente por Lombok
 }

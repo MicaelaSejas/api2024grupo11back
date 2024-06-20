@@ -33,22 +33,22 @@ CREATE TABLE `usuario` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE `producto` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `titulo` varchar(45) NOT NULL,
-  `imagen_1` blob,
-  `imagen_2` blob,
-  `imagen_3_url` varchar(60),
-  `imagen_4_url` varchar(60),
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `titulo` varchar(255) NOT NULL,
+  `imagen_1_url` varchar(255),
+  `imagen_2_url` varchar(255),
   `precio` float NOT NULL DEFAULT 0,
   `cantidad` int NOT NULL DEFAULT 0,
-  `idCategoria` int NOT NULL,
-  `idDescuento` int,
+  `idCategoria` bigint NOT NULL,
+  `idDescuento` bigint,
   PRIMARY KEY (`id`),
   KEY `fk_categoria` (`idCategoria`),
   KEY `fk_descuento` (`idDescuento`),
   CONSTRAINT `fk_categoria` FOREIGN KEY (`idCategoria`) REFERENCES `categoria` (`id`),
   CONSTRAINT `fk_descuento` FOREIGN KEY (`idDescuento`) REFERENCES `descuento` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+
 
 CREATE TABLE `carrito` (
   `id` int NOT NULL AUTO_INCREMENT,

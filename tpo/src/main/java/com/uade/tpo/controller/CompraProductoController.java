@@ -74,7 +74,7 @@ public class CompraProductoController {
 
     @GetMapping("/producto/{idProducto}")
     public ResponseEntity<CompraProducto> getCompraProductoByProducto(@PathVariable("idProducto") Long idProducto) {
-        Optional<Producto> optionalProducto = productoService.findProductoById(idProducto);
+        Optional<Producto> optionalProducto = productoService.getProductoById(idProducto);
         if (optionalProducto.isPresent()) {
             Producto producto = optionalProducto.get();
             Optional<CompraProducto> optionalCompraProducto = compraProductoService.findCompraProductoByProducto(producto);
