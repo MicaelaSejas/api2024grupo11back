@@ -18,8 +18,8 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "carrito")
-public class Carrito {
+@Table(name = "compra")
+public class Compra {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,43 +30,12 @@ public class Carrito {
     @JoinColumn(name = "idUsuario", referencedColumnName = "id")
     private Usuario usuario;
 
-    @Column(name = "total")
-    private float total;
+    @Column(name = "precioTotal")
+    private float precioTotal;
 
-    @OneToMany(mappedBy = "carrito", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "compra", cascade = CascadeType.ALL)
     @JsonManagedReference
-    private Set<CarritoProducto> carritoProducto;
+    private Set<CompraProducto> compraProductos;
 
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public Usuario getUsuario() {
-		return usuario;
-	}
-
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
-	}
-
-	public float getTotal() {
-		return total;
-	}
-
-	public void setTotal(float total) {
-		this.total = total;
-	}
-
-	public Set<CarritoProducto> getCarritoProducto() {
-		return carritoProducto;
-	}
-
-	public void setCarritoProducto(Set<CarritoProducto> carritoProducto) {
-		this.carritoProducto = carritoProducto;
-	}
-
+    
 }

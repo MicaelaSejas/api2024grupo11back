@@ -11,31 +11,31 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
+
+
 
 @Data
 @Entity
-@EqualsAndHashCode(exclude = "carrito")
-@Table(name = "carritoproductos")
-public class CarritoProductos {
+@Table(name = "carritoProducto")
+public class CarritoProducto {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "idCarritoProducto")
-	@JsonIgnore
-	private Long id;
 
-	@ManyToOne
-	@JoinColumn(name = "idProducto", referencedColumnName = "id")
-	private Producto producto;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private Long id;
 
-	@ManyToOne
-	@JoinColumn(name = "idCarrito", referencedColumnName = "idCARRITO")
-	@JsonIgnore
-	private Carrito carrito;
+    @ManyToOne
+    @JoinColumn(name = "idProducto", referencedColumnName = "id")
+    private Producto producto;
 
-	@Column(name = "cantidad")
-	private int cantidad;
+    @ManyToOne
+    @JoinColumn(name = "idCarrito", referencedColumnName = "id")
+    @JsonIgnore
+    private Carrito carrito;
+
+    @Column(name = "cantidad", nullable = false)
+    private int cantidad;
 
 	public Long getId() {
 		return id;

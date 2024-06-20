@@ -23,7 +23,7 @@ import com.uade.tpo.exception.ProductNotInCartException;
 import com.uade.tpo.service.CarritoServiceImpl;
 
 @RestController
-@RequestMapping("api/v1/carrito")
+@RequestMapping("api/carrito")
 public class CarritoController {
 
     @Autowired

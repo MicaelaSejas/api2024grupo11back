@@ -1,10 +1,11 @@
 package com.uade.tpo.controller.request;
 
+import java.util.Set;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.uade.tpo.entity.Carrito;
-import com.uade.tpo.entity.CarritoProductos;
-import java.util.Set;
+import com.uade.tpo.entity.CarritoProducto;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class CarritoResponse {
@@ -36,12 +37,12 @@ public class CarritoResponse {
         public float total;
 
         @JsonProperty("productos")
-        public Set<CarritoProductos> productos;
+        public Set<CarritoProducto> productos;
 
         public CarritoWithProductos(Carrito carrito) {
             this.id = carrito.getId();
             this.total = carrito.getTotal();
-            this.productos = carrito.getCarritoProductos();
+            this.productos = carrito.getCarritoProducto();
         }
     }
 }

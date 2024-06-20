@@ -1,27 +1,27 @@
 package com.uade.tpo.service;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.uade.tpo.controller.request.CarritoRequest;
 import com.uade.tpo.controller.request.CarritoResponse;
 import com.uade.tpo.entity.Carrito;
-import com.uade.tpo.entity.CarritoProductos;
+import com.uade.tpo.entity.CarritoProducto;
 import com.uade.tpo.entity.Producto;
 import com.uade.tpo.exception.CartAlreadyEmptyException;
 import com.uade.tpo.exception.CartNotFoundException;
 import com.uade.tpo.exception.ExceededCartQuantityException;
 import com.uade.tpo.exception.ProductNotFoundException;
 import com.uade.tpo.exception.ProductNotInCartException;
-import com.uade.tpo.repository.CarritoProductosRepository;
+import com.uade.tpo.repository.CarritoProductoRepository;
 import com.uade.tpo.repository.CarritoRepository;
-import com.uade.tpo.repository.ProductosRepository;
-
-import jakarta.transaction.Transactional;
+import com.uade.tpo.repository.ProductoRepository;
 
 @Service
 public class CarritoServiceImpl implements CarritoService {
@@ -30,37 +30,39 @@ public class CarritoServiceImpl implements CarritoService {
     private CarritoRepository carritoRepository;
 
     @Autowired
-    private ProductosRepository productoRepository;
+    private ProductoRepository productoRepository;
 
     @Autowired
-    private CarritoProductosRepository carritoProdRepository;
+    private CarritoProductoRepository carritoProdRepository;
 
-    public Carrito getCarritoById(final Long carritoId) throws CartNotFoundException {
-        return this.carritoRepository.findById(carritoId)
+    @Override
+    public Carrito getCarritoById(Long carritoId) throws CartNotFoundException {
+        return carritoRepository.findById(carritoId)
                 .orElseThrow(() -> new CartNotFoundException("Carrito con id " + carritoId + " no encontrado"));
     }
 
     @Transactional
-    public ResponseEntity<CarritoResponse> removeFromCarrito(final Long carritoId, final CarritoRequest request)
+    @Override
+    public ResponseEntity<CarritoResponse> removeFromCarrito(Long carritoId, CarritoRequest request)
             throws CartNotFoundException, ProductNotInCartException {
         Carrito carrito = getCarritoById(carritoId);
 
-        Optional<CarritoProductos> optCarritoProducto = carrito.getCarritoProductos().stream()
-                .filter(cp -> cp.getProducto().getIdProductos().equals(request.getProductoId()))
+        Optional<CarritoProducto> optCarritoProducto = carrito.getCarritoProducto().stream()
+                .filter(cp -> cp.getProducto().getId().equals(request.getProductoId()))
                 .findFirst();
 
         if (optCarritoProducto.isPresent()) {
-            CarritoProductos carritoProducto = optCarritoProducto.get();
+            CarritoProducto carritoProducto = optCarritoProducto.get();
             int cantidadEliminada = carritoProducto.getCantidad();
 
             float nuevoTotal = carrito.getTotal()
-                    - (carritoProducto.getProducto().getPrecioConDescuento() * cantidadEliminada);
+                    - (carritoProducto.getProducto().getPrecio() * cantidadEliminada);
             carrito.setTotal(nuevoTotal);
 
             int nuevaCantidadProducto = carritoProducto.getProducto().getCantidad() + cantidadEliminada;
             carritoProducto.getProducto().setCantidad(nuevaCantidadProducto);
 
-            carrito.getCarritoProductos().remove(carritoProducto);
+            carrito.getCarritoProducto().remove(carritoProducto);
 
             carritoRepository.save(carrito);
             carritoProdRepository.delete(carritoProducto);
@@ -69,13 +71,12 @@ public class CarritoServiceImpl implements CarritoService {
         } else {
             throw new ProductNotInCartException("El producto no se encuentra en el carrito con id: " + carritoId);
         }
-
     }
 
     @Transactional
-    public ResponseEntity<CarritoResponse> addToCarrito(final Long carritoId, final CarritoRequest request)
+    @Override
+    public ResponseEntity<CarritoResponse> addToCarrito(Long carritoId, CarritoRequest request)
             throws CartNotFoundException, ProductNotFoundException, ExceededCartQuantityException {
-
         Carrito carrito = getCarritoById(carritoId);
         int cantidad = request.getCantidad();
 
@@ -84,26 +85,25 @@ public class CarritoServiceImpl implements CarritoService {
         if (optProducto.isPresent()) {
             Producto producto = optProducto.get();
 
-            Optional<CarritoProductos> optCarritoProducto = carrito.getCarritoProductos().stream()
-                    .filter(cp -> cp.getProducto().getIdProductos().equals(producto.getIdProductos()))
+            Optional<CarritoProducto> optCarritoProducto = carrito.getCarritoProducto().stream()
+                    .filter(cp -> cp.getProducto().getId().equals(producto.getId()))
                     .findFirst();
 
-            // Si el producto ya está en el carrito
+            
             if (optCarritoProducto.isPresent()) {
-                CarritoProductos carritoProducto = optCarritoProducto.get();
+                CarritoProducto carritoProducto = optCarritoProducto.get();
                 int nuevaCantidad = carritoProducto.getCantidad() + cantidad;
 
                 if (producto.getCantidad() >= cantidad) {
                     producto.setCantidad(producto.getCantidad() - cantidad);
                     carritoProducto.setCantidad(nuevaCantidad);
 
-                    float total = carrito.getTotal() + (producto.getPrecioConDescuento() * cantidad);
+                    float total = carrito.getTotal() + (producto.getPrecio() * cantidad);
                     carrito.setTotal(total);
 
                     productoRepository.save(producto);
                     carritoRepository.save(carrito);
-                    return ResponseEntity
-                            .ok(new CarritoResponse("Cantidad de producto en el carrito actualizada.", carrito));
+                    return ResponseEntity.ok(new CarritoResponse("Cantidad de producto en el carrito actualizada.", carrito));
                 } else {
                     throw new ExceededCartQuantityException("No hay suficiente stock de ese producto");
                 }
@@ -113,14 +113,14 @@ public class CarritoServiceImpl implements CarritoService {
                 if (producto.getCantidad() >= cantidad) {
                     producto.setCantidad(producto.getCantidad() - cantidad);
 
-                    float total = carrito.getTotal() + (producto.getPrecioConDescuento() * cantidad);
+                    float total = carrito.getTotal() + (producto.getPrecio() * cantidad);
                     carrito.setTotal(total);
 
-                    CarritoProductos carritoProducto = new CarritoProductos();
+                    CarritoProducto carritoProducto = new CarritoProducto();
                     carritoProducto.setCarrito(carrito);
                     carritoProducto.setProducto(producto);
                     carritoProducto.setCantidad(cantidad);
-                    carrito.getCarritoProductos().add(carritoProducto);
+                    carrito.getCarritoProducto().add(carritoProducto);
                     carritoProdRepository.save(carritoProducto);
 
                     productoRepository.save(producto);
@@ -138,17 +138,18 @@ public class CarritoServiceImpl implements CarritoService {
     }
 
     @Transactional
+    @Override
     public ResponseEntity<CarritoResponse> emptyCarrito(Long carritoId)
             throws CartNotFoundException, CartAlreadyEmptyException {
         Carrito carrito = getCarritoById(carritoId);
 
-        if (carrito.getCarritoProductos().isEmpty()) {
-            throw new CartAlreadyEmptyException("El carrito ya está vacio");
+        if (carrito.getCarritoProducto().isEmpty()) {
+            throw new CartAlreadyEmptyException("El carrito ya está vacío");
         }
 
-        Iterator<CarritoProductos> iterator = carrito.getCarritoProductos().iterator();
+        Iterator<CarritoProducto> iterator = carrito.getCarritoProducto().iterator();
         while (iterator.hasNext()) {
-            CarritoProductos carritoProducto = iterator.next();
+            CarritoProducto carritoProducto = iterator.next();
             iterator.remove();
 
             Producto producto = carritoProducto.getProducto();
@@ -164,16 +165,15 @@ public class CarritoServiceImpl implements CarritoService {
 
         carrito.setTotal(0);
 
-        this.carritoRepository.save(carrito);
+        carritoRepository.save(carrito);
 
         return ResponseEntity.ok(new CarritoResponse("Carrito vaciado con éxito.", ""));
     }
 
-    @Transactional
+    @Override
     public ResponseEntity<CarritoResponse> substractFromCarrito(Long carritoId, CarritoRequest request)
             throws CartNotFoundException, ProductNotFoundException, ProductNotInCartException,
             ExceededCartQuantityException {
-
         Carrito carrito = getCarritoById(carritoId);
         int cantidad = request.getCantidad();
 
@@ -182,35 +182,32 @@ public class CarritoServiceImpl implements CarritoService {
         if (optProducto.isPresent()) {
             Producto producto = optProducto.get();
 
-            Optional<CarritoProductos> optCarritoProducto = carrito.getCarritoProductos().stream()
-                    .filter(cp -> cp.getProducto().getIdProductos().equals(producto.getIdProductos()))
+            Optional<CarritoProducto> optCarritoProducto = carrito.getCarritoProducto().stream()
+                    .filter(cp -> cp.getProducto().getId().equals(producto.getId()))
                     .findFirst();
 
             if (optCarritoProducto.isPresent()) {
-                CarritoProductos carritoProducto = optCarritoProducto.get();
+                CarritoProducto carritoProducto = optCarritoProducto.get();
 
                 int nuevaCantidadDelCarrito = carritoProducto.getCantidad() - cantidad;
                 float total = 0.0f;
 
                 if (nuevaCantidadDelCarrito < 0) {
                     throw new ExceededCartQuantityException(
-                            "La cantidad a eliminar excede el la cantidad del carrito.");
+                            "La cantidad a eliminar excede la cantidad del carrito.");
                 } else if (nuevaCantidadDelCarrito == 0) {
-                    carrito.getCarritoProductos().remove(carritoProducto);
+                    carrito.getCarritoProducto().remove(carritoProducto);
                     carritoProdRepository.delete(carritoProducto);
                 } else {
                     carritoProducto.setCantidad(nuevaCantidadDelCarrito);
                 }
-                total = carrito.getTotal() - (producto.getPrecioConDescuento() * cantidad);
+                total = carrito.getTotal() - (producto.getPrecio() * cantidad);
 
                 producto.setCantidad(producto.getCantidad() + cantidad);
 
-                carrito.setTotal(total);
-
                 productoRepository.save(producto);
                 carritoRepository.save(carrito);
-                return ResponseEntity
-                        .ok(new CarritoResponse("Cantidad de producto en el carrito actualizada.", carrito));
+                return ResponseEntity.ok(new CarritoResponse("Cantidad de producto en el carrito actualizada.", carrito));
             } else {
                 throw new ProductNotInCartException("El producto no se encuentra en el carrito con id: " + carritoId);
             }
@@ -219,4 +216,26 @@ public class CarritoServiceImpl implements CarritoService {
         }
     }
 
+    @Override
+    public Carrito saveCarrito(Carrito carrito) {
+        return carritoRepository.save(carrito);
+    }
+
+    @Override
+    public Carrito updateCarrito(Long carritoId, Carrito carrito) {
+        if (carritoRepository.existsById(carritoId)) {
+            carrito.setId(carritoId);
+            return carritoRepository.save(carrito);
+        } else {
+            throw new NoSuchElementException("No se encontró el carrito con ID: " + carritoId);
+        }
+    }
+    
+
+
+
+    @Override
+    public void deleteCarrito(Long carritoId) {
+        carritoRepository.deleteById(carritoId);
+    }
 }

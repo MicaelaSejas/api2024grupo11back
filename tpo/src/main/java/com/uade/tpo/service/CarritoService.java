@@ -27,4 +27,11 @@ public interface CarritoService {
 	public ResponseEntity<CarritoResponse> substractFromCarrito(Long carritoId, CarritoRequest request)
             throws CartNotFoundException, ProductNotFoundException, ProductNotInCartException,
             ExceededCartQuantityException;
+
+    Carrito saveCarrito(Carrito carrito);
+
+    Carrito updateCarrito(Long carritoId, Carrito carrito);
+        
+    void deleteCarrito(Long carritoId);
+
 }

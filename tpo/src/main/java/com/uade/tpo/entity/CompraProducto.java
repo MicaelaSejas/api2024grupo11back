@@ -7,24 +7,32 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "descuento")
-public class Descuento {
+@Table(name = "compraProducto")
+public class CompraProducto {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
+    @Column(name = "id")
     private Long id;
 
-    @Column(name = "porcentaje", nullable = false)
-    private int porcentaje;
-
+    @ManyToOne
+    @JoinColumn(name = "idCompra", referencedColumnName = "id")
     @JsonIgnore
-    @OneToOne(mappedBy = "descuento")
+    private Compra compra;
+
+    @ManyToOne
+    @JoinColumn(name = "idProducto", referencedColumnName = "id")
     private Producto producto;
+
+    @Column(name = "cantidad", nullable = false)
+    private int cantidad;
+
+    
 }

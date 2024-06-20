@@ -7,7 +7,6 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -15,7 +14,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -27,43 +25,41 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "usuarios")
+@Table(name = "usuario")
 public class Usuario implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long Id;
+    @Column(name = "id", nullable = false)
+    private Long id;
 
-    @Column
+    @Column(name = "username", nullable = false, unique = true)
     private String username;
 
-    @Column
+    @Column(name = "nombre", nullable = false)
     private String nombre;
 
-    @Column
+    @Column(name = "apellido", nullable = false)
     private String apellido;
 
-    @Column(unique = true)
-    private String email;
+    @Column(name = "mail", nullable = false, unique = true)
+    private String mail;
 
-    @Column
+    @Column(name = "password", nullable = false)
     private String password;
 
     @ManyToOne
-    @JoinColumn(name = "roles_id", referencedColumnName = "id")
-    private Rol roles;
-
-//    @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL)
-//    private Carrito carrito;
+    @JoinColumn(name = "idRol", nullable = false)
+    private Rol rol;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority(roles.getDescripcion()));
+        return List.of(new SimpleGrantedAuthority(rol.getDescripcion()));
     }
 
     @Override
     public String getUsername() {
-        return email;
+        return username;
     }
 
     @Override
@@ -86,8 +82,8 @@ public class Usuario implements UserDetails {
         return true;
     }
 
-	@Override
-	public String getPassword() {
-		return password;
-	}
+    @Override
+    public String getPassword() {
+        return password;
+    }
 }

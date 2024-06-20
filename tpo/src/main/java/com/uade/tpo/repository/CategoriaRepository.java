@@ -1,13 +1,12 @@
 package com.uade.tpo.repository;
 
-
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.uade.tpo.entity.CarritoProductos;
+import com.uade.tpo.entity.Categoria;
+
 @Repository
-
-public interface  CarritoProductosRepository extends JpaRepository<CarritoProductos, Long>{
-
+public interface CategoriaRepository extends JpaRepository<Categoria, Long> {
 
 }
+
