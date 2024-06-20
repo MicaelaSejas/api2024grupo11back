@@ -6,12 +6,12 @@ import java.util.function.Function;
 import javax.crypto.SecretKey;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
-import org.springframework.security.core.userdetails.UserDetails;
 
 @Service
 public class JwtService {
@@ -27,10 +27,13 @@ public class JwtService {
     }
 
     private String buildToken(UserDetails userDetails, long expiration) {
+        Date now = new Date();
+        Date expiryDate = new Date(now.getTime() + expiration);
+    
         return Jwts.builder()
-                .setSubject(userDetails.getUsername())
-                .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + expiration))
+                .subject(userDetails.getUsername())
+                .issuedAt(now)
+                .expiration(expiryDate)
                 .signWith(getSecretKey())
                 .compact();
     }
@@ -53,14 +56,16 @@ public class JwtService {
         return claimsResolver.apply(claims);
     }
 
+    @SuppressWarnings("deprecation")
     public Claims extractAllClaims(String token) {
-        return Jwts.builder()  // Utilizamos builder() en lugar de parserBuilder()
+        return Jwts.parser()
                 .setSigningKey(getSecretKey())
                 .build()
                 .parseClaimsJws(token)
                 .getBody();
     }
 
+    
     private SecretKey getSecretKey() {
         return Keys.hmacShaKeyFor(secretKey.getBytes(StandardCharsets.UTF_8));
     }
