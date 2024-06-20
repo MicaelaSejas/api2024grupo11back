@@ -44,9 +44,9 @@ public class UsuarioController {
         return optionalUsuario.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @GetMapping("/username/{username}")
-    public ResponseEntity<Usuario> getUsuarioByUsername(@PathVariable("username") String username) {
-        Optional<Usuario> optionalUsuario = usuarioService.findUsuarioByUsername(username);
+    @GetMapping("/usuario/{usuario}")
+    public ResponseEntity<Usuario> getUsuarioByUsername(@PathVariable("usuario") String usuario) {
+        Optional<Usuario> optionalUsuario = usuarioService.findUsuarioByUsername(usuario);
         return optionalUsuario.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 

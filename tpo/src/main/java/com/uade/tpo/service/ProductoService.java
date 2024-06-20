@@ -54,11 +54,11 @@ public class ProductoService {
     }
 
     public Optional<Producto> findProductoByDescuento(Descuento descuento) {
-        return productoRepository.findByIdDescuento(descuento);
+        return productoRepository.findByDescuento(descuento);
     }
 
     public Optional<Producto> findProductoByCategoria(Categoria categoria) {
-        return productoRepository.findByIdCategoria(categoria);
+        return productoRepository.findByCategoria(categoria);
     }
 
     public int getCantidadDisponibleEnStock(Long idProducto) {

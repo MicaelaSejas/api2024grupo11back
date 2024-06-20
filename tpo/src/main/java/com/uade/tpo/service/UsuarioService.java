@@ -25,8 +25,8 @@ public class UsuarioService {
         return usuarioRepository.findById(id);
     }
 
-    public Optional<Usuario> findUsuarioByUsername(String username) {
-        return usuarioRepository.findByUsername(username);
+    public Optional<Usuario> findUsuarioByUsername(String usuario) {
+        return usuarioRepository.findByUsuario(usuario);
     }
 
     public Optional<Usuario> findUsuarioByMail(String mail) {
@@ -34,7 +34,7 @@ public class UsuarioService {
     }
 
    public Optional<Usuario> findUsuariosByRol(Rol rol) {
-        return usuarioRepository.findByIdRol(rol);
+        return usuarioRepository.findByRolId(rol);
     }
 
 
@@ -46,7 +46,7 @@ public class UsuarioService {
         Optional<Usuario> optionalUsuario = usuarioRepository.findById(id);
         if (optionalUsuario.isPresent()) {
             Usuario usuarioExistente = optionalUsuario.get();
-            usuarioExistente.setUsername(usuarioNuevo.getUsername());
+            usuarioExistente.setUsuario(usuarioNuevo.getUsername());
             usuarioExistente.setNombre(usuarioNuevo.getNombre());
             usuarioExistente.setApellido(usuarioNuevo.getApellido());
             usuarioExistente.setMail(usuarioNuevo.getMail());

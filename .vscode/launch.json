@@ -2,6 +2,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "JwtSecretKeyGenerator",
+            "request": "launch",
+            "mainClass": "com.uade.tpo.controller.config.JwtSecretKeyGenerator",
+            "projectName": "tpo"
+        },
+        {
+            "type": "java",
             "name": "Spring Boot-TpoApplication<tpo>",
             "request": "launch",
             "cwd": "${workspaceFolder}",

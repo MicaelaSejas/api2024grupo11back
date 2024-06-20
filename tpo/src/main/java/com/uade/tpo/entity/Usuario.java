@@ -7,6 +7,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -33,8 +35,8 @@ public class Usuario implements UserDetails {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(name = "username", nullable = false, unique = true)
-    private String username;
+    @Column(name = "usuario", nullable = false, unique = true)
+    private String usuario;
 
     @Column(name = "nombre", nullable = false)
     private String nombre;
@@ -50,6 +52,7 @@ public class Usuario implements UserDetails {
 
     @ManyToOne
     @JoinColumn(name = "idRol", nullable = false)
+    @JsonIgnore
     private Rol rol;
 
     @Override
@@ -59,7 +62,7 @@ public class Usuario implements UserDetails {
 
     @Override
     public String getUsername() {
-        return username;
+        return usuario;
     }
 
     @Override

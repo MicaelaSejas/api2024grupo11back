@@ -11,6 +11,6 @@ import com.uade.tpo.entity.Usuario;
 @Repository
 public interface CompraRepository extends JpaRepository<Compra, Long> {
 
-    Optional<Compra> findByIdUsuario(Usuario usuario);
+    Optional<Compra> findByUsuario(Usuario usuario);
 
 }

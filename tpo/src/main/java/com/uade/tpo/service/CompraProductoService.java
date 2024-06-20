@@ -53,10 +53,10 @@ public class CompraProductoService {
     }
 
     public Optional<CompraProducto> findCompraProductoByProducto(Producto producto) {
-        return compraProductoRepository.findByIdProducto(producto);
+        return compraProductoRepository.findByProducto(producto);
     }
 
     public Optional<CompraProducto> findCompraProductoByCompra(Compra compra) {
-        return compraProductoRepository.findByIdCompra(compra);
+        return compraProductoRepository.findByCompra(compra);
     }
 }

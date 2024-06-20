@@ -27,6 +27,7 @@ public class CarritoProducto {
 
     @ManyToOne
     @JoinColumn(name = "idProducto", referencedColumnName = "id")
+	@JsonIgnore
     private Producto producto;
 
     @ManyToOne

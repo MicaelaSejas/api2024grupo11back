@@ -12,7 +12,7 @@ import com.uade.tpo.entity.Producto;
 @Repository
 public interface CompraProductoRepository extends JpaRepository<CompraProducto, Long> {
 
-    Optional<CompraProducto> findByIdProducto(Producto producto);
+    Optional<CompraProducto> findByProducto(Producto producto);
 
-    Optional<CompraProducto> findByIdCompra(Compra compra);
+    Optional<CompraProducto> findByCompra(Compra compra);
 }

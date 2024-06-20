@@ -47,7 +47,7 @@ public class AuthenticationServiceImplement implements AuthenticationService {
         var rol = rolRepository.findById(request.getRoles())
                 .orElseThrow(() -> new IllegalArgumentException("Invalid role ID: " + request.getRoles()));
         var user = Usuario.builder()
-                .username(request.getUsername())
+                .usuario(request.getUsername())
                 .nombre(request.getFirstname())
                 .apellido(request.getLastname())
                 .mail(request.getEmail())

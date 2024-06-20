@@ -16,9 +16,15 @@ import io.jsonwebtoken.security.Keys;
 @Service
 public class JwtService {
 
-    @Value("${application.security.jwt.secretKey}")
-    private String secretKey;
+    // @Value("${application.security.jwt.secretKey}")
+    private final String secretKey;
 
+
+    
+    public JwtService(@Value("${application.security.jwt.secretKey}") String secretKey) {
+        this.secretKey = secretKey;
+    }
+    
     @Value("${application.security.jwt.expiration}")
     private long jwtExpiration;
 
@@ -69,4 +75,5 @@ public class JwtService {
     private SecretKey getSecretKey() {
         return Keys.hmacShaKeyFor(secretKey.getBytes(StandardCharsets.UTF_8));
     }
+    
 }

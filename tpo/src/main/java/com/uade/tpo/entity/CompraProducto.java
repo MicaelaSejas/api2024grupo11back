@@ -29,6 +29,7 @@ public class CompraProducto {
 
     @ManyToOne
     @JoinColumn(name = "idProducto", referencedColumnName = "id")
+    @JsonIgnore
     private Producto producto;
 
     @Column(name = "cantidad", nullable = false)

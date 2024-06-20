@@ -14,6 +14,7 @@ import com.uade.tpo.controller.request.CarritoResponse;
 import com.uade.tpo.entity.Carrito;
 import com.uade.tpo.entity.CarritoProducto;
 import com.uade.tpo.entity.Producto;
+import com.uade.tpo.entity.Usuario;
 import com.uade.tpo.exception.CartAlreadyEmptyException;
 import com.uade.tpo.exception.CartNotFoundException;
 import com.uade.tpo.exception.ExceededCartQuantityException;
@@ -41,6 +42,12 @@ public class CarritoServiceImpl implements CarritoService {
                 .orElseThrow(() -> new CartNotFoundException("Carrito con id " + carritoId + " no encontrado"));
     }
 
+
+    public Optional<Carrito> findCarritoByUsuario(Usuario usuario) {
+        return carritoRepository.findByUsuario(usuario);
+    }
+
+    
     @Transactional
     @Override
     public ResponseEntity<CarritoResponse> removeFromCarrito(Long carritoId, CarritoRequest request)

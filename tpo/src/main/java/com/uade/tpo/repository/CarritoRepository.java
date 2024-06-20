@@ -11,6 +11,7 @@ import com.uade.tpo.entity.Usuario;
 @Repository
 public interface CarritoRepository extends JpaRepository<Carrito, Long> {
 
-    Optional<Carrito> findByIdUsuario(Usuario usuario);
+
+    Optional<Carrito> findByUsuario(Usuario usuario);
 
 }

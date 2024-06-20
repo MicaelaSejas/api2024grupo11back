@@ -52,6 +52,6 @@ public class CompraService {
     }
 
     public Optional<Compra> findCompraByUsuario(Usuario usuario) {
-        return compraRepository.findByIdUsuario(usuario);
+        return compraRepository.findByUsuario(usuario);
     }
 }

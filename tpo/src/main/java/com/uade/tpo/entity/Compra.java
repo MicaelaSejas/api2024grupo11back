@@ -2,6 +2,7 @@ package com.uade.tpo.entity;
 
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.CascadeType;
@@ -28,6 +29,7 @@ public class Compra {
 
     @ManyToOne
     @JoinColumn(name = "idUsuario", referencedColumnName = "id")
+    @JsonIgnore
     private Usuario usuario;
 
     @Column(name = "precioTotal")

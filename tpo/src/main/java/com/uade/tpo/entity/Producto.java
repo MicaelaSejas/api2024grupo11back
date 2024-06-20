@@ -1,6 +1,7 @@
 package com.uade.tpo.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -46,10 +47,12 @@ public class Producto {
 
     @ManyToOne
     @JoinColumn(name = "idCategoria", nullable = false, referencedColumnName = "id")
+    @JsonIgnore
     private Categoria categoria;
 
     @JsonBackReference
     @OneToOne
     @JoinColumn(name = "idDescuento", nullable = true, referencedColumnName = "id")
+    @JsonIgnore
     private Descuento descuento;
 }

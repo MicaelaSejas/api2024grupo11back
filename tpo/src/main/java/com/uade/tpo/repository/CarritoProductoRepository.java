@@ -12,7 +12,7 @@ import com.uade.tpo.entity.Producto;
 @Repository
 public interface CarritoProductoRepository extends JpaRepository<CarritoProducto, Long> {
 
-    Optional<CarritoProducto> findByIdProducto(Producto producto);
+    Optional<CarritoProducto> findByProducto(Producto producto);
 
-    Optional<CarritoProducto> findByIdCarrito(Carrito carrito);
+    Optional<CarritoProducto> findByCarrito(Carrito carrito);
 }
