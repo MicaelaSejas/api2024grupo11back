@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.uade.tpo.entity.Rol;
 import com.uade.tpo.entity.Usuario;
 import com.uade.tpo.service.RolService;
 import com.uade.tpo.service.UsuarioService;
@@ -57,25 +56,26 @@ public class UsuarioController {
     }
 
     @GetMapping("/rol/{idRol}")
-    public ResponseEntity<Usuario> getUsuariosByRol(@PathVariable("idRol") Long idRol) {
-        Optional<Rol> optionalRol = rolService.findRolById(idRol);
-        if (optionalRol.isPresent()) {
-            Optional<Usuario> optionalUsuario = usuarioService.findUsuariosByRol(optionalRol.get());
-            return optionalUsuario.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+    public ResponseEntity<List<Usuario>> getUsuariosByRol(@PathVariable("idRol") Long idRol) {
+        List<Usuario> usuarios = usuarioService.findUsuariosByRol(idRol);
+        return ResponseEntity.ok(usuarios);
     }
 
 
     @PostMapping
     public ResponseEntity<Usuario> createUsuario(@RequestBody Usuario usuario) {
+        System.out.println("Datos recibidos para crear usuario:");
+        System.out.println(usuario); 
+    
         Usuario nuevoUsuario = usuarioService.saveUsuario(usuario);
         return ResponseEntity.status(HttpStatus.CREATED).body(nuevoUsuario);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Usuario> updateUsuario(@PathVariable("id") Long id, @RequestBody Usuario usuario) {
+        System.out.println("Datos recibidos para actualizar usuario con ID: " + id);
+        System.out.println(usuario); 
+    
         try {
             Usuario usuarioActualizado = usuarioService.updateUsuario(id, usuario);
             return ResponseEntity.ok(usuarioActualizado);
@@ -84,9 +84,11 @@ public class UsuarioController {
         }
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteUsuario(@PathVariable("id") Long id) {
-        usuarioService.deleteUsuario(id);
-        return ResponseEntity.noContent().build();
-    }
+@DeleteMapping("/{id}")
+public ResponseEntity<Void> deleteUsuario(@PathVariable("id") Long id) {
+    System.out.println("Eliminando usuario con ID: " + id);
+
+    usuarioService.deleteUsuario(id);
+    return ResponseEntity.noContent().build();
+}
 }

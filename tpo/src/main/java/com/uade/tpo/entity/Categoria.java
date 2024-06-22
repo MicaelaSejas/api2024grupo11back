@@ -28,9 +28,9 @@ public class Categoria {
     private String descripcion;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "categoria", cascade = CascadeType.ALL)
-    private List<Producto> productos; // Cambiado a plural "productos" y se especifica el mappedBy como "categoria"
+    @OneToMany(mappedBy = "idCategoria", cascade = CascadeType.ALL)
+    private List<Producto> productos; 
 
 
-    // Getters y setters generados automáticamente por Lombok
+    
 }

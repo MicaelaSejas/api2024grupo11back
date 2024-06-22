@@ -3,14 +3,17 @@ package com.uade.tpo.entity;
 import java.util.Collection;
 import java.util.List;
 
+import javax.validation.constraints.NotNull;
+
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -28,6 +31,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "usuario")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Usuario implements UserDetails {
 
     @Id
@@ -35,31 +39,40 @@ public class Usuario implements UserDetails {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(name = "usuario", nullable = false, unique = true)
-    private String usuario;
-
     @Column(name = "nombre", nullable = false)
     private String nombre;
 
     @Column(name = "apellido", nullable = false)
     private String apellido;
 
+    @NotNull
     @Column(name = "mail", nullable = false, unique = true)
     private String mail;
+
+    @Column(name = "usuario", nullable = false, unique = true)
+    private String usuario;
 
     @Column(name = "password", nullable = false)
     private String password;
 
-    @ManyToOne
-    @JoinColumn(name = "idRol", nullable = false)
-    @JsonIgnore
+    @Column(name = "idRol", nullable = false)
+    private Long idRol;
+
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "idRol", referencedColumnName = "id", insertable = false, updatable = false)
     private Rol rol;
 
+    
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority(rol.getDescripcion()));
+        String rolDescripcion = "ROLE_DEFAULT"; 
+        if (rol != null && rol.getDescripcion() != null) {
+            rolDescripcion = rol.getDescripcion();
+        }
+        return List.of(new SimpleGrantedAuthority(rolDescripcion));
     }
-
+    
     @Override
     public String getUsername() {
         return usuario;

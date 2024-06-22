@@ -42,8 +42,14 @@ public class RolController {
 
     @PostMapping
     public ResponseEntity<Rol> createRol(@RequestBody Rol rol) {
-        Rol nuevoRol = rolService.saveRol(rol);
-        return ResponseEntity.status(HttpStatus.CREATED).body(nuevoRol);
+        try {
+            Rol nuevoRol = rolService.saveRol(rol);
+            return ResponseEntity.status(HttpStatus.CREATED).body(nuevoRol);
+        } catch (Exception e) {
+            
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
     @PutMapping("/{id}")

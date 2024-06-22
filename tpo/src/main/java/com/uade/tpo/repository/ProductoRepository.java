@@ -10,7 +10,7 @@ import com.uade.tpo.entity.Producto;
 @Repository
 public interface ProductoRepository extends JpaRepository<Producto, Long> {
 
-    List<Producto> findByDescuentoId(Long idDescuento);
-    List<Producto> findByCategoriaId(Long idCategoria);
+    List<Producto> findByIdDescuento(Long idDescuento);
+    List<Producto> findByIdCategoria(Long idCategoria);
 
 }

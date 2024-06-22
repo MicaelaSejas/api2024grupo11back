@@ -116,7 +116,7 @@ public class CarritoServiceImpl implements CarritoService {
                 }
 
             } else {
-                // Si el producto no está en el carrito
+                
                 if (producto.getCantidad() >= cantidad) {
                     producto.setCantidad(producto.getCantidad() - cantidad);
 

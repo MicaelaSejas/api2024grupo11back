@@ -43,11 +43,7 @@ public class CarritoController {
 
     }
 
-    /*
-     * Si el producto no existe, lo agrega.
-     * Si existe, suma en 1 la cantidad.
-     * 
-     */
+
     @PostMapping("agregar/{carritoId}")
     public ResponseEntity<CarritoResponse> addToCarrito(@PathVariable final Long carritoId,
             @RequestBody final CarritoRequest request) {

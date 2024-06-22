@@ -7,7 +7,6 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.uade.tpo.entity.Rol;
 import com.uade.tpo.entity.Usuario;
 import com.uade.tpo.repository.UsuarioRepository;
 
@@ -33,10 +32,13 @@ public class UsuarioService {
         return usuarioRepository.findByMail(mail);
     }
 
-   public Optional<Usuario> findUsuariosByRol(Rol rol) {
-        return usuarioRepository.findByRolId(rol);
+    public List<Usuario> findUsuariosByRol(Long idRol) {
+        return usuarioRepository.findByRolId(idRol);
     }
 
+    public Optional<Usuario> findUsuarioByIdWithRol(Long id) {
+        return usuarioRepository.findByIdWithRol(id);
+    }
 
     public Usuario saveUsuario(Usuario usuario) {
         return usuarioRepository.save(usuario);
@@ -46,12 +48,12 @@ public class UsuarioService {
         Optional<Usuario> optionalUsuario = usuarioRepository.findById(id);
         if (optionalUsuario.isPresent()) {
             Usuario usuarioExistente = optionalUsuario.get();
-            usuarioExistente.setUsuario(usuarioNuevo.getUsername());
+            usuarioExistente.setUsuario(usuarioNuevo.getUsuario());
             usuarioExistente.setNombre(usuarioNuevo.getNombre());
             usuarioExistente.setApellido(usuarioNuevo.getApellido());
             usuarioExistente.setMail(usuarioNuevo.getMail());
             usuarioExistente.setPassword(usuarioNuevo.getPassword());
-            usuarioExistente.setRol(usuarioNuevo.getRol());
+            usuarioExistente.setIdRol(usuarioNuevo.getIdRol());
             return usuarioRepository.save(usuarioExistente);
         } else {
             throw new NoSuchElementException("No se encontró el usuario con ID: " + id);
@@ -60,5 +62,17 @@ public class UsuarioService {
 
     public void deleteUsuario(Long id) {
         usuarioRepository.deleteById(id);
+    }
+
+
+    public Optional<Usuario> login(String usuario, String password) {
+        Optional<Usuario> optionalUsuario = usuarioRepository.findByUsuario(usuario);
+        if (optionalUsuario.isPresent()) {
+            Usuario usuarioEncontrado = optionalUsuario.get();
+            if (usuarioEncontrado.getPassword().equals(password)) {
+                return optionalUsuario;
+            }
+        }
+        return Optional.empty(); 
     }
 }
