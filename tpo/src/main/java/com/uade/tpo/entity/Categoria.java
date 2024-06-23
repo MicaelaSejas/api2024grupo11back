@@ -2,8 +2,6 @@ package com.uade.tpo.entity;
 
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -19,18 +17,19 @@ import lombok.Data;
 @Table(name = "categoria")
 public class Categoria {
 
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
-    private Long id;
+    private int id;
 
     @Column(name = "descripcion", nullable = false)
     private String descripcion;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "idCategoria", cascade = CascadeType.ALL)
-    private List<Producto> productos; 
+    
 
+    @OneToMany(mappedBy = "categoria", cascade = CascadeType.ALL)
+    private List<Producto> productos;
 
     
 }

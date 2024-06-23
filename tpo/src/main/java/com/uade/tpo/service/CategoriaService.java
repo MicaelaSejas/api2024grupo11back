@@ -21,7 +21,7 @@ public class CategoriaService {
     }
 
     
-    public Optional<Categoria> findCategoriaById(Long id) {
+    public Optional<Categoria> findCategoriaById(Integer id) {
         return categoriaRepository.findById(id);
     }
 
@@ -31,19 +31,19 @@ public class CategoriaService {
     }
 
     
-    public void deleteCategoria(Long id) {
+    public void deleteCategoria(Integer id) {
         categoriaRepository.deleteById(id);
     }
 
     
-    public Categoria updateCategoria(Long id, Categoria categoriaActualizada) {
+    public Categoria updateCategoria(Integer id, Categoria categoriaActualizada) {
         Optional<Categoria> optionalCategoria = categoriaRepository.findById(id);
         if (optionalCategoria.isPresent()) {
             Categoria categoriaExistente = optionalCategoria.get();
             categoriaExistente.setDescripcion(categoriaActualizada.getDescripcion());
             return categoriaRepository.save(categoriaExistente);
         } else {
-            throw new RuntimeException("No se encontró la categoría con ID: " + id);
+            throw new IllegalArgumentException("No se encontró la categoría con ID: " + id);
         }
     }
 }

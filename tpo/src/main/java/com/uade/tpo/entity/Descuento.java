@@ -2,8 +2,6 @@ package com.uade.tpo.entity;
 
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -22,13 +20,13 @@ public class Descuento {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
-    private Long id;
+    private int id;
 
     @Column(name = "porcentaje", nullable = false)
-    private int porcentaje;
+    private double porcentaje;
 
+    
+    @OneToMany(mappedBy = "descuento", cascade = CascadeType.ALL)
+    private List<Producto> productos;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "idDescuento", cascade = CascadeType.ALL)
-    private List<Producto> productos; 
 }

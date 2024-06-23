@@ -20,7 +20,7 @@ public class DescuentoService {
         return descuentoRepository.findAll();
     }
 
-    public Optional<Descuento> obtenerDescuentoPorId(Long id) {
+    public Optional<Descuento> obtenerDescuentoPorId(Integer id) {
         return descuentoRepository.findById(id);
     }
 
@@ -28,11 +28,11 @@ public class DescuentoService {
         return descuentoRepository.save(descuento);
     }
 
-    public void eliminarDescuento(Long id) {
+    public void eliminarDescuento(Integer id) {
         descuentoRepository.deleteById(id);
     }
 
-    public Descuento actualizarDescuento(Long id, Descuento descuentoActualizado) {
+    public Descuento actualizarDescuento(Integer id, Descuento descuentoActualizado) {
         Optional<Descuento> optionalDescuento = descuentoRepository.findById(id);
         if (optionalDescuento.isPresent()) {
             Descuento descuentoExistente = optionalDescuento.get();

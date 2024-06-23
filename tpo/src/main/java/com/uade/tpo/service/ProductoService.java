@@ -20,7 +20,7 @@ public class ProductoService {
     @Autowired
     private  ProductoRepository productoRepository;
 
-        @Autowired
+    @Autowired
     private CategoriaRepository categoriaRepository;
 
     @Autowired
@@ -30,33 +30,29 @@ public class ProductoService {
         return productoRepository.findAll();
     }
 
-    public Optional<Producto> getProductoById(Long id) {
+    public Optional<Producto> obtenerProductoPorId(Integer id) {
         return productoRepository.findById(id);
     }
 
-    public Producto saveProducto(Producto producto) {
-        
-        if (producto.getIdCategoria() != null) {
-            Categoria categoria = categoriaRepository.findById(producto.getIdCategoria())
-                    .orElseThrow(() -> new NoSuchElementException("No se encontró la categoría con ID: " + producto.getIdCategoria()));
-            producto.setIdCategoria(categoria.getId());
+    public Producto guardarProducto(Producto producto) {
+        if (producto.getCategoria() != null) {
+            Categoria categoria = categoriaRepository.findById(producto.getCategoria().getId())
+                    .orElseThrow(() -> new NoSuchElementException("No se encontró la categoría con ID: " + producto.getCategoria().getId()));
+            producto.setCategoria(categoria);
         }
-    
-        
-        if (producto.getIdDescuento() != null) {
-            Descuento descuento = descuentoRepository.findById(producto.getIdDescuento())
-                    .orElseThrow(() -> new NoSuchElementException("No se encontró el descuento con ID: " + producto.getIdDescuento()));
-            producto.setIdDescuento(descuento.getId());
+        if (producto.getDescuento() != null) {
+            Descuento descuento = descuentoRepository.findById(producto.getDescuento().getId())
+                    .orElseThrow(() -> new NoSuchElementException("No se encontró el descuento con ID: " + producto.getDescuento().getId()));
+            producto.setDescuento(descuento);
         }
-    
         return productoRepository.save(producto);
     }
 
-    public void deleteProducto(Long id) {
+    public void eliminarProducto(Integer id) {
         productoRepository.deleteById(id);
     }
 
-    public int getCantidadDisponibleEnStock(Long idProducto) {
+    public int getCantidadDisponibleEnStock(Integer idProducto) {
         Optional<Producto> optionalProducto = productoRepository.findById(idProducto);
         if (optionalProducto.isPresent()) {
             Producto producto = optionalProducto.get();
@@ -66,7 +62,7 @@ public class ProductoService {
         }
     }
 
-    public boolean verificarStockDisponible(Long idProducto, int cantidadRequerida) {
+    public boolean verificarStockDisponible(Integer idProducto, Integer cantidadRequerida) {
         Optional<Producto> optionalProducto = productoRepository.findById(idProducto);
         if (optionalProducto.isPresent()) {
             Producto producto = optionalProducto.get();
@@ -76,11 +72,23 @@ public class ProductoService {
         }
     }
 
-    public List<Producto> getProductosByDescuentoId(Long idDescuento) {
-        return productoRepository.findByIdDescuento(idDescuento);
+
+    public List<Producto> getProductosByDescuentoId(Integer idDescuento) {
+        Optional<Descuento> descuento = descuentoRepository.findById(idDescuento);
+        if (descuento.isPresent()) {
+            return descuento.get().getProductos();
+        } else {
+            throw new NoSuchElementException("No se encontró el descuento con ID: " + idDescuento);
+        }
     }
 
-    public List<Producto> getProductosByCategoriaId(Long idCategoria) {
-        return productoRepository.findByIdCategoria(idCategoria);
+    public List<Producto> getProductosByCategoriaId(Integer idDCategoria) {
+        Optional<Categoria> categoria = categoriaRepository.findById(idDCategoria);
+        if (categoria.isPresent()) {
+            return categoria.get().getProductos();
+        } else {
+            throw new NoSuchElementException("No se encontró la categoria con ID: " + idDCategoria);
+        }
     }
+
 }
