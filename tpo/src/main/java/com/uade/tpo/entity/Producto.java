@@ -1,6 +1,6 @@
 package com.uade.tpo.entity;
 
-// import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -9,7 +9,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
@@ -17,7 +16,7 @@ import lombok.Data;
 @Data
 @Entity
 @Table(name = "producto")
-// @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+
 public class Producto {
 
     @Id
@@ -37,18 +36,19 @@ public class Producto {
     @Column(name = "cantidad", nullable = false)
     private int cantidad;
 
-    @Lob
-    @Column(name = "imagen_1", nullable = true)
-    private byte[] imagen_1;
+    
+    @Column(name = "imagen_1_URL", nullable = true)
+    private String  imagen_1_URL;
 
-    @Lob
-    @Column(name = "imagen_2", nullable = true)
-    private byte[] imagen_2;
-
+    @Column(name = "imagen_2_URL", nullable = true)
+    private String  imagen_2_URL;
+    
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idCategoria", nullable = false)
     private Categoria categoria;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idDescuento")
     private Descuento descuento;

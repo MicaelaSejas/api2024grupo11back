@@ -2,6 +2,8 @@ package com.uade.tpo.entity;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -25,7 +27,7 @@ public class Descuento {
     @Column(name = "porcentaje", nullable = false)
     private double porcentaje;
 
-    
+    @JsonIgnore
     @OneToMany(mappedBy = "descuento", cascade = CascadeType.ALL)
     private List<Producto> productos;
 

@@ -24,8 +24,8 @@ CREATE TABLE `producto` (
   `descripcion` varchar(255) NOT NULL,
   `precio` DECIMAL(10,2) NOT NULL DEFAULT 1.00,
   `cantidad` int NOT NULL DEFAULT 1,
-  `imagen_1` BLOB,
-  `imagen_2` BLOB,
+  `imagen_1_URL` varchar(255),
+  `imagen_2_URL` varchar(255),
   `idCategoria` int NOT NULL,
   `idDescuento` int,
   PRIMARY KEY (`id`),
@@ -50,6 +50,6 @@ INSERT INTO descuento(porcentaje)
 VALUES (10);
 
 use tpo;
-INSERT INTO producto(titulo, descripcion, precio, cantidad,imagen_1,imagen_2, idCategoria, idDescuento)
-VALUES ('Silla RGB','Silla RGB Excelente estado', 100000,10, null,null,1, 1);
+INSERT INTO producto(titulo, descripcion, precio, cantidad,imagen_1_URL, imagen_2_URL,idCategoria, idDescuento)
+VALUES ('Silla RGB','Silla RGB Excelente estado', 100000,10, 'https://i.blogs.es/a9b4fe/dx/1366_2000.jpg','https://i.blogs.es/a9b4fe/dx/1366_2000.jpg',1, 1);
 

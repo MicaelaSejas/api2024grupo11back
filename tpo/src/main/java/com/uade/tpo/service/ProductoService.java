@@ -13,6 +13,7 @@ import com.uade.tpo.entity.Producto;
 import com.uade.tpo.repository.CategoriaRepository;
 import com.uade.tpo.repository.DescuentoRepository;
 import com.uade.tpo.repository.ProductoRepository;
+import com.uade.tpo.request.ProductoRequest;
 
 @Service
 public class ProductoService {
@@ -45,8 +46,51 @@ public class ProductoService {
                     .orElseThrow(() -> new NoSuchElementException("No se encontró el descuento con ID: " + producto.getDescuento().getId()));
             producto.setDescuento(descuento);
         }
+
         return productoRepository.save(producto);
     }
+
+
+    public Producto actualizarProducto(Integer id, ProductoRequest request) {
+        Optional<Producto> optionalProducto = productoRepository.findById(id);
+        if (optionalProducto.isPresent()) {
+            Producto productoExistente = optionalProducto.get();
+            
+            productoExistente.setTitulo(request.getTitulo());
+            productoExistente.setDescripcion(request.getDescripcion());
+            productoExistente.setPrecio(request.getPrecio());
+            productoExistente.setCantidad(request.getCantidad());
+
+            
+            if (request.getIdCategoria() != null) {
+                Categoria categoria = categoriaRepository.findById(request.getIdCategoria())
+                        .orElseThrow(() -> new NoSuchElementException("No se encontró la categoría con ID: " + request.getIdCategoria()));
+                productoExistente.setCategoria(categoria);
+            }
+
+            
+            if (request.getIdDescuento() != null) {
+                Descuento descuento = descuentoRepository.findById(request.getIdDescuento())
+                        .orElseThrow(() -> new NoSuchElementException("No se encontró el descuento con ID: " + request.getIdDescuento()));
+                productoExistente.setDescuento(descuento);
+            }
+
+            
+            if (request.getImagen_1_URL() != null && !request.getImagen_1_URL().isEmpty()) {
+                productoExistente.setImagen_1_URL(request.getImagen_1_URL());
+            }
+
+            if (request.getImagen_2_URL() != null && !request.getImagen_2_URL().isEmpty()) {
+                productoExistente.setImagen_2_URL(request.getImagen_2_URL());
+            }
+
+            return productoRepository.save(productoExistente);
+        } else {
+            throw new NoSuchElementException("No se encontró el producto con ID: " + id);
+        }
+    }
+
+
 
     public void eliminarProducto(Integer id) {
         productoRepository.deleteById(id);

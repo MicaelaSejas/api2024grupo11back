@@ -11,9 +11,9 @@ public class ProductoRequest {
     private String descripcion;
     private double precio;
     private int cantidad;
-    private byte[] imagen_1;
-    private byte[] imagen_2;
-    private int idCategoria;
+    private String imagen_1_URL;
+    private String imagen_2_URL;
+    private Integer idCategoria;
     private Integer idDescuento;
 
 }
