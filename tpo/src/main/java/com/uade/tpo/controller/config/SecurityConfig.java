@@ -33,6 +33,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(req -> req.requestMatchers("/api/v1/auth/**").permitAll()
                         .requestMatchers("/error/**").permitAll()
                         .requestMatchers("/api/v1/categoria").hasAnyAuthority("Vendedor")
+                        
                         .requestMatchers("/api/v1/descuento").hasAnyAuthority("Vendedor")
                         // TODO: chequear que un comprador no pueda crear productos
                         .requestMatchers("/api/v1/producto").permitAll()
