@@ -27,8 +27,7 @@ import com.uade.tpo.repository.DescuentoRepository;
 import com.uade.tpo.service.ProductoService;
 
 @RestController
-@RequestMapping("/api/producto")
-@CrossOrigin(origins = "http://localhost:3000")
+@RequestMapping("/api/v1/producto")
 public class ProductoController {
 
     @Autowired
@@ -47,16 +46,16 @@ public class ProductoController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Producto> obtenerProductoPorId(@PathVariable("id") Integer id) {
+    public ResponseEntity<Producto> obtenerProductoPorId(@PathVariable("id") Long id) {
         Optional<Producto> producto = productoService.obtenerProductoPorId(id);
         return producto.map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> eliminarProducto(@PathVariable("id") Integer id) {
+    public ResponseEntity<Void> eliminarProducto(@PathVariable("id") Long id) {
         productoService.eliminarProducto(id);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 
     @PostMapping
@@ -72,7 +71,7 @@ public class ProductoController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Producto> actualizarProducto(@PathVariable("id") Integer id,
+    public ResponseEntity<Producto> actualizarProducto(@PathVariable("id") Long id,
                                                        @RequestBody ProductoRequest request) {
         try {
             Producto producto = convertirAProducto(request);
@@ -111,7 +110,7 @@ public class ProductoController {
 
 
     @GetMapping("/{id}/stock")
-    public ResponseEntity<Integer> getCantidadDisponibleEnStock(@PathVariable("id") Integer idProducto) {
+    public ResponseEntity<Integer> getCantidadDisponibleEnStock(@PathVariable("id") Long idProducto) {
         int cantidadDisponible = productoService.getCantidadDisponibleEnStock(idProducto);
         return ResponseEntity.ok(cantidadDisponible);
     }
@@ -119,7 +118,7 @@ public class ProductoController {
 
 
     @GetMapping("/{id}/verificarStock")
-    public ResponseEntity<Boolean> verificarStockDisponible(@PathVariable("id") Integer idProducto, @RequestParam("cantidad") Integer cantidadRequerida) {
+    public ResponseEntity<Boolean> verificarStockDisponible(@PathVariable("id") Long idProducto, @RequestParam("cantidad") Integer cantidadRequerida) {
         boolean stockSuficiente = productoService.verificarStockDisponible(idProducto, cantidadRequerida);
         return ResponseEntity.ok(stockSuficiente);
     }

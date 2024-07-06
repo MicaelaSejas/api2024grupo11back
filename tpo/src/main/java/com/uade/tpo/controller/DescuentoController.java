@@ -22,8 +22,7 @@ import com.uade.tpo.entity.Descuento;
 import com.uade.tpo.service.DescuentoService;
 
 @RestController
-@RequestMapping("/api/descuento")
-@CrossOrigin(origins = "http://localhost:3000")
+@RequestMapping("/api/v1/descuento")
 public class DescuentoController {
 
     @Autowired

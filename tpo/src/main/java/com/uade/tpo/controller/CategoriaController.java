@@ -22,8 +22,7 @@ import com.uade.tpo.entity.Categoria;
 import com.uade.tpo.service.CategoriaService;
 
 @RestController
-@RequestMapping("/api/categoria")
-@CrossOrigin(origins = "http://localhost:3000")
+@RequestMapping("/api/v1/categoria")
 public class CategoriaController {
 
     @Autowired

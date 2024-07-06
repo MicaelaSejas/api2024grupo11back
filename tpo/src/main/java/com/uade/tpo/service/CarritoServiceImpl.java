@@ -46,14 +46,14 @@ public class CarritoServiceImpl implements CarritoService {
         Carrito carrito = getCarritoById(carritoId);
 
         Optional<CarritoProductos> optCarritoProducto = carrito.getCarritoProductos().stream()
-                .filter(cp -> cp.getProducto().getIdProductos().equals(request.getProductoId()))
+                .filter(cp -> cp.getProducto().getId().equals(request.getProductoId()))
                 .findFirst();
 
         if (optCarritoProducto.isPresent()) {
             CarritoProductos carritoProducto = optCarritoProducto.get();
             int cantidadEliminada = carritoProducto.getCantidad();
 
-            float nuevoTotal = carrito.getTotal()
+            double nuevoTotal = carrito.getTotal()
                     - (carritoProducto.getProducto().getPrecioConDescuento() * cantidadEliminada);
             carrito.setTotal(nuevoTotal);
 
@@ -85,7 +85,7 @@ public class CarritoServiceImpl implements CarritoService {
             Producto producto = optProducto.get();
 
             Optional<CarritoProductos> optCarritoProducto = carrito.getCarritoProductos().stream()
-                    .filter(cp -> cp.getProducto().getIdProductos().equals(producto.getIdProductos()))
+                    .filter(cp -> cp.getProducto().getId().equals(producto.getId()))
                     .findFirst();
 
             // Si el producto ya está en el carrito
@@ -97,7 +97,7 @@ public class CarritoServiceImpl implements CarritoService {
                     producto.setCantidad(producto.getCantidad() - cantidad);
                     carritoProducto.setCantidad(nuevaCantidad);
 
-                    float total = carrito.getTotal() + (producto.getPrecioConDescuento() * cantidad);
+                    double total = carrito.getTotal() + (producto.getPrecioConDescuento() * cantidad);
                     carrito.setTotal(total);
 
                     productoRepository.save(producto);
@@ -113,7 +113,7 @@ public class CarritoServiceImpl implements CarritoService {
                 if (producto.getCantidad() >= cantidad) {
                     producto.setCantidad(producto.getCantidad() - cantidad);
 
-                    float total = carrito.getTotal() + (producto.getPrecioConDescuento() * cantidad);
+                    double total = carrito.getTotal() + (producto.getPrecioConDescuento() * cantidad);
                     carrito.setTotal(total);
 
                     CarritoProductos carritoProducto = new CarritoProductos();
@@ -183,14 +183,14 @@ public class CarritoServiceImpl implements CarritoService {
             Producto producto = optProducto.get();
 
             Optional<CarritoProductos> optCarritoProducto = carrito.getCarritoProductos().stream()
-                    .filter(cp -> cp.getProducto().getIdProductos().equals(producto.getIdProductos()))
+                    .filter(cp -> cp.getProducto().getId().equals(producto.getId()))
                     .findFirst();
 
             if (optCarritoProducto.isPresent()) {
                 CarritoProductos carritoProducto = optCarritoProducto.get();
 
                 int nuevaCantidadDelCarrito = carritoProducto.getCantidad() - cantidad;
-                float total = 0.0f;
+                double total = 0;
 
                 if (nuevaCantidadDelCarrito < 0) {
                     throw new ExceededCartQuantityException(

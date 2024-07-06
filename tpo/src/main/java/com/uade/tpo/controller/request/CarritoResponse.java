@@ -33,7 +33,7 @@ public class CarritoResponse {
         public Long id;
 
         @JsonProperty("total")
-        public float total;
+        public double total;
 
         @JsonProperty("productos")
         public Set<CarritoProductos> productos;

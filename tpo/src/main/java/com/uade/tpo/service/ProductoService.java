@@ -32,7 +32,7 @@ public class ProductoService {
         return productoRepository.findAll();
     }
 
-    public Optional<Producto> obtenerProductoPorId(Integer id) {
+    public Optional<Producto> obtenerProductoPorId(Long id) {
         return productoRepository.findById(id);
     }
 
@@ -52,7 +52,7 @@ public class ProductoService {
     }
 
 
-    public Producto actualizarProducto(Integer id, ProductoRequest request) {
+    public Producto actualizarProducto(Long id, ProductoRequest request) {
         Optional<Producto> optionalProducto = productoRepository.findById(id);
         if (optionalProducto.isPresent()) {
             Producto productoExistente = optionalProducto.get();
@@ -93,11 +93,11 @@ public class ProductoService {
 
 
 
-    public void eliminarProducto(Integer id) {
+    public void eliminarProducto(Long id) {
         productoRepository.deleteById(id);
     }
 
-    public int getCantidadDisponibleEnStock(Integer idProducto) {
+    public int getCantidadDisponibleEnStock(Long idProducto) {
         Optional<Producto> optionalProducto = productoRepository.findById(idProducto);
         if (optionalProducto.isPresent()) {
             Producto producto = optionalProducto.get();
@@ -107,7 +107,7 @@ public class ProductoService {
         }
     }
 
-    public boolean verificarStockDisponible(Integer idProducto, Integer cantidadRequerida) {
+    public boolean verificarStockDisponible(Long idProducto, Integer cantidadRequerida) {
         Optional<Producto> optionalProducto = productoRepository.findById(idProducto);
         if (optionalProducto.isPresent()) {
             Producto producto = optionalProducto.get();
@@ -118,6 +118,7 @@ public class ProductoService {
     }
 
 
+    
     public List<Producto> getProductosByDescuentoId(Integer idDescuento) {
         Optional<Descuento> descuento = descuentoRepository.findById(idDescuento);
         if (descuento.isPresent()) {

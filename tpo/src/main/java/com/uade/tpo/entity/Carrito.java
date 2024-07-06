@@ -31,7 +31,7 @@ public class Carrito {
 	private Usuario usuario;
 
 	@Column(name = "total")
-	private float total;
+	private double total;
 
 	@OneToMany(mappedBy = "carrito")
 	@JsonManagedReference
@@ -53,11 +53,11 @@ public class Carrito {
 		this.usuario = usuario;
 	}
 
-	public float getTotal() {
+	public double getTotal() {
 		return total;
 	}
 
-	public void setTotal(float total) {
+	public void setTotal(double total) {
 		this.total = total;
 	}
 

@@ -22,7 +22,7 @@ public class Producto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
-    private int id;
+    private Long id;
 
     @Column(name = "titulo", nullable = false)
     private String titulo;
@@ -53,5 +53,15 @@ public class Producto {
     @JoinColumn(name = "idDescuento")
     private Descuento descuento;
 
+    public double getPrecioConDescuento() {
+        if (this.descuento != null && this.descuento.getPorcentaje() != 0) {
+        	double porcentaje = (float)this.descuento.getPorcentaje() / 100f;
+            double precioFinal = (this.precio - (this.precio * porcentaje));
+            return precioFinal;
+        } else {
+            return this.precio;
+        }
+    }
+    
 
 }
