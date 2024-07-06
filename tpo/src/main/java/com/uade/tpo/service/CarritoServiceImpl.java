@@ -19,7 +19,7 @@ import com.uade.tpo.exception.ProductNotFoundException;
 import com.uade.tpo.exception.ProductNotInCartException;
 import com.uade.tpo.repository.CarritoProductosRepository;
 import com.uade.tpo.repository.CarritoRepository;
-import com.uade.tpo.repository.ProductosRepository;
+import com.uade.tpo.repository.ProductoRepository;
 
 import jakarta.transaction.Transactional;
 
@@ -30,7 +30,7 @@ public class CarritoServiceImpl implements CarritoService {
     private CarritoRepository carritoRepository;
 
     @Autowired
-    private ProductosRepository productoRepository;
+    private ProductoRepository productoRepository;
 
     @Autowired
     private CarritoProductosRepository carritoProdRepository;
