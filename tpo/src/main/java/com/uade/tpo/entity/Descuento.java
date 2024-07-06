@@ -1,57 +1,34 @@
 package com.uade.tpo.entity;
 
+import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "descuentos")
-
+@Table(name = "descuento")
 public class Descuento {
-
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "idDescuentos",nullable = false)
-    private Long idDescuentos;
+    @Column(name = "id", nullable = false)
+    private int id;
 
-    @Column(name = "Porcentaje",nullable = false)
-    private int porcentaje;
+    @Column(name = "porcentaje", nullable = false)
+    private double porcentaje;
 
     @JsonIgnore
-    @OneToOne(mappedBy = "idDescuento")
-    private Producto productos;
+    @OneToMany(mappedBy = "descuento", cascade = CascadeType.ALL)
+    private List<Producto> productos;
 
-    // Aca los getters and Setters
-    public Long getIdDescuentos() {
-        return idDescuentos;
-    }
-
-    public void setIdDescuentos(Long idDescuentos) {
-        this.idDescuentos = idDescuentos;
-    }
-
-    public int getPorcentaje() {
-        return porcentaje;
-    }
-
-    public void setPorcentaje(int Porcentaje) {
-        this.porcentaje = Porcentaje;
-    }
-
-    public Producto getProductos() {
-        return productos;
-    }
-
-    public void setProductos(Producto productos) {
-        this.productos = productos;
-    }   
 }
