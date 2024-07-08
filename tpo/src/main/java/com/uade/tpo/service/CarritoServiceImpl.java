@@ -219,4 +219,9 @@ public class CarritoServiceImpl implements CarritoService {
         }
     }
 
+	@Override
+	public Carrito getCarritoByUsuarioId(Long userId) throws CartNotFoundException {
+		return carritoRepository.findByUserId(userId).orElseThrow();
+	}
+
 }

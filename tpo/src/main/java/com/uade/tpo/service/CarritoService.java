@@ -13,6 +13,8 @@ import com.uade.tpo.exception.ProductNotInCartException;
 
 public interface CarritoService {
 
+	public Carrito getCarritoByUsuarioId(final Long userId) throws CartNotFoundException;
+	
 	public Carrito getCarritoById(final Long carritoId) throws CartNotFoundException;
 	
 	public ResponseEntity<CarritoResponse> removeFromCarrito(final Long carritoId, final CarritoRequest request)

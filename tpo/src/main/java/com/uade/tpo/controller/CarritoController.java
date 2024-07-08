@@ -42,6 +42,22 @@ public class CarritoController {
         }
 
     }
+    
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<CarritoResponse> getCarritoByUserId(@PathVariable final Long userId) {
+
+        try {
+            Carrito carrito = this.carritoService.getCarritoByUsuarioId(userId);
+            return ResponseEntity.ok().body(new CarritoResponse("Carrito obtenido exitosamente.", carrito));
+
+        } catch (CartNotFoundException exception) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(new CarritoResponse(HttpStatus.NOT_FOUND.getReasonPhrase(), exception.getMessage()));
+        }
+
+    }
+    
+    
 
     /*
      * Si el producto no existe, lo agrega.

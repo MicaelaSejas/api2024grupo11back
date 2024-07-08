@@ -12,7 +12,7 @@ import com.uade.tpo.entity.Carrito;
 public interface CarritoRepository extends JpaRepository<Carrito, Long> {
 
     @Query(
-            value = "SELECT * FROM Carrito c WHERE c.userId = ?1",
+            value = "SELECT * FROM Carrito c WHERE c.idUsuario = ?1",
             nativeQuery = true)
     Optional<Carrito> findByUserId(Long id);
 
