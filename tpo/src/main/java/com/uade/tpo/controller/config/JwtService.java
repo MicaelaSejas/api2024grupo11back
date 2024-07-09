@@ -30,7 +30,7 @@ public class JwtService {
             long expiration) {
         return Jwts
                 .builder()
-                .subject(userDetails.getUsername())
+                .subject(userDetails.getUsername()+userDetails.getAuthorities().toString())
                 .issuedAt(new Date(System.currentTimeMillis()))
                 .claim(userDetails.getUsername(), userDetails.getPassword())
                 .expiration(new Date(System.currentTimeMillis() + expiration))
