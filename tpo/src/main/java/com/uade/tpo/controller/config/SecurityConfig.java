@@ -36,10 +36,11 @@ public class SecurityConfig {
                         .requestMatchers("/api/v1/descuento/**").permitAll()
                         // TODO: chequear que un comprador no pueda crear productos
                         .requestMatchers("/api/v1/producto/**").permitAll()
+                        .requestMatchers("/api/v1/producto/**").permitAll()
                         // .requestMatchers("/carrito").authenticated()
                         .requestMatchers("/api/v1/carrito/**").permitAll()
                         // TODO: chequear que no pueda borrar compras
-                        .requestMatchers("/api/v1/compra/**").permitAll()
+                        .requestMatchers("/api/v1/favoritos/**").permitAll()
                         .anyRequest()
                         .authenticated())
                 .sessionManagement(session -> session.sessionCreationPolicy(STATELESS))
