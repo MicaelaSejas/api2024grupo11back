@@ -37,13 +37,22 @@ VALUES ('Silla Comedor Madera','Silla comedor de madera', 45999.99, 29,'https://
 INSERT INTO producto(titulo, descripcion, precio, cantidad,imagen_1_URL, imagen_2_URL,idCategoria, idDescuento)
 VALUES ('Silla Comedor Black','Silla comedor asiento black', 50000, 21,'https://ballsellings.com/105550-large_default/silla-new-paris-ecocuero.jpg','https://http2.mlstatic.com/D_676189-MLA49552131277_042022-C.jpg',3, 1);
 
-insert into roles(descripcion) values ("Vendedor");
+insert into roles(descripcion) values ("Admin");
 insert into roles(descripcion) values ("Comprador");
+insert into roles(descripcion) values ("Vendedor");
 
-INSERT INTO usuarios(nombre, apellido, email, username, password, roles_id) VALUES ('Comprador', 'ApellidoComprador', 'comprador@gmail.com', 'comprador', '1234', 2);
+INSERT INTO usuarios(nombre, apellido, email, username, password, roles_id) VALUES ('Administrador', 'SillaShop', 'admin@sillashop.com', 'admin', 'admin', 1);
 INSERT INTO carrito(total, idUsuario) VALUES (0,1);
-INSERT INTO usuarios(nombre, apellido, email, username, password, roles_id) VALUES ('Vendedor', 'ApellidoVendedor', 'vendedor@gmail.com', 'vendedor', '1234', 1);
+INSERT INTO usuarios(nombre, apellido, email, username, password, roles_id) VALUES ('Comprador', 'ApellidoComprador', 'comprador@gmail.com', 'comprador', '1234', 2);
 INSERT INTO carrito(total, idUsuario) VALUES (0,2);
+INSERT INTO usuarios(nombre, apellido, email, username, password, roles_id) VALUES ('Vendedor', 'ApellidoVendedor', 'vendedor@gmail.com', 'vendedor', '1234', 3);
+INSERT INTO carrito(total, idUsuario) VALUES (0,3);
 
+select * from roles;
 select * from usuarios;
 select * from carrito;
+select * from categoria;
+select * from descuento;
+select * from producto;
+select * from carritoproductos;
+
