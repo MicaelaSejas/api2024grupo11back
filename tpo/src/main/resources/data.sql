@@ -3,41 +3,6 @@ DROP DATABASE IF EXISTS `tpo`;
 CREATE DATABASE IF NOT EXISTS `tpo` DEFAULT CHARACTER SET utf8mb4;
 USE `tpo`;
 
-DROP TABLE IF EXISTS `categoria`;
-DROP TABLE IF EXISTS `descuento`;
-DROP TABLE IF EXISTS `producto`;
-
-CREATE TABLE `categoria` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `descripcion` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
-CREATE TABLE `descuento` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `porcentaje` DECIMAL(5,2) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
-CREATE TABLE `producto` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `titulo` varchar(255) NOT NULL,
-  `descripcion` varchar(255) NOT NULL,
-  `precio` DECIMAL(10,2) NOT NULL DEFAULT 1.00,
-  `cantidad` int NOT NULL DEFAULT 1,
-  `imagen_1_URL` varchar(255),
-  `imagen_2_URL` varchar(255),
-  `idCategoria` int NOT NULL,
-  `idDescuento` int,
-  PRIMARY KEY (`id`),
-  KEY `fk_categoria` (`idCategoria`),
-  KEY `fk_descuento` (`idDescuento`),
-  CONSTRAINT `fk_categoria` FOREIGN KEY (`idCategoria`) REFERENCES `categoria` (`id`),
-  CONSTRAINT `fk_descuento` FOREIGN KEY (`idDescuento`) REFERENCES `descuento` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
-
-use tpo;
 INSERT INTO categoria(descripcion) 
 VALUES ('Silla Gamer');
 INSERT INTO categoria(descripcion) 
@@ -45,8 +10,6 @@ VALUES ('Silla Jardin');
 INSERT INTO categoria(descripcion) 
 VALUES ('Silla Comedor');
 
-
-use tpo;
 INSERT INTO descuento(porcentaje) 
 VALUES (0);
 INSERT INTO descuento(porcentaje) 
@@ -54,7 +17,9 @@ VALUES (10);
 INSERT INTO descuento(porcentaje) 
 VALUES (15);
 
-use tpo;
+insert into roles(descripcion) values ("Vendedor");
+insert into roles(descripcion) values ("Comprador");
+
 INSERT INTO producto(titulo, descripcion, precio, cantidad,imagen_1_URL, imagen_2_URL,idCategoria, idDescuento)
 VALUES ('Silla Gamer RGB','Silla RGB perfecta para tu comodidad', 100000, 15,'https://acdn.mitiendanube.com/stores/001/474/949/products/hesx00291-1936e738ce36b71af916350018512377-640-0.png','https://tpelectronica.com.ar/images/product_image/407/0?dpr=2.625&fit=contain&h=400&q=80&version=3e443&w=400',1, 1);
 INSERT INTO producto(titulo, descripcion, precio, cantidad,imagen_1_URL, imagen_2_URL,idCategoria, idDescuento)
@@ -73,3 +38,15 @@ INSERT INTO producto(titulo, descripcion, precio, cantidad,imagen_1_URL, imagen_
 VALUES ('Silla Comedor Madera','Silla comedor de madera', 45999.99, 29,'https://static1.muebles-lara.es/17099-large_default/silla-232.jpg','https://www.mobles-sedavi.com/15220-large_default/silla-de-comedor-clasica-diseno-194-640.jpg',3, 2);
 INSERT INTO producto(titulo, descripcion, precio, cantidad,imagen_1_URL, imagen_2_URL,idCategoria, idDescuento)
 VALUES ('Silla Comedor Black','Silla comedor asiento black', 50000, 21,'https://ballsellings.com/105550-large_default/silla-new-paris-ecocuero.jpg','https://http2.mlstatic.com/D_676189-MLA49552131277_042022-C.jpg',3, 1);
+
+
+INSERT INTO compra(precioTotal, idUsuario) VALUES (100000, 1);
+INSERT INTO compraproducto(cantidad, idCompra, idProducto) VALUES (1, 1, 1);
+
+INSERT INTO compra(precioTotal, idUsuario) VALUES (190000, 1);
+INSERT INTO compraproducto(cantidad, idCompra, idProducto) VALUES (1, 2, 1);
+INSERT INTO compraproducto(cantidad, idCompra, idProducto) VALUES (1, 2, 2);
+
+select * from compra;
+select * from compraproducto;
+select * from usuarios;
