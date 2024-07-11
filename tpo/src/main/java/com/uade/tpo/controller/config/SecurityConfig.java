@@ -38,6 +38,8 @@ public class SecurityConfig {
                         .requestMatchers("/api/v1/producto/**").permitAll()
                         // .requestMatchers("/carrito").authenticated()
                         .requestMatchers("/api/v1/carrito/**").permitAll()
+                        // TODO: chequear que no pueda borrar compras
+                        .requestMatchers("/api/v1/compra/**").permitAll()
                         .anyRequest()
                         .authenticated())
                 .sessionManagement(session -> session.sessionCreationPolicy(STATELESS))

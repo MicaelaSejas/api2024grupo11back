@@ -23,4 +23,9 @@ public class UsuariosServiceImp implements UsuariosService {
     public Optional<Usuario> obtenerUsuarioByEmail(String email) {
         return usuarioRepository.findByEmail(email);
     }
+
+	@Override
+	public Optional<Usuario> findById(Long id) {
+		return usuarioRepository.findById(id);
+	}
 }
