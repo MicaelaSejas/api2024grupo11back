@@ -9,8 +9,8 @@ public class CompraRequest {
 
     public CompraRequest() {}
 
-    @JsonProperty("usuarioId")
-    private Long usuarioId;
+    @JsonProperty("email")
+    private String email;
 
     @JsonProperty("total")
     private float total;
@@ -18,8 +18,8 @@ public class CompraRequest {
     @JsonProperty("productos")
     private List<ProductoCompraRequest> productos;
 
-    public Long getUsuarioId() {
-        return usuarioId;
+    public String getEmail() {
+        return email;
     }
 
     public float getTotal() {
@@ -55,4 +55,11 @@ public class CompraRequest {
             return precio;
         }
     }
+
+	@Override
+	public String toString() {
+		return "CompraRequest [email=" + email + ", total=" + total + ", productos=" + productos + "]";
+	}
+    
+    
 }

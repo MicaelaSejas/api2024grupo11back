@@ -49,11 +49,12 @@ public class CompraController {
 
     @PostMapping(value="/create", consumes= {"application/json"})
     public ResponseEntity<CompraResponse> createCompra(@RequestBody CompraRequest req) {
+    	System.out.println(req.toString());
     	try {
     		Compra nuevaCompra = compraService.createCompra(req);
     		return ResponseEntity.ok(new CompraResponse("Compra creada con exito", nuevaCompra));
     	} catch(Exception ex) {
-    		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new CompraResponse("Compra no se pudo crear"));
+    		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new CompraResponse(ex.getMessage()));
     	}
     }
 
