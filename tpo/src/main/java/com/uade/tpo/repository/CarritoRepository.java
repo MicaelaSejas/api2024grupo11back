@@ -15,5 +15,5 @@ public interface CarritoRepository extends JpaRepository<Carrito, Long> {
             value = "SELECT * FROM Carrito c WHERE c.idUsuario = ?1",
             nativeQuery = true)
     Optional<Carrito> findByUserId(Long id);
-
+    
 }

@@ -18,7 +18,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class SecurityConfig {
 
-	@Autowired
+    @Autowired
     private JwtAuthenticationFilter jwtAuthFilter;
 
     @Autowired
@@ -28,22 +28,28 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(req -> req.requestMatchers("/api/v1/auth/**").permitAll()
-                        .requestMatchers("/error/**").permitAll()
-                        // .requestMatchers("/api/v1/categoria").hasAnyAuthority("Vendedor")
-                        .requestMatchers("/api/v1/categoria").permitAll()
-                        // .requestMatchers("/api/v1/descuento").hasAnyAuthority("Vendedor")
-                        .requestMatchers("/api/v1/descuento").permitAll()
-                        // TODO: chequear que un comprador no pueda crear productos
-                        .requestMatchers("/api/v1/producto").permitAll()
-//                        .requestMatchers("/carrito").authenticated()
-                        .requestMatchers("/api/v1/carrito/**").permitAll()
-                        .anyRequest()
-                        .authenticated())
+                .authorizeHttpRequests(req -> req
+                .requestMatchers("/api/v1/auth/**").permitAll()
+                .requestMatchers("/error/**").permitAll()
+                .requestMatchers("/api/v1/categoria/**").permitAll()
+                .requestMatchers("/api/v1/descuento/**").permitAll()
+                .requestMatchers("/api/v1/producto/**").permitAll()
+                .requestMatchers("/api/v1/carrito/**").permitAll()
+                .requestMatchers("/api/v1/favoritos/**").permitAll()
+                .requestMatchers("/api/v1/usuarios/**").permitAll()
+                .anyRequest().permitAll()
+                )
                 .sessionManagement(session -> session.sessionCreationPolicy(STATELESS))
                 .authenticationProvider(authenticationProvider)
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
-
-        return http.build();
+    
+            return http.build();
+                        // .requestMatchers("/api/v1/categoria").hasAnyAuthority("Vendedor")                        
+                        // .requestMatchers("/api/v1/descuento").hasAnyAuthority("Vendedor")                        
+                        // TODO: chequear que un comprador no pueda crear productos
+                        // .requestMatchers("/carrito").authenticated()
+                        // TODO: chequear que no pueda borrar compras
+                        // .anyRequest()
+                        // .authenticated())
     }
 }

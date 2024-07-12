@@ -16,11 +16,18 @@ public class UsuariosServiceImp implements UsuariosService {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
+    @Override
     public Page<Usuario> obtenerUsuarios(PageRequest pageable) {
         return usuarioRepository.findAll(pageable);
     }
 
+    @Override
     public Optional<Usuario> obtenerUsuarioByEmail(String email) {
         return usuarioRepository.findByEmail(email);
     }
+
+	@Override
+	public Optional<Usuario> findById(Long id) {
+		return usuarioRepository.findById(id);
+	}
 }

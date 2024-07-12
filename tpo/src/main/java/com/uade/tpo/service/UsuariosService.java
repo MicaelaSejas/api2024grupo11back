@@ -8,6 +8,9 @@ import org.springframework.data.domain.PageRequest;
 import com.uade.tpo.entity.Usuario;
 
 public interface UsuariosService {
+	
+	public Optional<Usuario> findById(Long id);
+	
     public Page<Usuario> obtenerUsuarios(PageRequest pageRequest);
 
     public Optional<Usuario> obtenerUsuarioByEmail(String email);

@@ -6,7 +6,6 @@ import lombok.Data;
 @Data
 public class ProductoRequest {
 
-    private int id;
     private String titulo;
     private String descripcion;
     private double precio;
