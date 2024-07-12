@@ -12,14 +12,17 @@ import com.uade.tpo.controller.request.CarritoResponse;
 import com.uade.tpo.entity.Carrito;
 import com.uade.tpo.entity.CarritoProductos;
 import com.uade.tpo.entity.Producto;
+import com.uade.tpo.entity.Usuario;
 import com.uade.tpo.exception.CartAlreadyEmptyException;
 import com.uade.tpo.exception.CartNotFoundException;
 import com.uade.tpo.exception.ExceededCartQuantityException;
 import com.uade.tpo.exception.ProductNotFoundException;
 import com.uade.tpo.exception.ProductNotInCartException;
+import com.uade.tpo.exception.UsuarioNotFoundException;
 import com.uade.tpo.repository.CarritoProductosRepository;
 import com.uade.tpo.repository.CarritoRepository;
 import com.uade.tpo.repository.ProductoRepository;
+import com.uade.tpo.repository.UsuarioRepository;
 
 import jakarta.transaction.Transactional;
 
@@ -35,9 +38,19 @@ public class CarritoServiceImpl implements CarritoService {
     @Autowired
     private CarritoProductosRepository carritoProdRepository;
 
+    @Autowired
+    private UsuarioRepository usuarioRepository;
+    
     public Carrito getCarritoById(final Long carritoId) throws CartNotFoundException {
         return this.carritoRepository.findById(carritoId)
                 .orElseThrow(() -> new CartNotFoundException("Carrito con id " + carritoId + " no encontrado"));
+    }
+    
+    public Carrito getCarritoByEmail(final String email) throws CartNotFoundException, UsuarioNotFoundException {
+    	
+    	Usuario usuario = usuarioRepository.findByEmail(email).orElseThrow(() -> new UsuarioNotFoundException());
+		return this.carritoRepository.findByUserId(usuario.getId())
+				.orElseThrow(() -> new CartNotFoundException("Carrito con email" + email + " no encontrado"));
     }
 
     @Transactional

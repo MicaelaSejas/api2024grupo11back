@@ -20,6 +20,7 @@ import com.uade.tpo.exception.CartNotFoundException;
 import com.uade.tpo.exception.ExceededCartQuantityException;
 import com.uade.tpo.exception.ProductNotFoundException;
 import com.uade.tpo.exception.ProductNotInCartException;
+import com.uade.tpo.exception.UsuarioNotFoundException;
 import com.uade.tpo.service.CarritoServiceImpl;
 
 @RestController
@@ -57,6 +58,19 @@ public class CarritoController {
 
     }
     
+    @GetMapping("/user/email/{email}")
+    public ResponseEntity<CarritoResponse> getCarritoByUserEmail(@PathVariable final String email) {
+
+        try {
+            Carrito carrito = this.carritoService.getCarritoByEmail(email);
+            return ResponseEntity.ok().body(new CarritoResponse("Carrito obtenido exitosamente.", carrito));
+
+        } catch (UsuarioNotFoundException | CartNotFoundException exception) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(new CarritoResponse(HttpStatus.NOT_FOUND.getReasonPhrase(), exception.getMessage()));
+        }
+
+    }
     
 
     /*
@@ -100,6 +114,7 @@ public class CarritoController {
     public ResponseEntity<CarritoResponse> removeFromCarrito(@PathVariable final Long carritoId,
             @RequestBody final CarritoRequest request) {
         try {
+        	
             return this.carritoService.removeFromCarrito(carritoId, request);
 
         } catch (CartNotFoundException exception) {

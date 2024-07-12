@@ -15,4 +15,11 @@ public class AuthenticationResponse {
 
     @JsonProperty("access_token")
     private String accessToken;
+ 
+    @JsonProperty("role")
+    private String role;
+    
+    @JsonProperty("registered_email")
+    private String email;
+    
 }

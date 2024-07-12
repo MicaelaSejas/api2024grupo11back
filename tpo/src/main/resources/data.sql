@@ -19,8 +19,8 @@ INSERT INTO descuento(porcentaje)
 VALUES (15);
 
 insert into roles(descripcion) values ("Admin");
--- insert into roles(descripcion) values ("Comprador");
--- insert into roles(descripcion) values ("Vendedor");
+insert into roles(descripcion) values ("Comprador");
+insert into roles(descripcion) values ("Vendedor");
 
 
 INSERT INTO producto(titulo, descripcion, precio, cantidad,imagen_1_URL, imagen_2_URL,idCategoria, idDescuento)
