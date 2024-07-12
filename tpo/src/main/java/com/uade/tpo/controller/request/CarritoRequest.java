@@ -18,4 +18,9 @@ public class CarritoRequest {
 		return cantidad;
 	}
 
+	@Override
+	public String toString() {
+		return "CarritoRequest [productoId=" + productoId + ", cantidad=" + cantidad + "]";
+	}
+
 }

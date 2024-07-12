@@ -110,13 +110,11 @@ public class CarritoController {
 
     }
 
-    @DeleteMapping("quitar/{carritoId}")
+    @PutMapping("quitar/{carritoId}")
     public ResponseEntity<CarritoResponse> removeFromCarrito(@PathVariable final Long carritoId,
             @RequestBody final CarritoRequest request) {
         try {
-        	
             return this.carritoService.removeFromCarrito(carritoId, request);
-
         } catch (CartNotFoundException exception) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body(new CarritoResponse(HttpStatus.NOT_FOUND.getReasonPhrase(), exception.getMessage()));

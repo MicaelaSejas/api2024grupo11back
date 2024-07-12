@@ -86,5 +86,16 @@ public class CompraController {
         }
     }
 
+    @GetMapping("/email/{email}")
+    public ResponseEntity<Set<Compra>> getComprasByUsuarioEmail(@PathVariable("email") String email) {
+        Optional<Usuario> optionalUsuario = usuarioService.obtenerUsuarioByEmail(email);
+        if (optionalUsuario.isPresent()) {
+            Set<Compra> compras = compraService.findCompraByUsuario(optionalUsuario.get().getId());
+            compras.forEach(compra -> compra.getCompraProductos().size());
+            return ResponseEntity.ok(compras);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 
 }
