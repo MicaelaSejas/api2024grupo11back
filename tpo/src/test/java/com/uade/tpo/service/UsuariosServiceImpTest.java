@@ -1,6 +1,7 @@
 package com.uade.tpo.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
@@ -38,7 +39,7 @@ public class UsuariosServiceImpTest {
     }
 
     @Test
-    void testObtenerUsuarios() {
+    void testObtenerUsuarios_Success() {
         PageRequest pageable = PageRequest.of(0, 10);
         Page<Usuario> page = new PageImpl<>(List.of(usuario));
 
@@ -51,12 +52,21 @@ public class UsuariosServiceImpTest {
     }
 
     @Test
-    void testObtenerUsuarioByEmail() {
-        when(usuarioRepository.findByEmail("test@example.com")).thenReturn(Optional.of(usuario));
+    void testObtenerUsuarioByEmail_Success() {
+        when(usuarioRepository.findByEmail("test@test.com")).thenReturn(Optional.of(usuario));
 
-        Optional<Usuario> result = usuariosService.obtenerUsuarioByEmail("test@example.com");
+        Optional<Usuario> result = usuariosService.obtenerUsuarioByEmail("test@test.com");
 
         assertTrue(result.isPresent());
-        assertEquals("test@example.com", result.get().getEmail());
+        assertEquals("test@test.com", result.get().getEmail());
+    }
+
+    @Test
+    void testObtenerUsuarioByEmail_NotFound() {
+        when(usuarioRepository.findByEmail("test@test.com")).thenReturn(Optional.empty());
+
+        Optional<Usuario> result = usuariosService.obtenerUsuarioByEmail("test@test.com");
+
+        assertFalse(result.isPresent());
     }
 }
