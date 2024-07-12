@@ -7,7 +7,6 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -15,7 +14,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -53,8 +51,8 @@ public class Usuario implements UserDetails {
     @JoinColumn(name = "roles_id", referencedColumnName = "id")
     private Rol roles;
 
-//    @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL)
-//    private Carrito carrito;
+    // @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL)
+    // private Carrito carrito;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -86,8 +84,8 @@ public class Usuario implements UserDetails {
         return true;
     }
 
-	@Override
-	public String getPassword() {
-		return password;
-	}
+    @Override
+    public String getPassword() {
+        return password;
+    }
 }
