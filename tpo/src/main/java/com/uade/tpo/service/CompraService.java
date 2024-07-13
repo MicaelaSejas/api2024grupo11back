@@ -33,6 +33,9 @@ public class CompraService {
 
 	@Autowired
 	private ProductoRepository prodRepository;
+	
+	@Autowired
+	private ProductoService prodService;
 
 	public List<Compra> findAllCompras() {
 		return compraRepository.findAll();

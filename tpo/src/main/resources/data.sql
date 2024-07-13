@@ -38,22 +38,18 @@ INSERT INTO producto(titulo, descripcion, precio, cantidad,imagen_1_URL, imagen_
 VALUES ('Silla Comedor Blue','Silla comedor blues sky', 55499.99, 15,'https://ae01.alicdn.com/kf/H328846ee86e1481aade0b3992e410724O/Juego-de-sillas-de-comedor-con-terciopelo-suave-y-pies-de-madera-para-decoraci-n-del.jpg','https://m.media-amazon.com/images/I/61xl37Awz6L._AC_UF1000,1000_QL80_.jpg',3, 3);
 INSERT INTO producto(titulo, descripcion, precio, cantidad,imagen_1_URL, imagen_2_URL,idCategoria, idDescuento)
 VALUES ('Silla Comedor Madera','Silla comedor de madera', 45999.99, 29,'https://www.mobles-sedavi.com/15220-large_default/silla-de-comedor-clasica-diseno-194-640.jpg','https://www.mobles-sedavi.com/15220-large_default/silla-de-comedor-clasica-diseno-194-640.jpg',3, 2);
+
+
 INSERT INTO producto(titulo, descripcion, precio, cantidad,imagen_1_URL, imagen_2_URL,idCategoria, idDescuento)
 VALUES ('Silla Comedor Black','Silla comedor asiento black', 50000, 21,'https://ballsellings.com/105550-large_default/silla-new-paris-ecocuero.jpg','https://http2.mlstatic.com/D_676189-MLA49552131277_042022-C.jpg',3, 1);
+
+
 
 INSERT INTO usuarios(nombre, apellido, email, username, password, roles_id) VALUES ('Administrador', 'SillaShop', 'admin@sillashop.com', 'admin', 'admin', 1);
 INSERT INTO carrito(total, idUsuario) VALUES (0,1);
 INSERT INTO usuarios(nombre, apellido, email, username, password, roles_id) VALUES ('Comprador', 'ApellidoComprador', 'comprador@gmail.com', 'comprador', '1234', 1);
 INSERT INTO carrito(total, idUsuario) VALUES (0,2);
 INSERT INTO usuarios(nombre, apellido, email, username, password, roles_id) VALUES ('Vendedor', 'ApellidoVendedor', 'vendedor@gmail.com', 'vendedor', '1234', 2);
--- INSERT INTO carrito(total, idUsuario) VALUES (0,3);
-
--- INSERT INTO compra(precioTotal, idUsuario) VALUES (100000, 1);
--- INSERT INTO compraproducto(cantidad, idCompra, idProducto) VALUES (1, 1, 1);
-
--- INSERT INTO compra(precioTotal, idUsuario) VALUES (190000, 1);
--- INSERT INTO compraproducto(cantidad, idCompra, idProducto) VALUES (1, 2, 1);
--- INSERT INTO compraproducto(cantidad, idCompra, idProducto) VALUES (1, 2, 2);
 
 
 select * from roles;

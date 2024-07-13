@@ -25,36 +25,44 @@ public class SecurityConfig {
     @Autowired
     private AuthenticationProvider authenticationProvider;
 
+//    @Bean
+//    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+//        http
+//                .csrf(AbstractHttpConfigurer::disable)
+//                .authorizeHttpRequests(req -> req
+//                        .requestMatchers("/api/v1/auth/**").permitAll()
+//                        .requestMatchers("/error/**").permitAll()
+//                        .requestMatchers(HttpMethod.GET, "/api/v1/categoria").permitAll()
+//                        .requestMatchers(HttpMethod.GET, "/api/v1/descuento").permitAll()
+//                        .requestMatchers(HttpMethod.GET, "/api/v1/producto/**").permitAll()
+//                        .requestMatchers("/api/v1/categoria/**").hasAnyAuthority("Admin")
+//                        .requestMatchers("/api/v1/descuento/**").hasAnyAuthority("Admin")
+//                        .requestMatchers(HttpMethod.POST, "/api/v1/producto/**").hasAnyRole("Admin", "Vendedor")
+//                        .requestMatchers("/api/v1/carrito/**").permitAll()
+//                        .requestMatchers("/api/v1/favoritos/**").permitAll()
+//                        .requestMatchers("/api/v1/compra/**").permitAll()
+//                        .requestMatchers("/api/v1/compraProducto").permitAll()
+//                        .requestMatchers("/api/v1/usuarios/**").hasAnyAuthority("Admin")
+//                        .requestMatchers("/api/v1/categoria/**").hasAnyAuthority("Vendedor"))
+//                .sessionManagement(session -> session.sessionCreationPolicy(STATELESS))
+//                .authenticationProvider(authenticationProvider)
+//                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+//
+//        return http.build();
+//
+//    }
+    
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(req -> req
-                        .requestMatchers("/api/v1/auth/**").permitAll()
-                        .requestMatchers("/error/**").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/api/v1/categoria").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/api/v1/descuento").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/api/v1/producto").permitAll()
-                        .requestMatchers("/api/v1/categoria/**").hasAnyAuthority("Admin")
-                        .requestMatchers("/api/v1/descuento/**").hasAnyAuthority("Admin")
-                        .requestMatchers("/api/v1/producto/**").hasAnyAuthority("Admin")
-                        .requestMatchers("/api/v1/carrito/**").authenticated()
-                        .requestMatchers("/api/v1/favoritos/**").authenticated()
-                        .requestMatchers("/api/v1/compra/**").authenticated()
-                        .requestMatchers("/api/v1/compraProducto").authenticated()
-                        .requestMatchers("/api/v1/usuarios/**").hasAnyAuthority("Admin")
-                        .requestMatchers("/api/v1/categoria/**").hasAnyAuthority("Vendedor"))
+                        .requestMatchers("/api/v1/**").permitAll())
                 .sessionManagement(session -> session.sessionCreationPolicy(STATELESS))
                 .authenticationProvider(authenticationProvider)
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
-        // .requestMatchers("/api/v1/categoria").hasAnyAuthority("Vendedor")
-        // .requestMatchers("/api/v1/descuento").hasAnyAuthority("Vendedor")
-        // TODO: chequear que un comprador no pueda crear productos
-        // .requestMatchers("/carrito").authenticated()
-        // TODO: chequear que no pueda borrar compras
-        // .anyRequest()
-        // .authenticated())
+
     }
 }

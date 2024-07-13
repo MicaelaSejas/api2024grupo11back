@@ -43,13 +43,11 @@ public class Producto {
     @Column(name = "imagen_2_URL", nullable = true)
     private String  imagen_2_URL;
     
-    @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne()
     @JoinColumn(name = "idCategoria", nullable = false)
     private Categoria categoria;
 
-    @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne()
     @JoinColumn(name = "idDescuento")
     private Descuento descuento;
 
