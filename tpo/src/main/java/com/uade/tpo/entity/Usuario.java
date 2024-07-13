@@ -7,8 +7,6 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -49,13 +47,12 @@ public class Usuario implements UserDetails {
     @Column
     private String password;
 
-    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "roles_id", referencedColumnName = "id")
     private Rol roles;
 
-//    @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL)
-//    private Carrito carrito;
+    // @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL)
+    // private Carrito carrito;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -87,8 +84,8 @@ public class Usuario implements UserDetails {
         return true;
     }
 
-	@Override
-	public String getPassword() {
-		return password;
-	}
+    @Override
+    public String getPassword() {
+        return password;
+    }
 }
